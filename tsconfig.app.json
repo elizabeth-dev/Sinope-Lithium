@@ -6,13 +6,13 @@
     "types": [],
     "paths": {
       "@src/*": [
-        "src/*.web",
-        "src/*"
+        "src/main/angular/*.web",
+        "src/main/angular/*"
       ]
     }
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "src/main/angular/main.ts",
+    "src/main/angular/polyfills.ts"
   ]
 }

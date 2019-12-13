@@ -1,6 +1,6 @@
 {
   "appResourcesPath": "App_Resources",
-  "appPath": "src",
+  "appPath": "src/main/angular",
   "nsext": ".tns",
   "webext": "",
   "shared": true,

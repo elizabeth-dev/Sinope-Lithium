@@ -1,7 +1,7 @@
 {
   "name": "sinope-app",
   "nativescript": {
-    "id": "org.nativescript.sinopeapp"
+    "id": "app.sinope.sinopeapp"
   },
   "version": "0.0.0",
   "scripts": {

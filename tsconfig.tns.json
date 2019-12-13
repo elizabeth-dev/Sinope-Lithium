@@ -5,12 +5,12 @@
     "moduleResolution": "node",
     "paths": {
       "@src/*": [
-        "src/*.tns.ts",
-        "src/*.ts"
+        "src/main/angular/*.tns.ts",
+        "src/main/angular/*.ts"
       ]
     }
   },
   "files": [
-    "src/main.tns.ts"
+    "src/main/angular/main.tns.ts"
   ]
 }

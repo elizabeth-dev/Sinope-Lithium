@@ -21,11 +21,11 @@
       "baseUrl": ".",
       "paths": {
           "@src/*": [
-              "src/*.android.ts",
-              "src/*.ios.ts",
-              "src/*.tns.ts",
-              "src/*.web.ts",
-              "src/*.ts"
+              "src/main/angular/*.android.ts",
+              "src/main/angular/*.ios.ts",
+              "src/main/angular/*.tns.ts",
+              "src/main/angular/*.web.ts",
+              "src/main/angular/*.ts"
           ]
       }
   }
