@@ -1,15 +1,22 @@
 import { Routes } from '@angular/router';
-
-import { HomeComponent } from '@src/app/home/home.component';
+import { AuthGuard } from './core/auth/guards/auth.guard';
+import { GuestGuard } from './core/auth/guards/guest.guard';
 
 export const routes: Routes = [
-  {
-      path: '',
-      redirectTo: '/home',
-      pathMatch: 'full',
-  },
-  {
-      path: 'home',
-      component: HomeComponent,
-  },
+	{
+		path: '',
+		canLoad: [AuthGuard],
+		loadChildren: () =>
+			import('@src/app/views/dashboard/dashboard.module').then(
+				(m) => m.DashboardModule
+			),
+	},
+	{
+		path: 'login',
+		canLoad: [GuestGuard],
+		loadChildren: () =>
+			import('@src/app/views/login/login.module').then(
+				(m) => m.LoginModule
+			),
+	},
 ];
