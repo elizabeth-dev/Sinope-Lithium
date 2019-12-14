@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import * as AuthActions from './actions';
 import { UserPayload } from './interfaces/UserPayload.interface';
+import { AppSettingsService } from '@src/app/core/services/app-settings/app-settings.service';
 
 export interface AuthState {
 	token: string;
@@ -14,9 +15,9 @@ const AuthTokenKey = 'token';
 const AuthUserDataKey = 'user';
 
 const initialState: AuthState = {
-	token: localStorage.getItem(AuthTokenKey),
-	userData: JSON.parse(localStorage.getItem(AuthUserDataKey)),
-	loggedIn: !!localStorage.getItem(AuthTokenKey),
+	token: AppSettingsService.getString(AuthTokenKey),
+	userData: JSON.parse(AppSettingsService.getString(AuthUserDataKey)),
+	loggedIn: !!AppSettingsService.getString(AuthTokenKey),
 	error: undefined,
 };
 
@@ -39,8 +40,8 @@ const _authReducer = createReducer(
 		) => {
 			const userData = atob(token.split('.')[1]);
 
-			localStorage.setItem(AuthTokenKey, token);
-			localStorage.setItem(AuthUserDataKey, userData);
+			AppSettingsService.setString(AuthTokenKey, token);
+			AppSettingsService.setString(AuthUserDataKey, userData);
 
 			return {
 				...state,
@@ -64,7 +65,7 @@ const _authReducer = createReducer(
 		),
 	),
 	on(AuthActions.logout, (state) => {
-		localStorage.clear();
+		AppSettingsService.clear();
 
 		return {
 			...state,
