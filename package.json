@@ -1,7 +1,10 @@
 {
   "name": "sinope-app",
   "nativescript": {
-    "id": "app.sinope.sinopeapp"
+    "id": "app.sinope.sinopeapp",
+    "tns-android": {
+      "version": "6.2.0"
+    }
   },
   "version": "0.0.0",
   "scripts": {
@@ -36,9 +39,9 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.803.0",
     "@angular/cli": "~8.3.0",
     "@angular/compiler-cli": "~8.2.0",
-    "@angular-devkit/build-angular": "~0.803.0",
     "@nativescript/schematics": "~0.7.0",
     "@nativescript/tslint-rules": "~0.0.4",
     "@types/jasmine": "~3.3.8",
@@ -53,10 +56,11 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "nativescript-dev-webpack": "~1.3.0",
+    "node-sass": "^4.7.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3",
-    "node-sass": "^4.7.1"
+    "webpack-cli": "^3.3.10"
   }
 }

@@ -32,7 +32,12 @@
             "styles": [
               "src/main/angular/styles/styles.scss"
             ],
-            "scripts": []
+			"scripts": [],
+			"stylePreprocessorOptions": {
+				"includePaths": [
+					"src/main/angular/styles"
+				]
+			}
           },
           "configurations": {
             "production": {
@@ -85,7 +90,12 @@
             "assets": [
               "src/main/angular/favicon.ico",
               "src/main/angular/assets"
-            ]
+			],
+			"stylePreprocessorOptions": {
+				"includePaths": [
+					"src/main/angular/styles"
+				]
+			}
           }
         },
         "lint": {

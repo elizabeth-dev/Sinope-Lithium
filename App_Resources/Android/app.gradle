@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "__PACKAGE__" 
+    applicationId = "app.sinope.sinopeapp" 
     
     //override supported platforms
     // ndk {
