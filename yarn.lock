@@ -921,10 +921,10 @@
     tns-core-modules-widgets "6.3.2"
     tslib "1.10.0"
 
-"@nativescript/schematics@~0.7.0":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@nativescript/schematics/-/schematics-0.7.3.tgz#3e24184b4602a8f4288928210007101859ffac55"
-  integrity sha512-w5hJH7pWILrZaoO/pA1+YFZpyIdR+vvtC+6zQa/8Vb7rN5Mh2dwXDtGbGsqmvRrQ4F3k6J989JW92ujcM/PS4w==
+"@nativescript/schematics@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nativescript/schematics/-/schematics-1.0.0.tgz#18ed42032f38e105bd2917ec7767222be2b1ebfd"
+  integrity sha512-r0oO7Mz/VSlTyR1l2TzEIdyblOCOAoj+48upA9tOQEtGcuYdi8a95XRcgpX2Hbv4k/FCCsuByaEBYHsdWy+YxA==
   dependencies:
     "@angular-devkit/core" "~8.2.0"
     "@angular-devkit/schematics" "~8.2.0"
