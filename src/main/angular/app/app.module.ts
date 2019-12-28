@@ -9,15 +9,15 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
-import { HomeComponent } from '@src/app/home/home.component';
 import { appReducers } from '@src/app/app.reducer';
 import { AuthEffects } from '@src/app/core/auth/auth.effects';
 import { entityConfig } from '@src/app/core/entities/entity.metadata';
 import { RouterEffects } from '@src/app/core/router/router.effects';
-
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
-	declarations: [AppComponent, HomeComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -31,6 +31,7 @@ import { RouterEffects } from '@src/app/core/router/router.effects';
 		StoreRouterConnectingModule.forRoot(),
 		EntityDataModule.forRoot(entityConfig),
 		HttpClientModule,
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

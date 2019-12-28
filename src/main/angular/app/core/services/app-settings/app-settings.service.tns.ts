@@ -15,11 +15,27 @@ import {
 })
 export class AppSettingsService {
 	public static clear = clear;
-	public static getBoolean = getBoolean;
-	public static getNumber = getNumber;
-	public static getString = getString;
 	public static setBoolean = setBoolean;
 	public static setNumber = setNumber;
 	public static setString = setString;
 	public static remove = remove;
+
+	public static getBoolean = (key: string, defValue?: boolean) => {
+		const val = getBoolean(key, defValue);
+		if (val !== undefined) return val;
+
+		return null;
+	};
+	public static getNumber = (key: string, defValue?: number) => {
+		const val = getNumber(key, defValue);
+		if (val !== undefined) return val;
+
+		return null;
+	};
+	public static getString = (key: string, defValue?: string) => {
+		const val = getString(key, defValue);
+		if (val !== undefined) return val;
+
+		return null;
+	};
 }

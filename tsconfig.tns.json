@@ -1,12 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "paths": {
       "@src/*": [
         "src/main/angular/*.tns.ts",
         "src/main/angular/*.ts"
+      ],
+      "@views/*": [
+        "src/main/angular/app/views/*.tns.ts",
+        "src/main/angular/app/views/*.ts"
       ]
     }
   },

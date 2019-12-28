@@ -4,7 +4,7 @@ import { CanLoad, Route, UrlSegment } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { first, tap, map } from 'rxjs/operators';
 
 import { AppState } from '../../../app.reducer';
 import * as RouterActions from '../../router/actions';
@@ -18,16 +18,18 @@ export class GuestGuard implements CanLoad {
 	canLoad(
 		route: Route,
 		segments: UrlSegment[]
-	): Observable<boolean> | Promise<boolean> | boolean {
+	): Observable<boolean> {
 		return this.store.pipe(
 			select(AuthSelectors.loggedIn),
 			first(),
-			tap((loggedIn) => {
+			map((loggedIn) => {
 				if (loggedIn) {
 					this.store.dispatch(
 						RouterActions.navigate({ path: ['/'] })
 					);
 				}
+
+				return !loggedIn;
 			})
 		);
 	}

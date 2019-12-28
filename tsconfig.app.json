@@ -8,7 +8,11 @@
       "@src/*": [
         "src/main/angular/*.web",
         "src/main/angular/*"
-      ]
+	  ],
+	  "@views/*": [
+        "src/main/angular/app/views/*.web",
+        "src/main/angular/app/views/*"
+	  ]
     }
   },
   "files": [

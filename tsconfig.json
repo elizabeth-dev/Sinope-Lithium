@@ -26,6 +26,13 @@
               "src/main/angular/*.tns.ts",
               "src/main/angular/*.web.ts",
               "src/main/angular/*.ts"
+          ],
+          "@views/*": [
+              "src/main/angular/app/views/*.android.ts",
+              "src/main/angular/app/views/*.ios.ts",
+              "src/main/angular/app/views/*.tns.ts",
+              "src/main/angular/app/views/*.web.ts",
+              "src/main/angular/app/views/*.ts"
           ]
       }
   }

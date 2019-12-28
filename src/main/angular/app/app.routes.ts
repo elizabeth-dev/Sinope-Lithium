@@ -7,7 +7,7 @@ export const routes: Routes = [
 		path: '',
 		canLoad: [AuthGuard],
 		loadChildren: () =>
-			import('@src/app/views/dashboard/dashboard.module').then(
+			import('@views/dashboard/dashboard.module').then(
 				(m) => m.DashboardModule
 			),
 	},
@@ -15,7 +15,7 @@ export const routes: Routes = [
 		path: 'login',
 		canLoad: [GuestGuard],
 		loadChildren: () =>
-			import('@src/app/views/login/login.module').then(
+			import('@views/login/login.module').then(
 				(m) => m.LoginModule
 			),
 	},

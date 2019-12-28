@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
+
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
-
-
-const routes: Routes = [];
+import { routes } from './login.common';
 
 @NgModule({
-  imports: [NativeScriptRouterModule.forChild(routes)],
-  exports: [NativeScriptRouterModule]
+	imports: [NativeScriptRouterModule.forChild(routes)],
+	exports: [NativeScriptRouterModule],
 })
-export class LoginRoutingModule { }
+export class LoginRoutingModule {}

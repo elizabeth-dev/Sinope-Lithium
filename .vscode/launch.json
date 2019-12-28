@@ -43,7 +43,8 @@
 			"platform": "android",
 			"appRoot": "${workspaceRoot}",
 			"sourceMaps": true,
-			"watch": true
+			"watch": true,
+			
 		},
 		{
 			"name": "Test on Android",

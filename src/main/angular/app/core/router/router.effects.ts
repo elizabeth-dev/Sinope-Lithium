@@ -12,12 +12,12 @@ export class RouterEffects {
 		() =>
 			this.action$.pipe(
 				ofType(RouterActions.navigate),
-				exhaustMap((action) => {
-					return this.router.navigate(action.path, {
+				exhaustMap((action) =>
+					this.router.navigate(action.path, {
 						queryParams: action.query,
 						...action.extras,
-					});
-				})
+					})
+				)
 			),
 		{ dispatch: false }
 	);
