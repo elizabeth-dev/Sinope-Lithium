@@ -1,4 +1,4 @@
-package com.sinopeapp;
+package app.sinope;
 
 import com.reactnativenavigation.NavigationActivity;
 
