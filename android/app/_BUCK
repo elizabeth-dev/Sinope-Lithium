@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "app.sinope",
+    package = "app.sinope.lithium",
 )
 
 android_resource(
     name = "res",
-    package = "app.sinope",
+    package = "app.sinope.lithium",
     res = "src/main/res",
 )
 
