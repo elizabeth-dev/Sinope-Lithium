@@ -5,5 +5,6 @@ module.exports = {
 	plugins: ['@typescript-eslint'],
 	rules: {
 		curly: 'off',
+		'array-bracket-spacing': ['warn', 'always'],
 	},
 };

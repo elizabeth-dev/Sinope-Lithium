@@ -1,0 +1,88 @@
+import { IPost } from '@shared/types/post.interface';
+
+export const mockedPosts: IPost[] = [
+	{
+		id: "uid",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid2",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid3",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid4",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid5",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid6",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid7",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid8",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid9",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid10",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid11",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+	{
+		id: "uid12",
+		likes: ["a", "b", "c"],
+		date: new Date(),
+		content: "Lorem Ipsum Dolor Sit Amet",
+		author: "uid2",
+	},
+]

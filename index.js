@@ -3,21 +3,13 @@
  */
 
 import { Navigation } from 'react-native-navigation';
-import App from './App';
+import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 
-Navigation.registerComponent('com.myApp.WelcomeScreen', () => App);
-
-Navigation.events().registerAppLaunchedListener(() => {
-	Navigation.setRoot({
+Navigation.events().registerAppLaunchedListener(async () => {
+	await Navigation.setRoot({
 		root: {
-			stack: {
-				children: [
-					{
-						component: {
-							name: 'com.myApp.WelcomeScreen',
-						},
-					},
-				],
+			component: {
+				name: SplashScreen.displayName,
 			},
 		},
 	});

@@ -19,9 +19,9 @@ module.exports = {
 					'.json',
 				],
 				alias: {
-					'@shared/*': ['src/shared/*'],
-					'@core/*': ['src/core/*'],
-					'@assets/*': ['assets/*'],
+					'@shared': ['./src/shared'],
+					'@core': ['./src/core'],
+					'@assets': ['./assets'],
 				},
 			},
 		],
