@@ -1,9 +1,6 @@
 import React from 'react';
-import { FlatList, SafeAreaView, Text, TouchableHighlight, View } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { Navigation } from 'react-native-navigation';
+import { FlatList, Text, ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Colors } from 'react-native-paper';
-import { SplashScreen } from '../../../splash/screens/splash/SplashScreen.component';
 
 const DATA = [
 	{
@@ -81,7 +78,7 @@ const DATA = [
 ];
 
 const onClick = () => {
-	console.log('Clicked');
+	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 };
 
 function Item({ title }) {
@@ -101,14 +98,10 @@ function Item({ title }) {
 	);
 }
 
-export const Notifications: React.FC = () => {
+export const Notifications: React.FC = React.memo(() => {
 	return (
-		<SafeAreaView>
-			<FlatList
-				data={ DATA }
-				renderItem={ ({ item }) => <Item title={ item.title } /> }
-				keyExtractor={ item => item.id }
-			/>
-		</SafeAreaView>
+		<FlatList
+			data={ DATA } renderItem={ ({ item }) => <Item title={ item.title } /> } keyExtractor={ item => item.id }
+		/>
 	);
-};
+});

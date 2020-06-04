@@ -1,19 +1,46 @@
+import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
 import { IPost } from '@shared/types/post.interface';
 import React from 'react';
-import { TouchableHighlight, View } from 'react-native';
+import { ToastAndroid, TouchableHighlight, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import { Avatar, Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { PostScreen } from '../../../views/post/screens/post/PostScreen.component';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
 	post: IPost;
+	stackId: string;
 }
-const onClick = () => {
-	console.log('Clicked');
-};
 
-export const SlimPost: React.FC<SlimPostProps> = ({ post }) => {
+const onClick = () => {
+	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
+};
+export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
+	const onPostClick = () => {
+		Navigation.push(stackId, {
+			component: {
+				name: PostScreen.displayName as string,
+				options: {
+					topBar: {
+						title: {
+							text: 'Post',
+						},
+						subtitle: {
+							text: '',
+						},
+					},
+				},
+				passProps: {
+					post,
+					replies: mockedPosts,
+					stackId,
+				},
+			},
+		});
+	};
+
 	return (
-		<TouchableHighlight underlayColor={ Colors.grey200 } onPress={ onClick }>
+		<TouchableHighlight underlayColor={ Colors.grey200 } onPress={ onPostClick }>
 			<View style={ styles.root }>
 				<Avatar.Text style={ styles.avatar } size={ 48 } label="E" />
 				<View style={ styles.body }>

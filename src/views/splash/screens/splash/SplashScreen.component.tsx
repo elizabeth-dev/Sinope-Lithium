@@ -1,15 +1,15 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DrawerScreen } from '../../../dashboard/screens/drawer/DrawerScreen.component';
 import { DashboardScreen } from '../../../dashboard/screens/dashboard/DashboardScreen.component';
+import { DrawerScreen } from '../../../dashboard/screens/drawer/DrawerScreen.component';
 import { SplashScreenStyles as styles } from './SplashScreen.styles';
 
 export const SplashScreen: React.FC = () => {
 	Promise.all([
-			MaterialCommunityIcons.getImageSource('menu', 25), ,
+			MaterialCommunityIcons.getImageSource('menu', 25),
 		])
 		.then(([ menuIcon ]) => {
 			Navigation.setRoot({
@@ -22,6 +22,7 @@ export const SplashScreen: React.FC = () => {
 						},
 						center: {
 							stack: {
+								id: 'testComponentId',
 								children: [
 									{
 										component: {
@@ -55,9 +56,9 @@ export const SplashScreen: React.FC = () => {
 		});
 
 	return (
-		<SafeAreaView style={ styles.root }>
+		<View style={ styles.root }>
 			<Text>Splash</Text>
-		</SafeAreaView>
+		</View>
 	);
 };
 
