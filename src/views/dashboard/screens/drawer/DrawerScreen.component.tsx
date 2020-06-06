@@ -1,4 +1,3 @@
-import { AppScreens } from '@core/app.screens';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
@@ -26,4 +25,5 @@ export const DrawerScreen: React.FC = () => {
 	);
 };
 
-Navigation.registerComponent(AppScreens.DrawerScreen, () => gestureHandlerRootHOC(DrawerScreen));
+DrawerScreen.displayName = 'app.sinope.lithium.dashboard.DrawerScreen';
+Navigation.registerComponent(DrawerScreen.displayName, () => gestureHandlerRootHOC(DrawerScreen));

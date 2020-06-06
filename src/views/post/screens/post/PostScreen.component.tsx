@@ -1,4 +1,3 @@
-import { AppScreens } from '@core/app.screens';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { Post } from '@shared/components/post/Post.component';
 import { IPost } from '@shared/types/post.interface';
@@ -34,4 +33,5 @@ export const PostScreen: React.FC<PostScreenProps> = ({ post, replies, stackId }
 	);
 };
 
-Navigation.registerComponent(AppScreens.PostScreen, () => gestureHandlerRootHOC(PostScreen));
+PostScreen.displayName = 'app.sinope.lithium.post.PostScreen';
+Navigation.registerComponent(PostScreen.displayName, () => gestureHandlerRootHOC(PostScreen));
