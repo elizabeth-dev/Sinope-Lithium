@@ -1,3 +1,4 @@
+import { AppScreens } from '@core/app.screens';
 import React from 'react';
 import { View } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
@@ -8,10 +9,7 @@ export const LoginScreen: React.FC = () => {
 	const [ email, setEmail ] = React.useState('');
 	const [ password, setPassword ] = React.useState('');
 
-	return <View style={ styles.root }>
-
-	</View>;
+	return <View style={ styles.root } />;
 };
 
-LoginScreen.displayName = 'app.sinope.lithium.login.LoginScreen';
-Navigation.registerComponent(LoginScreen.displayName, () => gestureHandlerRootHOC(LoginScreen));
+Navigation.registerComponent(AppScreens.LoginScreen, () => gestureHandlerRootHOC(LoginScreen));

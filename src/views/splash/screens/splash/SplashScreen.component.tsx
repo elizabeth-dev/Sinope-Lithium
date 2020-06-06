@@ -1,23 +1,22 @@
+import { AppScreens } from '@core/app.screens';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DashboardScreen } from '../../../dashboard/screens/dashboard/DashboardScreen.component';
-import { DrawerScreen } from '../../../dashboard/screens/drawer/DrawerScreen.component';
 import { SplashScreenStyles as styles } from './SplashScreen.styles';
 
 export const SplashScreen: React.FC = () => {
 	Promise.all([
-			MaterialCommunityIcons.getImageSource('menu', 25),
-		])
+		MaterialCommunityIcons.getImageSource('menu', 25),
+	])
 		.then(([ menuIcon ]) => {
 			Navigation.setRoot({
 				root: {
 					sideMenu: {
 						left: {
 							component: {
-								name: DrawerScreen.displayName as string,
+								name: AppScreens.DrawerScreen,
 							},
 						},
 						center: {
@@ -26,7 +25,7 @@ export const SplashScreen: React.FC = () => {
 								children: [
 									{
 										component: {
-											name: DashboardScreen.displayName as string,
+											name: AppScreens.DashboardScreen,
 											options: {
 												topBar: {
 													leftButtons: [
@@ -62,5 +61,4 @@ export const SplashScreen: React.FC = () => {
 	);
 };
 
-SplashScreen.displayName = 'app.sinope.lithium.splash.SplashScreen';
-Navigation.registerComponent(SplashScreen.displayName, () => gestureHandlerRootHOC(SplashScreen));
+Navigation.registerComponent(AppScreens.SplashScreen, () => gestureHandlerRootHOC(SplashScreen));

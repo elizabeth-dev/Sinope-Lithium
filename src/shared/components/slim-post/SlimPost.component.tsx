@@ -1,10 +1,10 @@
+import { AppScreens } from '@core/app.screens';
 import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
 import { IPost } from '@shared/types/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Avatar, Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
-import { PostScreen } from '../../../views/post/screens/post/PostScreen.component';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
@@ -19,7 +19,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 	const onPostClick = () => {
 		Navigation.push(stackId, {
 			component: {
-				name: PostScreen.displayName as string,
+				name: AppScreens.PostScreen,
 				options: {
 					topBar: {
 						title: {

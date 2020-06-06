@@ -1,0 +1,14 @@
+{
+    "react-native.android.runArguments.device": [
+        "--variant",
+        "debug",
+        "--appIdSuffix",
+        "adebug"
+    ],
+    "react-native.android.runArguments.simulator": [
+        "--variant",
+        "debug",
+        "--appIdSuffix",
+        "adebug"
+    ]
+}

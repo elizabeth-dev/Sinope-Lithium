@@ -135,19 +135,9 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.0.${versionCode}"
     }
-    productFlavors {
-        dev {
-            applicationId "app.sinope.lithium.dev"
-            resValue "string", "build_config_package", "app.sinope.lithium"
-        }
-        beta {
-            applicationId "app.sinope.lithium.beta"
-            resValue "string", "build_config_package", "app.sinope.lithium"
-        }
-        prod {}
-    }
+    productFlavors {}
     splits {
         abi {
             reset()
@@ -166,7 +156,19 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+            // resValue "string", "build_config_package", "${applicationIdSuffix}"
+
             signingConfig signingConfigs.debug
+        }
+        rc {
+            applicationIdSuffix '.rc'
+            versionNameSuffix '-rc'
+
+            signingConfig signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

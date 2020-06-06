@@ -1,7 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { Navigation } from 'react-native-navigation';
 import { Avatar, Colors, Divider, Subheading, Title } from 'react-native-paper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
@@ -16,7 +14,7 @@ export const DrawerHeader: React.FC = () => {
 				<View style={ styles.user }>
 					<View style={ styles.userInfo }>
 						<Title>Elizabeth</Title>
-						<Subheading style={{color: Colors.grey600}}>@Elizabeth</Subheading>
+						<Subheading style={{ color: Colors.grey600 }}>@Elizabeth</Subheading>
 					</View>
 					<MaterialIcon name="chevron-down" size={24} color={Colors.grey600} />
 				</View>
@@ -25,6 +23,3 @@ export const DrawerHeader: React.FC = () => {
 		</>
 	);
 };
-
-DrawerHeader.displayName = '.DrawerHeader';
-Navigation.registerComponent(DrawerHeader.displayName, () => gestureHandlerRootHOC(DrawerHeader));
