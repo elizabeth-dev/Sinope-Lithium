@@ -1,9 +1,10 @@
 import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
+import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
 import { IPost } from '@shared/types/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Avatar, Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
 import { PostScreen } from '../../../views/post/screens/post/PostScreen.component';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
@@ -42,7 +43,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 	return (
 		<TouchableHighlight underlayColor={ Colors.grey200 } onPress={ onPostClick }>
 			<View style={ styles.root }>
-				<Avatar.Text style={ styles.avatar } size={ 48 } label="E" />
+				<ProfileAvatar style={ styles.avatar } label="E" size={48} stackId={stackId} profileId="test" />
 				<View style={ styles.body }>
 					<View style={ styles.header }>
 						<View style={ styles.userData }>

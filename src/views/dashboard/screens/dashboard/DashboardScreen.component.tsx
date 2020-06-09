@@ -4,15 +4,12 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation, NavigationButtonPressedEvent, NavigationComponentProps } from 'react-native-navigation';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { Colors } from 'react-native-paper';
-import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
+import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { SceneRoute } from '../../../../shared/types/scene-route.type';
 import { Home } from '../../components/home/Home.component';
 import { Notifications } from '../../components/notifications/Notifications.component';
-
 import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
-
-type SceneRoute = Route & { icon: string };
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -33,24 +30,24 @@ export const DashboardScreen: React.FC<NavigationComponentProps> = ({ componentI
 
 	const renderScene = ({ route }: SceneRendererProps & { route: SceneRoute }) => {
 		switch (route.key) {
-			case 'home':
-				return <Home stackId={ componentId } />;
-			case 'notifications':
-				return <Notifications />;
-			default:
-				return null;
+		case 'home':
+			return <Home stackId={ componentId } />;
+		case 'notifications':
+			return <Notifications />;
+		default:
+			return null;
 		}
 	};
 
 	React.useEffect(() => {
 		const listener: NavigationComponentListener = {
 			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
-				if (event.buttonId === 'DASHBOARD_MENU') {
+				if (event.buttonId === 'DASHBOARD_MENU')
 					Navigation.mergeOptions(
 						componentId,
 						{ sideMenu: { left: { visible: true } } },
 					);
-				}
+
 			},
 		};
 

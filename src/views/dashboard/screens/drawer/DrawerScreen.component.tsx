@@ -8,9 +8,7 @@ import { DrawerScreenStyles as styles } from './DrawerScreen.styles';
 
 export const DrawerScreen: React.FC = () => {
 	const items = [
-		{ key: 'home', label: 'Item 1', icon: 'home' },
-		{ key: 'notifications', label: 'Item 2', icon: 'bell' },
-		{ key: 'placeholder', label: 'Item 3' },
+		{ key: 'settings', label: 'Settings', icon: 'settings' },
 	];
 
 	return (

@@ -1,15 +1,24 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const DrawerHeaderStyles = StyleSheet.create({
 	root: {
-		marginVertical: 8,
-		marginHorizontal: 16,
+		backgroundColor: '#ffffff',
+		paddingVertical: 8,
+		paddingHorizontal: 16,
 	},
 	avatarBox: {
 		flexDirection: 'row',
 		flex: 1,
 		paddingTop: 8,
-		paddingBottom: 12
+		paddingBottom: 12,
+	},
+	otherProfiles: {
+		flexDirection: 'row',
+		marginBottom: 'auto',
+		marginLeft: 'auto',
+	},
+	otherProfileAvatar: {
+		marginHorizontal: 8,
 	},
 	user: {
 		flexDirection: 'row',
