@@ -1,20 +1,16 @@
-import { PostActions } from '@core/actions/post.actions';
-import { Post } from '@shared/types/post.interface';
+import { combineReducers } from 'redux';
+import { pendingPostsReducer, PendingPostsState } from './post/pendingPosts.reducer';
+import { postsByIdReducer, PostsByIdState } from './post/postsById.reducer';
+import { postsByProfileReducer, PostsByProfileState } from './post/postsByProfile.reducer';
 
 export interface PostState {
-	postsById: { [id: string]: Post };
+	postsById: PostsByIdState;
+	postsByProfile: PostsByProfileState;
+	pendingPosts: PendingPostsState;
 }
 
-const initialState: PostState = {
-	postsById: {},
-};
-
-export function postReducer(
-	state = initialState,
-	action: PostActions,
-): PostState {
-	switch (action.type) {
-		default:
-			return state;
-	}
-}
+export const postReducer = combineReducers<PostState>({
+	postsById: postsByIdReducer,
+	postsByProfile: postsByProfileReducer,
+	pendingPosts: pendingPostsReducer,
+});

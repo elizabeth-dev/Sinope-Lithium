@@ -1,15 +1,74 @@
-import { INewPost } from '@shared/types/post.interface';
+import { INewPost, IPost } from '@shared/types/entities/post.interface';
 
-export const CreatePostAction = 'post/AddPost';
+export const RequestPostAction = 'post/RequestPostAction';
 
-export interface ICreatePostAction {
-	type: typeof CreatePostAction;
+export interface IRequestPostAction {
+	type: typeof RequestPostAction;
 	payload: {
-		newPost: INewPost;
-	}
+		post: string;
+	};
 }
 
-export const DeletePostAction = 'post/DeletePost';
+export const ReceivePostsAction = 'post/ReceivePostsAction';
+
+export interface IReceivePostsAction {
+	type: typeof ReceivePostsAction;
+	payload: {
+		posts: IPost[];
+		receivedAt: number;
+	};
+}
+
+export const RequestProfilePostsAction = 'post/RequestProfilePostsAction';
+
+export interface IRequestProfilePostsAction {
+	type: typeof RequestProfilePostsAction;
+	payload: {
+		profile: string;
+	};
+}
+
+export const ReceiveProfilePostsAction = 'post/ReceiveProfilePostsAction';
+
+export interface IReceiveProfilePostsAction {
+	type: typeof ReceiveProfilePostsAction;
+	payload: {
+		profile: string;
+		posts: IPost[];
+		receivedAt: number;
+	};
+}
+
+export const SendPostAction = 'post/SendPostAction';
+
+export interface ISendPostAction {
+	type: typeof SendPostAction;
+	payload: {
+		newPost: INewPost;
+	};
+}
+
+export const SentPostAction = 'post/SentPostAction';
+
+export interface ISentPostAction {
+	type: typeof SentPostAction;
+	payload: {
+		post: IPost;
+		receivedAt: number;
+		tmpId: string;
+	};
+}
+
+export const FailedSentPostAction = 'post/FailedSentPostAction';
+
+export interface IFailedSentPostAction {
+	type: typeof FailedSentPostAction;
+	payload: {
+		tmpId: string;
+	};
+}
+
+export const DeletePostAction = 'post/DeletePostAction';
 
 export interface IDeletePostAction {
 	type: typeof DeletePostAction;
@@ -18,16 +77,7 @@ export interface IDeletePostAction {
 	};
 }
 
-export const GetPostAction = 'post/GetPostAction';
-
-export interface IGetPostAction {
-	type: typeof GetPostAction;
-	payload: {
-		post: string;
-	};
-}
-
-export const LikePostAction = 'post/LikePost';
+export const LikePostAction = 'post/LikePostAction';
 
 export interface ILikePostAction {
 	type: typeof LikePostAction;
@@ -36,7 +86,7 @@ export interface ILikePostAction {
 	};
 }
 
-export const UnlikePostAction = 'post/UnlikePost';
+export const UnlikePostAction = 'post/UnlikePostAction';
 
 export interface IUnlikePostAction {
 	type: typeof UnlikePostAction;
@@ -45,4 +95,14 @@ export interface IUnlikePostAction {
 	};
 }
 
-export type PostActions = ICreatePostAction | IGetPostAction | IDeletePostAction | ILikePostAction | IUnlikePostAction;
+export type PostActions =
+	| ISendPostAction
+	| IRequestPostAction
+	| IDeletePostAction
+	| ILikePostAction
+	| IUnlikePostAction
+	| IRequestProfilePostsAction
+	| IReceivePostsAction
+	| IReceiveProfilePostsAction
+	| ISentPostAction
+	| IFailedSentPostAction;

@@ -10,4 +10,6 @@ export interface IPost {
 export interface INewPost {
 	content: string;
 	question?: string;
+	profile: string;
+	tmpId: string;
 }

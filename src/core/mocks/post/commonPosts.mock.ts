@@ -1,4 +1,4 @@
-import { IPost } from '@shared/types/post.interface';
+import { IPost } from '@shared/types/entities/post.interface';
 
 export const mockedPosts: IPost[] = [
 	{
