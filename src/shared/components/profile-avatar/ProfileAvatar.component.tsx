@@ -1,8 +1,8 @@
+import { AppScreens } from '@core/app.screens';
 import React from 'react';
-import { StyleSheet, TouchableNativeFeedback, StyleProp, ViewStyle, View } from 'react-native';
+import { StyleProp, TouchableNativeFeedback, View, ViewStyle } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Avatar } from 'react-native-paper';
-import { ProfileScreen } from '../../../views/profile/screens/profile/ProfileScreen.component';
 
 export interface ProfileAvatarProps {
 	profileId: string;
@@ -22,7 +22,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
 	const navigate = () => {
 		Navigation.push(componentId, {
 			component: {
-				name: ProfileScreen.displayName as string,
+				name: AppScreens.ProfileScreen,
 				passProps: {
 					profileId,
 				},

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation, NavigationButtonPressedEvent, NavigationComponentProps } from 'react-native-navigation';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { Colors } from 'react-native-paper';
@@ -14,28 +13,30 @@ import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
 const initialLayout = { width: Dimensions.get('window').width };
 
 // TODO: Check color prop capabilities
-const renderIcon = ({ route, focused }: { route: SceneRoute, focused: boolean, color: string }) =>
-	<MaterialIcon name={ route.icon } size={ 26 } color={ focused ? Colors.purple400 : undefined } />;
+const renderIcon = ({ route, focused }: { route: SceneRoute; focused: boolean; color: string }) => (
+	<MaterialIcon name={route.icon} size={26} color={focused ? Colors.purple400 : undefined} />
+);
 
-const renderTabBar = (sceneProps: SceneRendererProps & { navigationState: NavigationState<SceneRoute> }) =>
-	<TabBar { ...sceneProps } style={ styles.tabBar } renderIcon={ renderIcon } />;
+const renderTabBar = (sceneProps: SceneRendererProps & { navigationState: NavigationState<SceneRoute> }) => (
+	<TabBar {...sceneProps} style={styles.tabBar} renderIcon={renderIcon} />
+);
 
 export const DashboardScreen: React.FC<NavigationComponentProps> = ({ componentId }) => {
-	const [ index, setIndex ] = React.useState(0);
+	const [index, setIndex] = React.useState(0);
 
-	const [ routes ] = React.useState<SceneRoute[]>([
+	const [routes] = React.useState<SceneRoute[]>([
 		{ key: 'home', accessibilityLabel: 'Home', icon: 'home' },
 		{ key: 'notifications', accessibilityLabel: 'Notifications', icon: 'bell' },
 	]);
 
 	const renderScene = ({ route }: SceneRendererProps & { route: SceneRoute }) => {
 		switch (route.key) {
-		case 'home':
-			return <Home stackId={ componentId } />;
-		case 'notifications':
-			return <Notifications />;
-		default:
-			return null;
+			case 'home':
+				return <Home stackId={componentId} />;
+			case 'notifications':
+				return <Notifications />;
+			default:
+				return null;
 		}
 	};
 
@@ -43,11 +44,7 @@ export const DashboardScreen: React.FC<NavigationComponentProps> = ({ componentI
 		const listener: NavigationComponentListener = {
 			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
 				if (event.buttonId === 'DASHBOARD_MENU')
-					Navigation.mergeOptions(
-						componentId,
-						{ sideMenu: { left: { visible: true } } },
-					);
-
+					Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } });
 			},
 		};
 
@@ -55,18 +52,15 @@ export const DashboardScreen: React.FC<NavigationComponentProps> = ({ componentI
 		return () => {
 			subscription.remove();
 		};
-	}, [ componentId ]);
+	}, [componentId]);
 
 	return (
 		<TabView
-			navigationState={ { index, routes } }
-			renderScene={ renderScene }
-			onIndexChange={ setIndex }
-			initialLayout={ initialLayout }
-			renderTabBar={ renderTabBar }
+			navigationState={{ index, routes }}
+			renderScene={renderScene}
+			onIndexChange={setIndex}
+			initialLayout={initialLayout}
+			renderTabBar={renderTabBar}
 		/>
 	);
 };
-
-DashboardScreen.displayName = 'app.sinope.lithium.dashboard.DashboardScreen';
-Navigation.registerComponent(DashboardScreen.displayName, () => gestureHandlerRootHOC(DashboardScreen));
