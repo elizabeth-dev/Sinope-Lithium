@@ -1,4 +1,4 @@
-import { IPost } from '@shared/types/post.interface';
+import { IPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, View } from 'react-native';
 import { Avatar, Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';

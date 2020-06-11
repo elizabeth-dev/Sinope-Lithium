@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Animated, LayoutChangeEvent } from 'react-native';
-import { Avatar, Paragraph, Subheading, Title, Text } from 'react-native-paper';
+import { Animated, LayoutChangeEvent, View } from 'react-native';
+import { Avatar, Paragraph, Subheading, Text, Title } from 'react-native-paper';
 import { ProfileHeaderStyles as styles } from './ProfileHeader.styles';
 
 export interface ProfileHeaderProps {

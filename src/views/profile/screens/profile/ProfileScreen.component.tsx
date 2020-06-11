@@ -1,11 +1,10 @@
+import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
+import { mockedProfiles } from '@core/mocks/profile/commonProfiles.mock';
+import { PostList } from '@shared/components/post-list/PostList.component';
 import React from 'react';
-import { Dimensions, ToastAndroid, View, Animated } from 'react-native';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-import { Navigation, NavigationComponentProps } from 'react-native-navigation';
+import { Animated, Dimensions, ToastAndroid, View } from 'react-native';
+import { NavigationComponentProps } from 'react-native-navigation';
 import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
-import { mockedPosts } from '../../../../core/mocks/post/commonPosts.mock';
-import { mockedProfiles } from '../../../../core/mocks/profile/commonProfiles.mock';
-import { PostList } from '../../../../shared/components/post-list/PostList.component';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 
@@ -40,11 +39,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 		outputRange: [headerHeight, 0],
 		extrapolateRight: 'clamp',
 	});
-	// const headerY = React.useRef(Animated.multiply(Animated.diffClamp(scroll, 0, 256), -1)).current;
-	//const contentY = Animated.add(scroll, headerY);
 
-	const renderScene = ({ route }: SceneRendererProps & { route: Route }) => {
-		switch (route.key) {
+	const renderScene = (props: SceneRendererProps & { route: Route }) => {
+		switch (props.route.key) {
 			case 'posts':
 				return (
 					<PostList
@@ -56,6 +53,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 							useNativeDriver: true,
 						})}
 						containerPaddingTop={headerHeight + 48}
+						progressViewOffset={headerHeight + 48}
 					/>
 				);
 			default:
@@ -96,6 +94,3 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 		</View>
 	);
 };
-
-ProfileScreen.displayName = 'app.sinope.lithium.profile.ProfileScreen';
-Navigation.registerComponent(ProfileScreen.displayName, () => gestureHandlerRootHOC(ProfileScreen));

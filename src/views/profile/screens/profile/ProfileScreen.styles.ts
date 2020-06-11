@@ -6,7 +6,7 @@ export const ProfileScreenStyles = StyleSheet.create({
 	tabBarContainer: {
 		position: 'absolute',
 		width: '100%',
-		zIndex: 1,
+		zIndex: 10,
 	},
 	tabBar: {
 		backgroundColor: '#ffffff',
