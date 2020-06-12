@@ -5,4 +5,5 @@ export const AppScreens = {
 	LoginScreen: 'app.sinope.lithium.login.LoginScreen',
 	PostScreen: 'app.sinope.lithium.post.PostScreen',
 	ProfileScreen: 'app.sinope.lithium.profile.ProfileScreen',
+	ComposeScreen: 'app.sinope.lithium.compose.ComposeScreen',
 };
