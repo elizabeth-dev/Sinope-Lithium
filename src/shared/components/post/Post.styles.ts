@@ -3,6 +3,11 @@ import { Colors } from 'react-native-paper';
 
 export const PostStyles = StyleSheet.create({
 	root: {
+		position: 'absolute',
+		backgroundColor: '#ffffff',
+		width: '100%',
+	},
+	card: {
 		paddingRight: 8,
 		paddingLeft: 12,
 	},

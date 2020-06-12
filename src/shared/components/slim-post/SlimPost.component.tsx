@@ -29,6 +29,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 						subtitle: {
 							text: '',
 						},
+						elevation: 2, // Default
 					},
 				},
 				passProps: {

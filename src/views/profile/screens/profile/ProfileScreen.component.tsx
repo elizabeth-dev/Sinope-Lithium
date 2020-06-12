@@ -40,6 +40,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 		extrapolateRight: 'clamp',
 	});
 
+	// Fix TabBar padding
 	const renderScene = (props: SceneRendererProps & { route: Route }) => {
 		switch (props.route.key) {
 			case 'posts':

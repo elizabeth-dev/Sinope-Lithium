@@ -6,8 +6,8 @@ import { Divider } from 'react-native-paper';
 
 interface PostListProps {
 	posts: IPost[];
-	onRefresh: () => void;
-	refreshing: boolean;
+	onRefresh?: () => void;
+	refreshing?: boolean;
 	header?: React.ReactElement;
 	stackId: string;
 	onScroll?: (ev: NativeSyntheticEvent<NativeScrollEvent>) => void;
