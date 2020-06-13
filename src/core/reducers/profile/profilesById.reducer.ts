@@ -1,4 +1,4 @@
-import { ProfileActions, RequestProfileAction, ReceiveProfilesAction } from '@core/actions/profile.actions';
+import { ProfileActionsDto, RequestProfileAction, ReceiveProfilesAction } from '@core/actions/profile.actions';
 import { mockedProfiles } from '@core/mocks/profile/commonProfiles.mock';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { FetchFields } from '@shared/types/fetchFields.interface';
@@ -12,7 +12,7 @@ const initialState = Object.values(mockedProfiles).reduce(
 	{} as ProfilesByIdState,
 );
 
-export function profilesByIdReducer(state = initialState, action: ProfileActions): ProfilesByIdState {
+export function profilesByIdReducer(state = initialState, action: ProfileActionsDto): ProfilesByIdState {
 	switch (action.type) {
 		case RequestProfileAction:
 			return { ...state, [action.payload.profile]: { ...state[action.payload.profile], isFetching: true } };

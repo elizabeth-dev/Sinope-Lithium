@@ -2,7 +2,7 @@ import {
 	RequestProfilePostsAction,
 	ReceiveProfilePostsAction,
 	SentPostAction,
-	PostActions,
+	PostActionsDto,
 } from '@core/actions/post.actions';
 import { FetchFields } from '@shared/types/fetchFields.interface';
 import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
@@ -14,14 +14,16 @@ export type PostsByProfileState = {
 const initialState: PostsByProfileState = mockedPosts.reduce(
 	(acc, post) =>
 		Object.assign(acc, {
-			isFetching: false,
-			receivedAt: Date.now(),
-			[post.author]: { posts: [...acc[post.author].posts, post.id] },
+			[post.author]: {
+				posts: [...(acc[post.author] ? acc[post.author].posts : []), post.id],
+				isFetching: false,
+				receivedAt: Date.now(),
+			},
 		}),
 	{} as PostsByProfileState,
 );
 
-export function postsByProfileReducer(state = initialState, action: PostActions): PostsByProfileState {
+export function postsByProfileReducer(state = initialState, action: PostActionsDto): PostsByProfileState {
 	switch (action.type) {
 		case RequestProfilePostsAction:
 			return {

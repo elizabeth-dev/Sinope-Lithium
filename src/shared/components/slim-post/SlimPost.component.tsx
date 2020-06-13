@@ -1,11 +1,14 @@
-import { AppScreens } from '@core/app.screens';
-import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
+import { PostActions } from '@core/actions/post.actions';
 import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
+import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
+import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { IPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
@@ -17,34 +20,17 @@ const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 };
 export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
-	const onPostClick = () => {
-		Navigation.push(stackId, {
-			component: {
-				name: AppScreens.PostScreen,
-				options: {
-					topBar: {
-						title: {
-							text: 'Post',
-						},
-						subtitle: {
-							text: '',
-						},
-						elevation: 2, // Default
-					},
-				},
-				passProps: {
-					post,
-					replies: mockedPosts,
-					stackId,
-				},
-			},
-		});
-	};
+	const dispatcher = useDispatch();
+
+	const onPostClick = () => Navigation.push(stackId, postScreenLayer(post.id));
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.author));
+	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id));
 
 	return (
 		<TouchableHighlight underlayColor={Colors.grey200} onPress={onPostClick}>
 			<View style={styles.root}>
-				<ProfileAvatar style={styles.avatar} label="E" size={48} stackId={stackId} profileId="test" />
+				<ProfileAvatar style={styles.avatar} label="E" size={48} onPress={onAvatarClick} />
 				<View style={styles.body}>
 					<View style={styles.header}>
 						<View style={styles.userData}>
@@ -61,13 +47,13 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 						<IconButton
 							icon="message-reply-text"
 							style={[styles.actionButton, styles.replyButton]}
-							onPress={onClick}
+							onPress={onReplyClick}
 							size={18}
 							color={Colors.grey600}
 						/>
 						<IconButton
 							icon="star-circle"
-							onPress={onClick}
+							onPress={onLikeClick}
 							size={18}
 							color={Colors.grey600}
 							style={styles.actionButton}

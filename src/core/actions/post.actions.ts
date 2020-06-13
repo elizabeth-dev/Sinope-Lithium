@@ -48,6 +48,8 @@ export interface ISendPostAction {
 	};
 }
 
+const sendPostFn = (newPost: INewPost): ISendPostAction => ({ type: SendPostAction, payload: { newPost } });
+
 export const SentPostAction = 'post/SentPostAction';
 
 export interface ISentPostAction {
@@ -58,6 +60,11 @@ export interface ISentPostAction {
 		tmpId: string;
 	};
 }
+
+const sentPostFn = (post: IPost, receivedAt: number, tmpId: string): ISentPostAction => ({
+	type: SentPostAction,
+	payload: { post, receivedAt, tmpId },
+});
 
 export const FailedSentPostAction = 'post/FailedSentPostAction';
 
@@ -86,6 +93,8 @@ export interface ILikePostAction {
 	};
 }
 
+const likePostFn = (post: string): ILikePostAction => ({ type: LikePostAction, payload: { post } });
+
 export const UnlikePostAction = 'post/UnlikePostAction';
 
 export interface IUnlikePostAction {
@@ -95,7 +104,7 @@ export interface IUnlikePostAction {
 	};
 }
 
-export type PostActions =
+export type PostActionsDto =
 	| ISendPostAction
 	| IRequestPostAction
 	| IDeletePostAction
@@ -106,3 +115,5 @@ export type PostActions =
 	| IReceiveProfilePostsAction
 	| ISentPostAction
 	| IFailedSentPostAction;
+
+export const PostActions = { send: sendPostFn, sent: sentPostFn, like: likePostFn };

@@ -1,10 +1,10 @@
-import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
-import { mockedProfiles } from '@core/mocks/profile/commonProfiles.mock';
+import { AppState } from '@core/app.store';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import React from 'react';
 import { Animated, Dimensions, ToastAndroid, View } from 'react-native';
 import { NavigationComponentProps } from 'react-native-navigation';
 import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
+import { useSelector } from 'react-redux';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 
@@ -19,14 +19,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 	const [routes] = React.useState<Route[]>([{ key: 'posts', title: 'Posts' }]);
 	const [headerHeight, setHeaderHeight] = React.useState(0);
 	const [refreshing, setRefreshing] = React.useState(false);
+	const { name, tag, description } = useSelector((state: AppState) => state.profile.profilesById[profileId].profile);
+	const posts = useSelector((state: AppState) =>
+		state.post.postsByProfile[profileId].posts.map((postId) => state.post.postsById[postId].post),
+	);
 
 	const onRefresh = () => {
 		setRefreshing(true);
 		ToastAndroid.show('Refreshing...', ToastAndroid.SHORT);
 		setTimeout(() => setRefreshing(false), 3000);
 	};
-
-	const { name, tag, description } = mockedProfiles[profileId];
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const headerY = scroll.interpolate({
@@ -46,7 +48,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 			case 'posts':
 				return (
 					<PostList
-						posts={mockedPosts}
+						posts={posts}
 						stackId={componentId}
 						onRefresh={onRefresh}
 						refreshing={refreshing}

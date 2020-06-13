@@ -1,24 +1,37 @@
+import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { IPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
-import { Avatar, Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { Navigation } from 'react-native-navigation';
+import { Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { ProfileAvatar } from '../profile-avatar/ProfileAvatar.component';
 import { PostStyles as styles } from './Post.styles';
+import { useDispatch } from 'react-redux';
+import { PostActions } from '@core/actions/post.actions';
+import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 
 export interface PostProps {
 	post: IPost;
+	stackId: string;
 	mainPostY: number;
 	onLayout: (ev: LayoutChangeEvent) => void;
 }
 
-export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout }) => {
+export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout, stackId }) => {
+	const dispatcher = useDispatch();
+
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 	};
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.author));
+	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id));
+
 	return (
 		<Animated.View style={[styles.root, { transform: [{ translateY: mainPostY }] }]} onLayout={onLayout}>
 			<View style={styles.card}>
 				<View style={styles.header}>
-					<Avatar.Text size={48} label="E" style={styles.avatar} />
+					<ProfileAvatar style={styles.avatar} label="E" size={48} onPress={onAvatarClick} />
 					<View style={styles.userData}>
 						<Title style={styles.name}>Elizabeth</Title>
 						<Subheading style={styles.username}>@elizabeth</Subheading>
@@ -33,7 +46,7 @@ export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout }) => {
 				<View style={styles.actions}>
 					<Button
 						icon="message-reply-text"
-						onPress={onClick}
+						onPress={onReplyClick}
 						labelStyle={styles.actionButtonLabel}
 						contentStyle={styles.actionButton}
 						style={styles.replyButton}>
@@ -41,7 +54,7 @@ export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout }) => {
 					</Button>
 					<Button
 						icon="star-circle"
-						onPress={onClick}
+						onPress={onLikeClick}
 						labelStyle={styles.actionButtonLabel}
 						contentStyle={styles.actionButton}>
 						{post.likes.length}

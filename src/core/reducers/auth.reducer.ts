@@ -1,26 +1,33 @@
-import { AuthActions, LoginFailureAction, LoginSuccessAction, LogoutAction } from '@core/actions/auth.actions';
+import {
+	AuthActionsDto,
+	LoginFailureAction,
+	LoginSuccessAction,
+	LogoutAction,
+	LoginAction,
+} from '@core/actions/auth.actions';
 
 export interface AuthState {
 	loggedIn: boolean;
 	token?: string;
+	loggingIn: boolean;
 }
 
 const initialState: AuthState = {
 	loggedIn: false,
 	token: undefined,
+	loggingIn: false,
 };
 
-export function authReducer(
-	state = initialState,
-	action: AuthActions,
-): AuthState {
+export function authReducer(state = initialState, action: AuthActionsDto): AuthState {
 	switch (action.type) {
+		case LoginAction:
+			return { ...state, loggingIn: true };
 		case LoginSuccessAction:
-			return { loggedIn: true, token: action.payload.token };
+			return { ...state, loggedIn: true, token: action.payload.token, loggingIn: false };
 		case LoginFailureAction:
-			return { loggedIn: false, token: undefined };
+			return { ...state, loggingIn: false };
 		case LogoutAction:
-			return { loggedIn: false, token: undefined };
+			return { ...state, loggedIn: false, token: undefined };
 		default:
 			return state;
 	}

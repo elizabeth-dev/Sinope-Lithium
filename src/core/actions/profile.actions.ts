@@ -19,4 +19,20 @@ export interface IReceiveProfilesAction {
 	};
 }
 
-export type ProfileActions = IRequestProfileAction | IReceiveProfilesAction;
+export const SwitchProfileAction = 'profile/SwitchProfileAction';
+
+export interface ISwitchProfileAction {
+	type: typeof SwitchProfileAction;
+	payload: {
+		profileId: string;
+	};
+}
+
+const switchProfileFn = (profileId: string): ISwitchProfileAction => ({
+	type: SwitchProfileAction,
+	payload: { profileId },
+});
+
+export type ProfileActionsDto = IRequestProfileAction | IReceiveProfilesAction | ISwitchProfileAction;
+
+export const ProfileActions = { switch: switchProfileFn };

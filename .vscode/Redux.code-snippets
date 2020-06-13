@@ -27,7 +27,10 @@
 			"\tpayload: {",
 			"\t\t$0",
 			"\t};",
-			"}"
+			"}",
+			"",
+			"const $2Fn = (): I$1Action => ({ type: $1Action, payload: {} });",
+			"",
 		]
 	}
 }

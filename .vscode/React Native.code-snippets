@@ -27,9 +27,9 @@
 			""
 		]
 	},
-	"New Screen": {
+	"New Component": {
 		"scope": "typescriptreact",
-		"prefix": "rnsc",
+		"prefix": "rnc",
 		"body": [
 			"import React from 'react';",
 			"import { ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Styles as styles } from './${TM_FILENAME_BASE/(.*)\\..+?$/$1/}.styles';",
@@ -42,14 +42,29 @@
 			""
 		]
 	},
-	"New Component": {
+	"New Component model": {
 		"scope": "typescriptreact",
-		"prefix": "rnc",
+		"prefix": "rnm",
 		"body": [
 			"import React from 'react';",
 			"import { ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Styles as styles } from './${TM_FILENAME_BASE/(.*)\\..+?$/$1/}.styles';",
 			"",
-			"export const ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}: React.FC = () => {",
+			"export const ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Model: React.FC = () => {",
+			"\treturn (",
+			"\t\t$0",
+			"\t);",
+			"}",
+			""
+		]
+	},
+	"New Component store": {
+		"scope": "typescriptreact",
+		"prefix": "rnrx",
+		"body": [
+			"import React from 'react';",
+			"import { ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Styles as styles } from './${TM_FILENAME_BASE/(.*)\\..+?$/$1/}.styles';",
+			"",
+			"export const ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Model: React.FC = () => {",
 			"\treturn (",
 			"\t\t$0",
 			"\t);",

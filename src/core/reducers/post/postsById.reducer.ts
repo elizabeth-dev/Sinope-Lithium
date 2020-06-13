@@ -1,5 +1,5 @@
 import {
-	PostActions,
+	PostActionsDto,
 	RequestPostAction,
 	ReceivePostsAction,
 	ReceiveProfilePostsAction,
@@ -18,7 +18,7 @@ const initialState: PostsByIdState = mockedPosts.reduce(
 	{} as PostsByIdState,
 );
 
-export function postsByIdReducer(state = initialState, action: PostActions): PostsByIdState {
+export function postsByIdReducer(state = initialState, action: PostActionsDto): PostsByIdState {
 	switch (action.type) {
 		case RequestPostAction:
 			return {
