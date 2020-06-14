@@ -5189,10 +5189,10 @@ react-native-gesture-handler@^1.6.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-navigation@^6.4.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-6.7.0.tgz#37f1449ddd473c5f4e612f2847d509f44d3a3287"
-  integrity sha512-nt5qYxS/Gt3YqM5gs9GoKYB906su7BV2PP0SLrlAwRK0ar9211T55jIO49Uc+m5zQhzxlSCswA0Xv0tOkz2fNQ==
+react-native-navigation@^6.7.3:
+  version "6.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-6.7.3.tgz#db98a96bd3b92e1827d57a9453d9453b043824af"
+  integrity sha512-n5GnAhCaTFlTRo7qfmd01fw6I6wPubA1+qTtvlEjMRUP+mobM8ppPrWJpKOh2bfy+u3HUsMsGKbAuBOcsUt0YQ==
   dependencies:
     hoist-non-react-statics "3.x.x"
     lodash "4.17.x"

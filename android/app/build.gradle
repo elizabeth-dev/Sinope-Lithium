@@ -160,6 +160,8 @@ android {
             signingConfig signingConfigs.debug
         }
         rc {
+            matchingFallbacks = ['release']
+            
             applicationIdSuffix '.rc'
             versionNameSuffix '-rc'
 
