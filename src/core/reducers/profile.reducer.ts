@@ -1,13 +1,10 @@
 import { combineReducers } from 'redux';
-import { profilesByIdReducer, ProfilesByIdState } from './profile/profilesById.reducer';
-import { SelfProfilesState, selfProfilesReducer } from './profile/currentProfile.reducer';
+import { selfProfilesReducer } from './profile/selfProfile.reducer';
+import { profilesByIdReducer } from './profile/profilesById.reducer';
 
-export interface ProfileState {
-	profilesById: ProfilesByIdState;
-	self: SelfProfilesState;
-}
+export type ProfileState = ReturnType<typeof profileReducer>;
 
-export const profileReducer = combineReducers<ProfileState>({
+export const profileReducer = combineReducers({
 	profilesById: profilesByIdReducer,
 	self: selfProfilesReducer,
 });

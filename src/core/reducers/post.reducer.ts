@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux';
-import { pendingPostsReducer, PendingPostsState } from './post/pendingPosts.reducer';
-import { postsByIdReducer, PostsByIdState } from './post/postsById.reducer';
-import { postsByProfileReducer, PostsByProfileState } from './post/postsByProfile.reducer';
+import { pendingPostsReducer } from './post/pendingPosts.reducer';
+import { postsByIdReducer } from './post/postsById.reducer';
+import { postsByProfileReducer } from './post/postsByProfile.reducer';
 
-export interface PostState {
-	postsById: PostsByIdState;
-	postsByProfile: PostsByProfileState;
-	pendingPosts: PendingPostsState;
-}
+export type PostState = ReturnType<typeof postReducer>;
 
-export const postReducer = combineReducers<PostState>({
+export const postReducer = combineReducers({
 	postsById: postsByIdReducer,
 	postsByProfile: postsByProfileReducer,
 	pendingPosts: pendingPostsReducer,
