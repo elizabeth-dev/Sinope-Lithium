@@ -128,16 +128,24 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
+        // Android Gradle Plugin v4.0.0
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
         applicationId "app.sinope.lithium"
+
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+
         versionCode 1
         versionName "0.0.0.${versionCode}"
+
+        // Android Gradle Plugin v4.0.0
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -221,6 +229,9 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
+
+    // Android Gradle Plugin v4.0.0
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
