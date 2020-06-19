@@ -9,6 +9,7 @@ buildscript {
 
         kotlin_version = "1.3.72"
 
+        // react-native-navigation
         RNNKotlinVersion = "${kotlin_version}"
         RNNKotlinStdlib = "kotlin-stdlib-jdk8"
     }
@@ -19,7 +20,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.5.3")
+        classpath("com.android.tools.build:gradle:3.6.0")
+        
+        // Kotlin support + react-native-navigation
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
 
         // NOTE: Do not place your application dependencies here; they belong
