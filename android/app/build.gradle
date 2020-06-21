@@ -194,6 +194,7 @@ android {
         pickFirst "lib/x86/libc++_shared.so"
         pickFirst "lib/x86_64/libc++_shared.so"
     }
+    buildToolsVersion = '29.0.2'
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->

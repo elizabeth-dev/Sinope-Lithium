@@ -1,6 +1,6 @@
 import { AuthActions } from '@core/actions/auth.actions';
 import React from 'react';
-import { View } from 'react-native';
+import { View, Linking, ToastAndroid } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
@@ -9,6 +9,10 @@ export const LoginScreen: React.FC = () => {
 	const dispatch = useDispatch();
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
+
+	Linking.getInitialURL().then((aaa) => {
+	console.log(aaa);
+	ToastAndroid.show(aaa || '', ToastAndroid.LONG);})
 
 	const onLogin = () => dispatch(AuthActions.login(email, password));
 	return (

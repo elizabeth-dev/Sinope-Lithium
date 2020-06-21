@@ -14,6 +14,7 @@ import { LoginScreen } from './src/views/login/screens/login/LoginScreen.compone
 import { PostScreen } from './src/views/post/screens/post/PostScreen.component';
 import { ProfileScreen } from './src/views/profile/screens/profile/ProfileScreen.component';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
+import { Linking, ToastAndroid } from 'react-native';
 
 Navigation.registerComponent(AppScreens.SplashScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(SplashScreen, appStore)),
