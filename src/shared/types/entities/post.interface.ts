@@ -13,3 +13,8 @@ export interface INewPost {
 	profile: string;
 	tmpId: string;
 }
+
+export interface CreatePostDto {
+	content: string;
+	question?: string;
+}
