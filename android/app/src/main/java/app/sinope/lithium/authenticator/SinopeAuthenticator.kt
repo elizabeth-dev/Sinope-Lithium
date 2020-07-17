@@ -5,6 +5,7 @@ import android.accounts.Account
 import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import app.sinope.lithium.values.Constants
 import java.time.Instant
@@ -58,7 +59,9 @@ class SinopeAuthenticator(private val context: Context) : AbstractAccountAuthent
             result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name)
             result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type)
             result.putString(AccountManager.KEY_AUTHTOKEN, "authToken")
-            result.putLong(AbstractAccountAuthenticator.KEY_CUSTOM_TOKEN_EXPIRY, Instant.now().epochSecond + 180)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                result.putLong(KEY_CUSTOM_TOKEN_EXPIRY, Instant.now().epochSecond + 180)
+            }
 
             response.onResult(result)
         }

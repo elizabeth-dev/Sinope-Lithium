@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 
 class SinopeAuthenticatorService: Service() {
-    lateinit var authenticator: SinopeAuthenticator
+    private lateinit var authenticator: SinopeAuthenticator
 
     override fun onCreate() {
         this.authenticator = SinopeAuthenticator(this)

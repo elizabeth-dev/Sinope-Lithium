@@ -216,23 +216,22 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.google.android.gms:play-services-cronet:17.0.0'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
-
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
-
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
 
     // Android Gradle Plugin v4.0.0
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.4'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

@@ -18,7 +18,7 @@ class MainApplication : NavigationApplication() {
 		}
 		
 		override fun getPackages(): List<ReactPackage> {
-			val packages = PackageList(this).getPackages()
+			val packages = PackageList(this).packages
 
 			// Packages that cannot be autolinked yet can be added manually here, for example:
 		  	// packages.add(new MyReactNativePackage())
@@ -38,7 +38,7 @@ class MainApplication : NavigationApplication() {
 	override fun onCreate() {
 		super.onCreate()
 
-		initializeFlipper(this, getReactNativeHost().getReactInstanceManager())
+		initializeFlipper(this, reactNativeHost.reactInstanceManager)
 	}
 
 	companion object {

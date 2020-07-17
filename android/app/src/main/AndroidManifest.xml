@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="app.sinope.lithium">
 
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -24,7 +27,8 @@
 
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
 
-        <service android:name=".authenticator.SinopeAuthenticatorService">
+        <service android:name=".authenticator.SinopeAuthenticatorService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
