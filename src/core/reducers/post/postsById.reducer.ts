@@ -1,29 +1,31 @@
 import {
 	PostActionsDto,
-	RequestPostAction,
 	ReceivePostsAction,
 	ReceiveProfilePostsAction,
+	RequestPostAction,
 	SentPostAction,
 } from '@core/actions/post.actions';
 import { IPost } from '@shared/types/entities/post.interface';
 import { FetchFields } from '@shared/types/fetchFields.interface';
-import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
 
 export type PostsByIdState = {
 	[id: string]: { post: IPost } & FetchFields;
 };
 
-const initialState: PostsByIdState = mockedPosts.reduce(
-	(acc, post) => Object.assign(acc, { [post.id]: { post, isFetching: false, receivedAt: Date.now() } }),
-	{} as PostsByIdState,
-);
+const initialState: PostsByIdState = {};
 
-export function postsByIdReducer(state = initialState, action: PostActionsDto): PostsByIdState {
+export function postsByIdReducer(
+	state = initialState,
+	action: PostActionsDto,
+): PostsByIdState {
 	switch (action.type) {
 		case RequestPostAction:
 			return {
 				...state,
-				[action.payload.post]: { ...state[action.payload.post], isFetching: true },
+				[action.payload.post]: {
+					...state[action.payload.post],
+					isFetching: true,
+				},
 			};
 		case ReceivePostsAction:
 		case ReceiveProfilePostsAction:
@@ -32,7 +34,11 @@ export function postsByIdReducer(state = initialState, action: PostActionsDto): 
 				...action.payload.posts.reduce(
 					(acc, post) => ({
 						...acc,
-						[post.id]: { post, isFetching: false, receivedAt: action.payload.receivedAt },
+						[post.id]: {
+							post,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
 					}),
 					{} as PostsByIdState,
 				),

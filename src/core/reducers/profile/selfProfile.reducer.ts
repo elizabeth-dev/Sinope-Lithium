@@ -1,5 +1,7 @@
-import { ProfileActionsDto, SwitchProfileAction } from '@core/actions/profile.actions';
-import { mockedProfiles } from '@core/mocks/profile/commonProfiles.mock';
+import {
+	ProfileActionsDto,
+	SwitchProfileAction,
+} from '@core/actions/profile.actions';
 
 export interface SelfProfilesState {
 	current: string;
@@ -7,11 +9,14 @@ export interface SelfProfilesState {
 }
 
 const initialState: SelfProfilesState = {
-	current: Object.values(mockedProfiles)[0].id,
-	profiles: Object.values(mockedProfiles).map((profile) => profile.id),
+	current: '',
+	profiles: [],
 };
 
-export function selfProfilesReducer(state = initialState, action: ProfileActionsDto): SelfProfilesState {
+export function selfProfilesReducer(
+	state = initialState,
+	action: ProfileActionsDto,
+): SelfProfilesState {
 	switch (action.type) {
 		case SwitchProfileAction:
 			return { ...state, current: action.payload.profileId };

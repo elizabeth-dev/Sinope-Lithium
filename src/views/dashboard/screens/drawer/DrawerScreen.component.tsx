@@ -5,7 +5,7 @@ import { DrawerHeader } from '../../components/drawer-header/DrawerHeader.compon
 import { DrawerScreenStyles as styles } from './DrawerScreen.styles';
 
 export const DrawerScreen: React.FC = () => {
-	const items = [{ key: 'settings', label: 'Settings', icon: 'settings' }];
+	const items = [{ key: 'settings', label: 'Settings', icon: 'cog' }];
 
 	return (
 		<FlatList

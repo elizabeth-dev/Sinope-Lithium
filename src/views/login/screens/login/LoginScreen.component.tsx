@@ -1,19 +1,30 @@
 import { AuthActions } from '@core/actions/auth.actions';
 import React from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
+import { NavigationFunctionComponent } from 'react-native-navigation';
 import { Button, TextInput } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
 
-export const LoginScreen: React.FC = () => {
+export const LoginScreen: NavigationFunctionComponent = () => {
 	const dispatch = useDispatch();
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 
-	const onLogin = () => dispatch(AuthActions.login(email, password));
+	const onLogin = () => {
+		Keyboard.dismiss();
+		dispatch(AuthActions.login(email, password));
+	};
+
 	return (
 		<View style={styles.root}>
-			<TextInput style={styles.input} label="Email" mode="outlined" value={email} onChangeText={setEmail} />
+			<TextInput
+				style={styles.input}
+				label="Email"
+				mode="outlined"
+				value={email}
+				onChangeText={setEmail}
+			/>
 			<TextInput
 				style={styles.input}
 				label="Password"
@@ -30,4 +41,8 @@ export const LoginScreen: React.FC = () => {
 			</Button>
 		</View>
 	);
+};
+
+LoginScreen.options = {
+	blurOnUnmount: true,
 };
