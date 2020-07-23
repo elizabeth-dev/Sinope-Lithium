@@ -21,7 +21,9 @@ Navigation.registerComponent(AppScreens.SplashScreen, () =>
 Navigation.registerComponent(AppScreens.DashboardScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(DashboardScreen, appStore)),
 );
-Navigation.registerComponent(AppScreens.DrawerScreen, () => gestureHandlerRootHOC(DrawerScreen));
+Navigation.registerComponent(AppScreens.DrawerScreen, () =>
+	gestureHandlerRootHOC(reduxProviderHOC(DrawerScreen, appStore)),
+);
 Navigation.registerComponent(AppScreens.ProfileScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(ProfileScreen, appStore)),
 );

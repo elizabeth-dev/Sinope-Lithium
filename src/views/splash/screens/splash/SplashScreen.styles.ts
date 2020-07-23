@@ -6,4 +6,16 @@ export const SplashScreenStyles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+
+	disclaimer: {
+		position: 'absolute',
+	},
+	disclaimerTop: {
+		top: 0,
+		left: 0,
+	},
+	disclaimerBottom: {
+		bottom: 0,
+		right: 0,
+	},
 });

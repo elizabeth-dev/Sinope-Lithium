@@ -8,6 +8,7 @@ export const ComposeScreenStyles = StyleSheet.create({
 	input: {
 		backgroundColor: '#ffffff',
 		flexGrow: 1,
+		textAlignVertical: 'top',
 	},
 	actionBar: {
 		flexDirection: 'row',

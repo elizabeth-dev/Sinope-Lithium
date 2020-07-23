@@ -7,6 +7,7 @@ import {
 } from '@core/actions/post.actions';
 import { IPost } from '@shared/types/entities/post.interface';
 import { FetchFields } from '@shared/types/fetchFields.interface';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@core/actions/timeline.actions';
 
 export type PostsByIdState = {
 	[id: string]: { post: IPost } & FetchFields;
@@ -16,7 +17,7 @@ const initialState: PostsByIdState = {};
 
 export function postsByIdReducer(
 	state = initialState,
-	action: PostActionsDto,
+	action: PostActionsDto | IReceiveTimelineAction,
 ): PostsByIdState {
 	switch (action.type) {
 		case RequestPostAction:
@@ -29,6 +30,7 @@ export function postsByIdReducer(
 			};
 		case ReceivePostsAction:
 		case ReceiveProfilePostsAction:
+		case ReceiveTimelineAction:
 			return {
 				...state,
 				...action.payload.posts.reduce(

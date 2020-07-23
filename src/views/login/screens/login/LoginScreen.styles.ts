@@ -17,4 +17,15 @@ export const LoginScreenStyles = StyleSheet.create({
 	loginButtonContent: {
 		paddingVertical: 4,
 	},
+	disclaimer: {
+		position: 'absolute',
+	},
+	disclaimerTop: {
+		top: 0,
+		left: 0,
+	},
+	disclaimerBottom: {
+		bottom: 0,
+		right: 0,
+	},
 });

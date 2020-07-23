@@ -1,11 +1,16 @@
 import { SlimPost } from '@shared/components/slim-post/SlimPost.component';
 import { IPost } from '@shared/types/entities/post.interface';
+import { IProfile } from '@shared/types/entities/profile.interface';
 import React from 'react';
-import { Animated, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+	Animated,
+	NativeScrollEvent,
+	NativeSyntheticEvent,
+} from 'react-native';
 import { Divider } from 'react-native-paper';
 
 interface PostListProps {
-	posts: IPost[];
+	posts: (Omit<IPost, 'profile'> & { profile: IProfile })[];
 	onRefresh?: () => void;
 	refreshing?: boolean;
 	header?: React.ReactElement;
@@ -20,7 +25,9 @@ export const PostList: React.FC<PostListProps> = React.memo((props) => (
 		ListHeaderComponent={props.header}
 		data={props.posts}
 		extraData={props.stackId}
-		renderItem={({ item }: { item: IPost }) => <SlimPost stackId={props.stackId} post={item} />}
+		renderItem={({ item }: { item: IPost }) => (
+			<SlimPost stackId={props.stackId} post={item} />
+		)}
 		keyExtractor={(item: IPost) => item.id}
 		showsVerticalScrollIndicator={false}
 		ItemSeparatorComponent={Divider}

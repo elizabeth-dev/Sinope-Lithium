@@ -1,27 +1,10 @@
 import { developmentEnv } from '@core/environments/development.env';
 import { TokenPair } from '@shared/types/auth.interface';
-import { from, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ajax, AjaxError } from 'rxjs/ajax';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 const login = (email: string, password: string): Observable<TokenPair> => {
-	/* return from(
-		fetch(`${developmentEnv.apiUrl}/auth/login`, {
-			body: JSON.stringify({ email, password }),
-			method: 'POST',
-			headers: new Headers({
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-			}),
-		}),
-	).pipe(
-		mergeMap((res) => res.json() as Promise<TokenPair>),
-		catchError((err) => {
-			console.log(JSON.stringify(err));
-
-			return throwError(err);
-		}),
-	); */
 	return ajax
 		.post(
 			`${developmentEnv.apiUrl}/auth/login`,
@@ -31,9 +14,9 @@ const login = (email: string, password: string): Observable<TokenPair> => {
 		.pipe(
 			map((res) => res.response as TokenPair),
 			catchError((err: AjaxError) => {
-				console.log(JSON.stringify(err));
+				console.error(JSON.stringify(err));
 
-				return throwError(err);
+				return throwError(err.status);
 			}),
 		);
 };

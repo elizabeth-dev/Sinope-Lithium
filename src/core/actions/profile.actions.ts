@@ -1,6 +1,6 @@
 import { IProfile } from '@shared/types/entities/profile.interface';
 
-export const RequestProfileAction = 'post/RequestPostAction';
+export const RequestProfileAction = 'profile/RequestProfileAction';
 
 export interface IRequestProfileAction {
 	type: typeof RequestProfileAction;
@@ -8,6 +8,11 @@ export interface IRequestProfileAction {
 		profile: string;
 	};
 }
+
+const requestProfileFn = (profile: string): IRequestProfileAction => ({
+	type: RequestProfileAction,
+	payload: { profile },
+});
 
 export const ReceiveProfilesAction = 'profile/ReceiveProfilesAction';
 
@@ -18,6 +23,14 @@ export interface IReceiveProfilesAction {
 		receivedAt: number;
 	};
 }
+
+const receiveProfileFn = (
+	profiles: IProfile[],
+	receivedAt: number,
+): IReceiveProfilesAction => ({
+	type: ReceiveProfilesAction,
+	payload: { profiles, receivedAt },
+});
 
 export const SwitchProfileAction = 'profile/SwitchProfileAction';
 
@@ -33,6 +46,13 @@ const switchProfileFn = (profileId: string): ISwitchProfileAction => ({
 	payload: { profileId },
 });
 
-export type ProfileActionsDto = IRequestProfileAction | IReceiveProfilesAction | ISwitchProfileAction;
+export type ProfileActionsDto =
+	| IRequestProfileAction
+	| IReceiveProfilesAction
+	| ISwitchProfileAction;
 
-export const ProfileActions = { switch: switchProfileFn };
+export const ProfileActions = {
+	switch: switchProfileFn,
+	receive: receiveProfileFn,
+	request: requestProfileFn,
+};

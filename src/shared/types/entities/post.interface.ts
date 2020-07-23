@@ -2,7 +2,7 @@ export interface IPost {
 	id: string;
 	content: string;
 	date: Date;
-	author: string;
+	profile: string;
 	likes: string[];
 	question?: string;
 }
@@ -15,6 +15,7 @@ export interface INewPost {
 }
 
 export interface CreatePostDto {
+	profile: string;
 	content: string;
 	question?: string;
 }

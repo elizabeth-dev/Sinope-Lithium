@@ -1,7 +1,7 @@
+import { developmentEnv } from '@core/environments/development.env';
+import { CreatePostDto, IPost } from '@shared/types/entities/post.interface';
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { developmentEnv } from '@core/environments/development.env';
-import { IPost, CreatePostDto } from '@shared/types/entities/post.interface';
 import { map } from 'rxjs/operators';
 
 const getById = (id: string, token: string): Observable<IPost> => {
@@ -11,43 +11,47 @@ const getById = (id: string, token: string): Observable<IPost> => {
 };
 
 const getByProfile = (profile: string, token: string): Observable<IPost[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profile/${profile}/posts`, {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/posts?profile=${profile}`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
 
 const remove = (id: string, token: string): Observable<void> => {
 	return ajax
-		.delete(`${developmentEnv.apiUrl}/post/${id}`, {
+		.delete(`${developmentEnv.apiUrl}/posts/${id}`, {
 			Authorization: `Bearer ${token}`,
 		})
 		.pipe(map(() => {}));
 };
 
-const create = (
-	newPost: CreatePostDto,
-	profile: string,
-	token: string,
-): Observable<IPost> => {
-	return ajax.post(
-		`${developmentEnv.apiUrl}/profile/${profile}/posts`,
-		newPost,
-		{ Authorization: `Bearer ${token}` },
-	).pipe(map((res) => res.response as IPost));
+const create = (newPost: CreatePostDto, token: string): Observable<IPost> => {
+	return ajax
+		.post(`${developmentEnv.apiUrl}/posts`, newPost, {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
+		})
+		.pipe(map((res) => res.response as IPost));
 };
 
 const like = (id: string, fromProfile: string, token: string) => {
 	return ajax.put(
-		`${developmentEnv.apiUrl}/post/${id}/likes/${fromProfile}`,
+		`${developmentEnv.apiUrl}/posts/${id}/likes/${fromProfile}`,
 		{ Authorization: `Bearer ${token}` },
 	);
 };
 
 const unlike = (id: string, fromProfile: string, token: string) => {
 	return ajax.delete(
-		`${developmentEnv.apiUrl}/post/${id}/likes/${fromProfile}`,
+		`${developmentEnv.apiUrl}/posts/${id}/likes/${fromProfile}`,
 		{ Authorization: `Bearer ${token}` },
 	);
 };
 
-export const PostService = { getById, getByProfile, create, remove, like, unlike };
+export const PostService = {
+	getById,
+	getByProfile,
+	create,
+	remove,
+	like,
+	unlike,
+};

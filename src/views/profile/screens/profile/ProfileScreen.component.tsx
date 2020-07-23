@@ -1,10 +1,18 @@
+import { PostActions } from '@core/actions/post.actions';
+import { ProfileActions } from '@core/actions/profile.actions';
 import { AppState } from '@core/app.store';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import React from 'react';
-import { Animated, Dimensions, ToastAndroid, View } from 'react-native';
-import { NavigationComponentProps } from 'react-native-navigation';
-import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
-import { useSelector } from 'react-redux';
+import { Animated, Dimensions, View } from 'react-native';
+import { NavigationFunctionComponent } from 'react-native-navigation';
+import {
+	NavigationState,
+	Route,
+	SceneRendererProps,
+	TabBar,
+	TabView,
+} from 'react-native-tab-view';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 
@@ -14,21 +22,38 @@ export interface ProfileScreenProps {
 	profileId: string;
 }
 
-export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentProps> = ({ profileId, componentId }) => {
+export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
+	profileId,
+	componentId,
+}) => {
+	const dispatcher = useDispatch();
 	const [index, setIndex] = React.useState(0);
-	const [routes] = React.useState<Route[]>([{ key: 'posts', title: 'Posts' }]);
+	const [routes] = React.useState<Route[]>([
+		{ key: 'posts', title: 'Posts' },
+	]);
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const [refreshing, setRefreshing] = React.useState(false);
-	const { name, tag, description } = useSelector((state: AppState) => state.profile.profilesById[profileId].profile);
-	const posts = useSelector((state: AppState) =>
-		state.post.postsByProfile[profileId].posts.map((postId) => state.post.postsById[postId].post),
+
+	const reloadProfile = React.useCallback(() => {
+		dispatcher(ProfileActions.request(profileId));
+		dispatcher(PostActions.requestFromProfile(profileId));
+	}, [dispatcher, profileId]);
+
+	React.useEffect(() => reloadProfile(), [reloadProfile]);
+
+	const profile = useSelector(
+		(state: AppState) => state.profile.profilesById[profileId],
 	);
 
-	const onRefresh = () => {
-		setRefreshing(true);
-		ToastAndroid.show('Refreshing...', ToastAndroid.SHORT);
-		setTimeout(() => setRefreshing(false), 3000);
-	};
+	const profilePosts = useSelector((state: AppState) => ({
+		...state.post.postsByProfile[profileId],
+		posts: state.post.postsByProfile[profileId]?.posts?.map((postId) => ({
+			...state.post.postsById[postId]?.post,
+			profile:
+				state.profile.profilesById[
+					state.post.postsById[postId].post.profile
+				]?.profile,
+		})),
+	}));
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const headerY = scroll.interpolate({
@@ -48,13 +73,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 			case 'posts':
 				return (
 					<PostList
-						posts={posts}
+						posts={profilePosts.posts}
 						stackId={componentId}
-						onRefresh={onRefresh}
-						refreshing={refreshing}
-						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scroll } } }], {
-							useNativeDriver: true,
-						})}
+						onRefresh={reloadProfile}
+						refreshing={profilePosts.isFetching}
+						onScroll={Animated.event(
+							[{ nativeEvent: { contentOffset: { y: scroll } } }],
+							{
+								useNativeDriver: true,
+							},
+						)}
 						containerPaddingTop={headerHeight + 48}
 						progressViewOffset={headerHeight + 48}
 					/>
@@ -64,7 +92,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 		}
 	};
 
-	const renderTabBar = (sceneProps: SceneRendererProps & { navigationState: NavigationState<Route> }) => (
+	const renderTabBar = (
+		sceneProps: SceneRendererProps & {
+			navigationState: NavigationState<Route>;
+		},
+	) => (
 		<Animated.View
 			style={[
 				styles.tabBarContainer,
@@ -72,7 +104,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 					transform: [{ translateY: (tabBarY as unknown) as number }],
 				},
 			]}>
-			<TabBar {...sceneProps} style={styles.tabBar} labelStyle={styles.tabBarLabel} />
+			<TabBar
+				{...sceneProps}
+				style={styles.tabBar}
+				labelStyle={styles.tabBarLabel}
+			/>
 		</Animated.View>
 	);
 
@@ -88,11 +124,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps & NavigationComponentPro
 				/>
 			)}
 			<ProfileHeader
-				name={name}
-				tag={tag}
-				description={description}
+				name={profile.profile.name}
+				tag={profile.profile.tag}
+				description={profile.profile.description}
 				headerY={(headerY as unknown) as number}
-				onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
+				onLayout={({ nativeEvent }) =>
+					setHeaderHeight(nativeEvent.layout.height)
+				}
 			/>
 		</View>
 	);

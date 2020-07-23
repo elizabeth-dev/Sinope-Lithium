@@ -38,11 +38,13 @@ export function postsByProfileReducer(
 		case SentPostAction:
 			return {
 				...state,
-				[action.payload.post.author]: {
-					...state[action.payload.post.author],
+				[action.payload.post.profile]: {
+					...state[action.payload.post.profile],
 					posts: [
 						action.payload.post.id,
-						...state[action.payload.post.author].posts,
+						...(state[action.payload.post.profile]
+							? state[action.payload.post.profile].posts
+							: []),
 					],
 				},
 			};

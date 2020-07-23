@@ -12,6 +12,7 @@ export interface AuthState {
 	refreshToken?: string;
 	expiresAt?: number;
 	loggingIn: boolean;
+	error: boolean;
 }
 
 const initialState: AuthState = {
@@ -20,6 +21,7 @@ const initialState: AuthState = {
 	loggingIn: false,
 	refreshToken: undefined,
 	expiresAt: undefined,
+	error: false,
 };
 
 export function authReducer(
@@ -28,7 +30,7 @@ export function authReducer(
 ): AuthState {
 	switch (action.type) {
 		case LoginAction:
-			return { ...state, loggingIn: true };
+			return { ...state, loggingIn: true, error: false };
 		case LoginSuccessAction:
 			return {
 				...state,
@@ -39,7 +41,7 @@ export function authReducer(
 				loggingIn: false,
 			};
 		case LoginFailureAction:
-			return { ...state, loggingIn: false };
+			return { ...state, loggingIn: false, error: true };
 		case LogoutAction:
 			return { ...state, loggedIn: false, accessToken: undefined };
 		default:

@@ -1,42 +1,43 @@
 import {
+	AuthActions,
+	ILoginFailureAction,
 	ILoginSuccessAction,
 	LoginAction,
-	LoginSuccessAction,
-	AuthActions,
 	TokenExpiredAction,
 } from '@core/actions/auth.actions';
+import { AppState } from '@core/app.store';
 import { AuthService } from '@core/http/auth.service';
-import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
-import { Navigation } from 'react-native-navigation';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { combineEpics, Epic } from 'redux-observable';
-import { filter, ignoreElements, switchMap, tap, map } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { catchError, filter, map, mergeMap } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { AppActionsDto } from '../actions';
-import { AppState } from '@core/app.store';
 
-const loginEpic: Epic<AppActionsDto, ILoginSuccessAction> = (action$) =>
+const loginEpic: Epic<
+	AppActionsDto,
+	ILoginSuccessAction | ILoginFailureAction
+> = (action$) =>
 	action$.pipe(
 		filter(isOfType(LoginAction)),
-		switchMap((action) =>
-			AuthService.login(action.payload.username, action.payload.password),
-		),
-		map(({ jwt: accessToken, refreshToken, expiresAt }) =>
-			AuthActions.loginSuccess(accessToken, refreshToken, expiresAt),
-		),
-	);
+		mergeMap((action) =>
+			AuthService.login(
+				action.payload.username,
+				action.payload.password,
+			).pipe(
+				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+					AuthActions.loginSuccess(
+						accessToken,
+						refreshToken,
+						expiresAt,
+					),
+				),
+				catchError((err: number) => {
+					if (err === 401) return of(AuthActions.loginFailure());
 
-const loginSuccessEpic: Epic<AppActionsDto> = (action$) =>
-	action$.pipe(
-		filter(isOfType(LoginSuccessAction)),
-		tap(() =>
-			Promise.all([
-				MaterialCommunityIcons.getImageSource('menu', 25),
-			]).then(([menuIcon]) => {
-				Navigation.setRoot(dashboardRoot(menuIcon));
-			}),
+					return throwError(err);
+				}),
+			),
 		),
-		ignoreElements(),
 	);
 
 const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
@@ -45,16 +46,13 @@ const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 ) =>
 	action$.pipe(
 		filter(isOfType(TokenExpiredAction)),
-		switchMap(() =>
-			AuthService.refresh(state$.value.auth.refreshToken as string),
-		),
-		map(({ jwt: accessToken, refreshToken, expiresAt }) =>
-			AuthActions.refreshed(accessToken, refreshToken, expiresAt),
+		mergeMap(() =>
+			AuthService.refresh(state$.value.auth.refreshToken as string).pipe(
+				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+					AuthActions.refreshed(accessToken, refreshToken, expiresAt),
+				),
+			),
 		),
 	);
 
-export const authEpic = combineEpics(
-	loginEpic,
-	loginSuccessEpic,
-	accessTokenExpiredEpic,
-);
+export const authEpic = combineEpics(loginEpic, accessTokenExpiredEpic);

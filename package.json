@@ -30,7 +30,7 @@
 		"@babel/runtime": "^7.6.2",
 		"@react-native-community/eslint-config": "^2.0.0",
 		"@types/jest": "^24.0.24",
-		"@types/react-native": "^0.62.0",
+		"@types/react-native": "^0.63.1",
 		"@types/react-native-vector-icons": "^6.4.5",
 		"@types/react-redux": "^7.1.7",
 		"@types/react-test-renderer": "16.9.2",

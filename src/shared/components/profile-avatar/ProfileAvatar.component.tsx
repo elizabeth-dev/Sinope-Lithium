@@ -1,5 +1,10 @@
 import React from 'react';
-import { GestureResponderEvent, StyleProp, TouchableNativeFeedback, View, ViewStyle } from 'react-native';
+import {
+	GestureResponderEvent,
+	StyleProp,
+	TouchableNativeFeedback,
+	ViewStyle,
+} from 'react-native';
 import { Avatar } from 'react-native-paper';
 
 export interface ProfileAvatarProps {
@@ -9,7 +14,12 @@ export interface ProfileAvatarProps {
 	onPress?: (event: GestureResponderEvent) => void;
 }
 
-export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ size, label, style, onPress }) => {
+export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
+	size,
+	label,
+	style,
+	onPress,
+}) => {
 	return (
 		<TouchableNativeFeedback onPress={onPress}>
 			<Avatar.Text style={style} size={size} label={label} />

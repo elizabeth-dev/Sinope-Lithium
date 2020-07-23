@@ -1,7 +1,9 @@
 import { Layout } from 'react-native-navigation';
 import { AppScreens } from '@core/app.screens';
 
-export const postScreenLayer = (postId: string): Layout<{ postId: string }> => ({
+export const postScreenLayer = (
+	postId: string,
+): Layout<{ postId: string }> => ({
 	component: {
 		name: AppScreens.PostScreen,
 		options: {
@@ -13,6 +15,11 @@ export const postScreenLayer = (postId: string): Layout<{ postId: string }> => (
 					text: '',
 				},
 				elevation: 2, // Default
+			},
+			sideMenu: {
+				left: {
+					enabled: false,
+				},
 			},
 		},
 		passProps: {

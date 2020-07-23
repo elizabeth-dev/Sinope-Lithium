@@ -3,6 +3,7 @@ import { Colors } from 'react-native-paper';
 
 export const ProfileHeaderStyles = StyleSheet.create({
 	root: {
+		width: '100%',
 		backgroundColor: '#ffffff',
 		position: 'absolute',
 	},

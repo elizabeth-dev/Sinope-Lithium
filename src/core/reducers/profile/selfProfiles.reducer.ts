@@ -2,6 +2,10 @@ import {
 	ProfileActionsDto,
 	SwitchProfileAction,
 } from '@core/actions/profile.actions';
+import {
+	IReceiveSelfUserAction,
+	ReceiveSelfUserAction,
+} from '@core/actions/user.actions';
 
 export interface SelfProfilesState {
 	current: string;
@@ -15,11 +19,19 @@ const initialState: SelfProfilesState = {
 
 export function selfProfilesReducer(
 	state = initialState,
-	action: ProfileActionsDto,
+	action: ProfileActionsDto | IReceiveSelfUserAction,
 ): SelfProfilesState {
 	switch (action.type) {
 		case SwitchProfileAction:
 			return { ...state, current: action.payload.profileId };
+		case ReceiveSelfUserAction:
+			return {
+				...state,
+				profiles: action.payload.user.profiles.map(
+					(profile) => profile.id,
+				),
+				current: action.payload.user.profiles[0]?.id,
+			};
 		default:
 			return state;
 	}

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { selfProfilesReducer } from './profile/selfProfile.reducer';
+import { selfProfilesReducer } from './profile/selfProfiles.reducer';
 import { profilesByIdReducer } from './profile/profilesById.reducer';
 
 export type ProfileState = ReturnType<typeof profileReducer>;

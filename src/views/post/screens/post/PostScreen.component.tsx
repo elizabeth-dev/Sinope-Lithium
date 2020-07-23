@@ -1,5 +1,4 @@
 import { AppState } from '@core/app.store';
-import { mockedPosts } from '@core/mocks/post/commonPosts.mock';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { Post } from '@shared/components/post/Post.component';
 import React from 'react';
@@ -12,10 +11,13 @@ export interface PostScreenProps {
 	postId: string;
 }
 
-export const PostScreen: React.FC<PostScreenProps & NavigationComponentProps> = ({ postId, componentId }) => {
+export const PostScreen: React.FC<
+	PostScreenProps & NavigationComponentProps
+> = ({ postId, componentId }) => {
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const post = useSelector((state: AppState) => state.post.postsById[postId].post);
-	const replies = mockedPosts;
+	const post = useSelector(
+		(state: AppState) => state.post.postsById[postId].post,
+	);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const mainPostY = scroll.interpolate({
@@ -28,11 +30,14 @@ export const PostScreen: React.FC<PostScreenProps & NavigationComponentProps> = 
 		<View style={styles.root}>
 			{headerHeight !== 0 && (
 				<PostList
-					posts={replies}
+					posts={[]}
 					stackId={componentId}
-					onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scroll } } }], {
-						useNativeDriver: true,
-					})}
+					onScroll={Animated.event(
+						[{ nativeEvent: { contentOffset: { y: scroll } } }],
+						{
+							useNativeDriver: true,
+						},
+					)}
 					containerPaddingTop={headerHeight}
 					progressViewOffset={headerHeight}
 				/>
@@ -40,7 +45,9 @@ export const PostScreen: React.FC<PostScreenProps & NavigationComponentProps> = 
 			<Post
 				post={post}
 				mainPostY={(mainPostY as unknown) as number}
-				onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
+				onLayout={({ nativeEvent }) =>
+					setHeaderHeight(nativeEvent.layout.height)
+				}
 				stackId={componentId}
 			/>
 		</View>

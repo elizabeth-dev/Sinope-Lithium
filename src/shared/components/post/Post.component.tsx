@@ -23,7 +23,7 @@ export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout, stackId }
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 	};
-	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.author));
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile));
 	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
 	const onLikeClick = () => dispatcher(PostActions.like(post.id));
 

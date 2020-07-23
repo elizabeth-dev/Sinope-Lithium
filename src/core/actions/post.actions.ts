@@ -9,6 +9,11 @@ export interface IRequestPostAction {
 	};
 }
 
+const requestPostFn = (post: string): IRequestPostAction => ({
+	type: RequestPostAction,
+	payload: { post },
+});
+
 export const ReceivePostsAction = 'post/ReceivePostsAction';
 
 export interface IReceivePostsAction {
@@ -19,6 +24,14 @@ export interface IReceivePostsAction {
 	};
 }
 
+const receivePostsFn = (
+	posts: IPost[],
+	receivedAt: number,
+): IReceivePostsAction => ({
+	type: ReceivePostsAction,
+	payload: { posts, receivedAt },
+});
+
 export const RequestProfilePostsAction = 'post/RequestProfilePostsAction';
 
 export interface IRequestProfilePostsAction {
@@ -27,6 +40,13 @@ export interface IRequestProfilePostsAction {
 		profile: string;
 	};
 }
+
+const requestProfilePostsFn = (
+	profile: string,
+): IRequestProfilePostsAction => ({
+	type: RequestProfilePostsAction,
+	payload: { profile },
+});
 
 export const ReceiveProfilePostsAction = 'post/ReceiveProfilePostsAction';
 
@@ -39,6 +59,15 @@ export interface IReceiveProfilePostsAction {
 	};
 }
 
+const receiveProfilePostsFn = (
+	profile: string,
+	posts: IPost[],
+	receivedAt: number,
+): IReceiveProfilePostsAction => ({
+	type: ReceiveProfilePostsAction,
+	payload: { profile, posts, receivedAt },
+});
+
 export const SendPostAction = 'post/SendPostAction';
 
 export interface ISendPostAction {
@@ -48,7 +77,10 @@ export interface ISendPostAction {
 	};
 }
 
-const sendPostFn = (newPost: INewPost): ISendPostAction => ({ type: SendPostAction, payload: { newPost } });
+const sendPostFn = (newPost: INewPost): ISendPostAction => ({
+	type: SendPostAction,
+	payload: { newPost },
+});
 
 export const SentPostAction = 'post/SentPostAction';
 
@@ -61,7 +93,11 @@ export interface ISentPostAction {
 	};
 }
 
-const sentPostFn = (post: IPost, receivedAt: number, tmpId: string): ISentPostAction => ({
+const sentPostFn = (
+	post: IPost,
+	receivedAt: number,
+	tmpId: string,
+): ISentPostAction => ({
 	type: SentPostAction,
 	payload: { post, receivedAt, tmpId },
 });
@@ -75,6 +111,11 @@ export interface IFailedSentPostAction {
 	};
 }
 
+const failedSentPostFn = (tmpId: string): IFailedSentPostAction => ({
+	type: FailedSentPostAction,
+	payload: { tmpId },
+});
+
 export const DeletePostAction = 'post/DeletePostAction';
 
 export interface IDeletePostAction {
@@ -83,6 +124,11 @@ export interface IDeletePostAction {
 		post: string;
 	};
 }
+
+const deletePostFn = (post: string): IDeletePostAction => ({
+	type: DeletePostAction,
+	payload: { post },
+});
 
 export const LikePostAction = 'post/LikePostAction';
 
@@ -93,7 +139,10 @@ export interface ILikePostAction {
 	};
 }
 
-const likePostFn = (post: string): ILikePostAction => ({ type: LikePostAction, payload: { post } });
+const likePostFn = (post: string): ILikePostAction => ({
+	type: LikePostAction,
+	payload: { post },
+});
 
 export const UnlikePostAction = 'post/UnlikePostAction';
 
@@ -103,6 +152,11 @@ export interface IUnlikePostAction {
 		post: string;
 	};
 }
+
+const unlikePostFn = (post: string): IUnlikePostAction => ({
+	type: UnlikePostAction,
+	payload: { post },
+});
 
 export type PostActionsDto =
 	| ISendPostAction
@@ -116,4 +170,15 @@ export type PostActionsDto =
 	| ISentPostAction
 	| IFailedSentPostAction;
 
-export const PostActions = { send: sendPostFn, sent: sentPostFn, like: likePostFn };
+export const PostActions = {
+	send: sendPostFn,
+	sent: sentPostFn,
+	sendFailed: failedSentPostFn,
+	delete: deletePostFn,
+	like: likePostFn,
+	unlike: unlikePostFn,
+	request: requestPostFn,
+	requestFromProfile: requestProfilePostsFn,
+	receive: receivePostsFn,
+	receiveFromProfile: receiveProfilePostsFn,
+};

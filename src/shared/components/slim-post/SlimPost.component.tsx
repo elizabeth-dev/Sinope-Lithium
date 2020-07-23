@@ -4,15 +4,24 @@ import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.lay
 import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { IPost } from '@shared/types/entities/post.interface';
+import { IProfile } from '@shared/types/entities/profile.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import {
+	Caption,
+	Colors,
+	IconButton,
+	Paragraph,
+	Subheading,
+	Title,
+} from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
-	post: IPost;
+	// TODO: [SLI-45] Check if SlimPost should get full post or id only
+	post: Omit<IPost, 'profile'> & { profile: IProfile };
 	stackId: string;
 }
 
@@ -22,26 +31,49 @@ const onClick = () => {
 export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 	const dispatcher = useDispatch();
 
-	const onPostClick = () => Navigation.push(stackId, postScreenLayer(post.id));
-	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.author));
-	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
+	const onPostClick = () =>
+		Navigation.push(stackId, postScreenLayer(post.id));
+	const onAvatarClick = () =>
+		Navigation.push(stackId, profileScreenLayer(post.profile.id));
+	const onReplyClick = () =>
+		Navigation.push(stackId, composeScreenLayer(post.id));
 	const onLikeClick = () => dispatcher(PostActions.like(post.id));
 
 	return (
-		<TouchableHighlight underlayColor={Colors.grey200} onPress={onPostClick}>
+		<TouchableHighlight
+			underlayColor={Colors.grey200}
+			onPress={onPostClick}>
 			<View style={styles.root}>
-				<ProfileAvatar style={styles.avatar} label="E" size={48} onPress={onAvatarClick} />
+				<ProfileAvatar
+					style={styles.avatar}
+					label={post.profile.name[0].toUpperCase()}
+					size={48}
+					onPress={onAvatarClick}
+				/>
 				<View style={styles.body}>
 					<View style={styles.header}>
 						<View style={styles.userData}>
-							<Title style={styles.name}>Elizabeth</Title>
-							<Subheading style={styles.username}>@elizabeth</Subheading>
+							<Title style={styles.name}>
+								{post.profile.name}
+							</Title>
+							<Subheading style={styles.username}>
+								{`@${post.profile.tag}`}
+							</Subheading>
 						</View>
-						<IconButton icon="dots-vertical" color={Colors.grey600} size={24} onPress={onClick} />
+						<IconButton
+							icon="dots-vertical"
+							color={Colors.grey600}
+							size={24}
+							onPress={onClick}
+						/>
 					</View>
 					<View style={styles.content}>
-						<Paragraph style={styles.text}>{post.content}</Paragraph>
-						<Caption style={styles.date}>{post.date.toLocaleString()}</Caption>
+						<Paragraph style={styles.text}>
+							{post.content}
+						</Paragraph>
+						<Caption style={styles.date}>
+							{post.date.toLocaleString()}
+						</Caption>
 					</View>
 					<View style={styles.actions}>
 						<IconButton

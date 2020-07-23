@@ -3,6 +3,10 @@ import {
 	ReceiveProfilesAction,
 	RequestProfileAction,
 } from '@core/actions/profile.actions';
+import {
+	IReceiveSelfUserAction,
+	ReceiveSelfUserAction,
+} from '@core/actions/user.actions';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { FetchFields } from '@shared/types/fetchFields.interface';
 
@@ -14,7 +18,7 @@ const initialState: ProfilesByIdState = {};
 
 export function profilesByIdReducer(
 	state = initialState,
-	action: ProfileActionsDto,
+	action: ProfileActionsDto | IReceiveSelfUserAction,
 ): ProfilesByIdState {
 	switch (action.type) {
 		case RequestProfileAction:
@@ -29,6 +33,21 @@ export function profilesByIdReducer(
 			return {
 				...state,
 				...action.payload.profiles.reduce(
+					(acc, profile) => ({
+						...acc,
+						[profile.id]: {
+							profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
+			};
+		case ReceiveSelfUserAction:
+			return {
+				...state,
+				...action.payload.user.profiles.reduce(
 					(acc, profile) => ({
 						...acc,
 						[profile.id]: {

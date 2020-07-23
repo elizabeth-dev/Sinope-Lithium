@@ -7,6 +7,7 @@ import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { SplashScreenStyles as styles } from './SplashScreen.styles';
+import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
 
 export const SplashScreen: React.FC = () => {
 	const loggedIn = useSelector<AppState>((state) => state.auth.loggedIn);
@@ -19,7 +20,13 @@ export const SplashScreen: React.FC = () => {
 
 	return (
 		<View style={styles.root}>
+			<Disclaimer style={[styles.disclaimer, styles.disclaimerTop]}>
+				UNSTABLE - INSECURE
+			</Disclaimer>
 			<Text>Splash</Text>
+			<Disclaimer style={[styles.disclaimer, styles.disclaimerBottom]}>
+				UNSTABLE - INSECURE
+			</Disclaimer>
 		</View>
 	);
 };
