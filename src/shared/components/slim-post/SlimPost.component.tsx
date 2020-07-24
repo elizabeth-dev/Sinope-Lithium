@@ -22,13 +22,14 @@ import { SlimPostStyles as styles } from './SlimPost.styles';
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
 	post: Omit<IPost, 'profile'> & { profile: IProfile };
+	currentProfile: string;
 	stackId: string;
 }
 
 const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 };
-export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
+export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackId }) => {
 	const dispatcher = useDispatch();
 
 	const onPostClick = () =>
@@ -37,7 +38,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, stackId }) => {
 		Navigation.push(stackId, profileScreenLayer(post.profile.id));
 	const onReplyClick = () =>
 		Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () => dispatcher(PostActions.like(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
 
 	return (
 		<TouchableHighlight

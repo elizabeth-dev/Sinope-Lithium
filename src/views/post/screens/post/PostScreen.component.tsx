@@ -4,8 +4,9 @@ import { Post } from '@shared/components/post/Post.component';
 import React from 'react';
 import { Animated, View } from 'react-native';
 import { NavigationComponentProps } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { PostScreenStyles as styles } from './PostScreen.styles';
+import { PostActions } from '@core/actions/post.actions';
 
 export interface PostScreenProps {
 	postId: string;
@@ -14,10 +15,21 @@ export interface PostScreenProps {
 export const PostScreen: React.FC<
 	PostScreenProps & NavigationComponentProps
 > = ({ postId, componentId }) => {
+	const dispatcher = useDispatch();
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const post = useSelector(
-		(state: AppState) => state.post.postsById[postId].post,
+	const post = useSelector((state: AppState) => state.post.postsById[postId]);
+	const currentProfile = useSelector(
+		(state: AppState) => state.profile.self.current,
 	);
+
+	const refreshPost = React.useCallback(
+		(_postId) => {
+			dispatcher(PostActions.request(_postId));
+		},
+		[dispatcher],
+	);
+
+	React.useEffect(() => refreshPost(postId), [postId, refreshPost]);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const mainPostY = scroll.interpolate({
@@ -30,6 +42,7 @@ export const PostScreen: React.FC<
 		<View style={styles.root}>
 			{headerHeight !== 0 && (
 				<PostList
+					currentProfile={currentProfile}
 					posts={[]}
 					stackId={componentId}
 					onScroll={Animated.event(
@@ -40,10 +53,13 @@ export const PostScreen: React.FC<
 					)}
 					containerPaddingTop={headerHeight}
 					progressViewOffset={headerHeight}
+					refreshing={post.isFetching}
+					onRefresh={() => refreshPost(postId)}
 				/>
 			)}
 			<Post
-				post={post}
+				post={post.post}
+				currentProfile={currentProfile}
 				mainPostY={(mainPostY as unknown) as number}
 				onLayout={({ nativeEvent }) =>
 					setHeaderHeight(nativeEvent.layout.height)

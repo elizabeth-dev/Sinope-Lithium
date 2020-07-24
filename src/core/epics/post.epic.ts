@@ -1,24 +1,19 @@
 import { AppActionsDto } from '@core/actions';
 import {
+	IReceivePostsAction,
 	IReceiveProfilePostsAction,
 	ISentPostAction,
 	LikePostAction,
 	PostActions,
+	RequestPostAction,
 	RequestProfilePostsAction,
 	SendPostAction,
+	UnlikePostAction,
 } from '@core/actions/post.actions';
 import { AppState } from '@core/app.store';
 import { PostService } from '@core/http/post.service';
-import { ToastAndroid } from 'react-native';
 import { combineEpics, Epic } from 'redux-observable';
-import {
-	filter,
-	ignoreElements,
-	map,
-	mergeMap,
-	tap,
-	withLatestFrom,
-} from 'rxjs/operators';
+import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 
 const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (
@@ -44,13 +39,36 @@ const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (
 		),
 	);
 
-const likePostEpic: Epic<AppActionsDto> = (actions$) =>
+const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
+	actions$,
+	state$,
+) =>
 	actions$.pipe(
 		filter(isOfType(LikePostAction)),
-		tap(({ payload }) =>
-			ToastAndroid.show(`Liked post ${payload.post}`, ToastAndroid.SHORT),
+		withLatestFrom(state$),
+		mergeMap(([{ payload }, state]) =>
+			PostService.like(
+				payload.post,
+				payload.fromProfile,
+				state.auth.accessToken as string,
+			).pipe(map((post) => PostActions.receive([post], Date.now()))),
 		),
-		ignoreElements(),
+	);
+
+const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
+	actions$,
+	state$,
+) =>
+	actions$.pipe(
+		filter(isOfType(UnlikePostAction)),
+		withLatestFrom(state$),
+		mergeMap(([{ payload }, state]) =>
+			PostService.unlike(
+				payload.post,
+				payload.fromProfile,
+				state.auth.accessToken as string,
+			).pipe(map((post) => PostActions.receive([post], Date.now()))),
+		),
 	);
 
 const requestProfilePostsEpic: Epic<
@@ -77,8 +95,25 @@ const requestProfilePostsEpic: Epic<
 		),
 	);
 
+const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
+	actions$,
+	state$,
+) =>
+	actions$.pipe(
+		filter(isOfType(RequestPostAction)),
+		withLatestFrom(state$),
+		mergeMap(([{ payload }, state]) =>
+			PostService.getById(
+				payload.post,
+				state.auth.accessToken as string,
+			).pipe(map((posts) => PostActions.receive([posts], Date.now()))),
+		),
+	);
+
 export const postEpic = combineEpics(
 	sendPostEpic,
 	likePostEpic,
+	unlikePostEpic,
 	requestProfilePostsEpic,
+	requestPostEpic,
 );

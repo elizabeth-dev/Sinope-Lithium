@@ -42,6 +42,7 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	return (
 		<>
 			<PostList
+				currentProfile={profile}
 				posts={posts || []}
 				onRefresh={onRefresh}
 				refreshing={timeline ? timeline.isFetching : true}

@@ -11,6 +11,7 @@ import { Divider } from 'react-native-paper';
 
 interface PostListProps {
 	posts: (Omit<IPost, 'profile'> & { profile: IProfile })[];
+	currentProfile: string;
 	onRefresh?: () => void;
 	refreshing?: boolean;
 	header?: React.ReactElement;
@@ -24,11 +25,15 @@ export const PostList: React.FC<PostListProps> = React.memo((props) => (
 	<Animated.FlatList
 		ListHeaderComponent={props.header}
 		data={props.posts}
-		extraData={props.stackId}
-		renderItem={({ item }: { item: IPost }) => (
-			<SlimPost stackId={props.stackId} post={item} />
+		extraData={`${props.stackId}/${[props.currentProfile]}`}
+		renderItem={(el) => (
+			<SlimPost
+				stackId={props.stackId}
+				post={el.item}
+				currentProfile={props.currentProfile}
+			/>
 		)}
-		keyExtractor={(item: IPost) => item.id}
+		keyExtractor={(item) => item.id}
 		showsVerticalScrollIndicator={false}
 		ItemSeparatorComponent={Divider}
 		onRefresh={props.onRefresh}

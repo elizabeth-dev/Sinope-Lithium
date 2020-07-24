@@ -136,12 +136,13 @@ export interface ILikePostAction {
 	type: typeof LikePostAction;
 	payload: {
 		post: string;
+		fromProfile: string;
 	};
 }
 
-const likePostFn = (post: string): ILikePostAction => ({
+const likePostFn = (post: string, fromProfile: string): ILikePostAction => ({
 	type: LikePostAction,
-	payload: { post },
+	payload: { post, fromProfile },
 });
 
 export const UnlikePostAction = 'post/UnlikePostAction';
@@ -150,12 +151,16 @@ export interface IUnlikePostAction {
 	type: typeof UnlikePostAction;
 	payload: {
 		post: string;
+		fromProfile: string;
 	};
 }
 
-const unlikePostFn = (post: string): IUnlikePostAction => ({
+const unlikePostFn = (
+	post: string,
+	fromProfile: string,
+): IUnlikePostAction => ({
 	type: UnlikePostAction,
-	payload: { post },
+	payload: { post, fromProfile },
 });
 
 export type PostActionsDto =

@@ -33,15 +33,25 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 	]);
 	const [headerHeight, setHeaderHeight] = React.useState(0);
 
-	const reloadProfile = React.useCallback(() => {
-		dispatcher(ProfileActions.request(profileId));
-		dispatcher(PostActions.requestFromProfile(profileId));
-	}, [dispatcher, profileId]);
+	const refreshProfile = React.useCallback(
+		(_profileId) => {
+			dispatcher(ProfileActions.request(_profileId));
+			dispatcher(PostActions.requestFromProfile(_profileId));
+		},
+		[dispatcher],
+	);
 
-	React.useEffect(() => reloadProfile(), [reloadProfile]);
+	React.useEffect(() => refreshProfile(profileId), [
+		refreshProfile,
+		profileId,
+	]);
 
 	const profile = useSelector(
 		(state: AppState) => state.profile.profilesById[profileId],
+	);
+
+	const currentProfile = useSelector(
+		(state: AppState) => state.profile.self.current,
 	);
 
 	const profilePosts = useSelector((state: AppState) => ({
@@ -73,9 +83,10 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 			case 'posts':
 				return (
 					<PostList
+						currentProfile={profile}
 						posts={profilePosts.posts}
 						stackId={componentId}
-						onRefresh={reloadProfile}
+						onRefresh={() => refreshProfile(profileId)}
 						refreshing={profilePosts.isFetching}
 						onScroll={Animated.event(
 							[{ nativeEvent: { contentOffset: { y: scroll } } }],

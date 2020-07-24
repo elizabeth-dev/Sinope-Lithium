@@ -9,23 +9,25 @@ import { PostStyles as styles } from './Post.styles';
 import { useDispatch } from 'react-redux';
 import { PostActions } from '@core/actions/post.actions';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
+import { IProfile } from '@shared/types/entities/profile.interface';
 
 export interface PostProps {
-	post: IPost;
+	post: Omit<IPost, 'profile'> & { profile: IProfile };
+	currentProfile: string;
 	stackId: string;
 	mainPostY: number;
 	onLayout: (ev: LayoutChangeEvent) => void;
 }
 
-export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout, stackId }) => {
+export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onLayout, stackId }) => {
 	const dispatcher = useDispatch();
 
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 	};
-	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile));
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile.id));
 	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () => dispatcher(PostActions.like(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
 
 	return (
 		<Animated.View style={[styles.root, { transform: [{ translateY: mainPostY }] }]} onLayout={onLayout}>
@@ -33,8 +35,8 @@ export const Post: React.FC<PostProps> = ({ post, mainPostY, onLayout, stackId }
 				<View style={styles.header}>
 					<ProfileAvatar style={styles.avatar} label="E" size={48} onPress={onAvatarClick} />
 					<View style={styles.userData}>
-						<Title style={styles.name}>Elizabeth</Title>
-						<Subheading style={styles.username}>@elizabeth</Subheading>
+						<Title style={styles.name}>{post.profile.name}</Title>
+						<Subheading style={styles.username}>{`@${post.profile.tag}`}</Subheading>
 					</View>
 					<IconButton icon="dots-vertical" color={Colors.grey600} size={24} onPress={onClick} />
 				</View>
