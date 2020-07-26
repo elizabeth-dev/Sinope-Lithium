@@ -1,5 +1,6 @@
 import { PostActions } from '@core/actions/post.actions';
 import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
@@ -16,7 +17,6 @@ import {
 	Subheading,
 	Title,
 } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
@@ -29,8 +29,12 @@ export interface SlimPostProps {
 const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 };
-export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackId }) => {
-	const dispatcher = useDispatch();
+export const SlimPost: React.FC<SlimPostProps> = ({
+	post,
+	currentProfile,
+	stackId,
+}) => {
+	const dispatcher = useAppDispatch();
 
 	const onPostClick = () =>
 		Navigation.push(stackId, postScreenLayer(post.id));
@@ -38,7 +42,8 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackI
 		Navigation.push(stackId, profileScreenLayer(post.profile.id));
 	const onReplyClick = () =>
 		Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
+	const onLikeClick = () =>
+		dispatcher(PostActions.like(post.id, currentProfile));
 
 	return (
 		<TouchableHighlight

@@ -11,6 +11,7 @@ import { profileReducer } from './reducers/profile.reducer';
 import { timelineReducer } from './reducers/timeline.reducer';
 import { userReducer } from './reducers/user.reducer';
 import { profileEpic } from './epics/profile.epic';
+import { configureStore } from '@reduxjs/toolkit';
 
 const appReducer = combineReducers({
 	auth: authReducer,
@@ -21,14 +22,22 @@ const appReducer = combineReducers({
 });
 export type AppState = ReturnType<typeof appReducer>;
 
-const appEpic = combineEpics(authEpic, postEpic, userEpic, timelineEpic, profileEpic);
+const appEpic = combineEpics(
+	authEpic,
+	postEpic,
+	userEpic,
+	timelineEpic,
+	profileEpic,
+);
 const epicMiddleware = createEpicMiddleware();
 
 const configStore = () => {
-	const store = createStore(
-		appReducer,
-		applyMiddleware(epicMiddleware, loggerMiddleware),
-	);
+	const store = configureStore({
+		reducer: appReducer,
+		middleware: (defaultMiddleware) =>
+			defaultMiddleware({ thunk: false }).concat(epicMiddleware),
+		devTools: __DEV__,
+	});
 
 	epicMiddleware.run(appEpic);
 

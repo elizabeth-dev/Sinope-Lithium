@@ -6,10 +6,10 @@ import { Navigation } from 'react-native-navigation';
 import { Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
 import { ProfileAvatar } from '../profile-avatar/ProfileAvatar.component';
 import { PostStyles as styles } from './Post.styles';
-import { useDispatch } from 'react-redux';
 import { PostActions } from '@core/actions/post.actions';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { IProfile } from '@shared/types/entities/profile.interface';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 
 export interface PostProps {
 	post: Omit<IPost, 'profile'> & { profile: IProfile };
@@ -20,7 +20,7 @@ export interface PostProps {
 }
 
 export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onLayout, stackId }) => {
-	const dispatcher = useDispatch();
+	const dispatcher = useAppDispatch();
 
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);

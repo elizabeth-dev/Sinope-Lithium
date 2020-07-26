@@ -1,35 +1,33 @@
+import { PostActions } from '@core/actions/post.actions';
 import { AppState } from '@core/app.store';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { Post } from '@shared/components/post/Post.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { Animated, View } from 'react-native';
-import { NavigationComponentProps } from 'react-native-navigation';
-import { useSelector, useDispatch } from 'react-redux';
+import { NavigationFunctionComponent } from 'react-native-navigation';
+import { useSelector } from 'react-redux';
 import { PostScreenStyles as styles } from './PostScreen.styles';
-import { PostActions } from '@core/actions/post.actions';
 
 export interface PostScreenProps {
 	postId: string;
 }
 
-export const PostScreen: React.FC<
-	PostScreenProps & NavigationComponentProps
-> = ({ postId, componentId }) => {
-	const dispatcher = useDispatch();
+export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
+	postId,
+	componentId,
+}) => {
+	const dispatcher = useAppDispatch();
+
 	const [headerHeight, setHeaderHeight] = React.useState(0);
 	const post = useSelector((state: AppState) => state.post.postsById[postId]);
 	const currentProfile = useSelector(
 		(state: AppState) => state.profile.self.current,
 	);
 
-	const refreshPost = React.useCallback(
-		(_postId) => {
-			dispatcher(PostActions.request(_postId));
-		},
-		[dispatcher],
-	);
-
-	React.useEffect(() => refreshPost(postId), [postId, refreshPost]);
+	React.useEffect(() => {
+		dispatcher(PostActions.request(postId));
+	}, [postId, dispatcher]);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const mainPostY = scroll.interpolate({
@@ -54,7 +52,6 @@ export const PostScreen: React.FC<
 					containerPaddingTop={headerHeight}
 					progressViewOffset={headerHeight}
 					refreshing={post.isFetching}
-					onRefresh={() => refreshPost(postId)}
 				/>
 			)}
 			<Post

@@ -1,15 +1,17 @@
 import { AuthActions } from '@core/actions/auth.actions';
+import { AppState } from '@core/app.store';
 import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { Keyboard, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { Button, TextInput } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
-import { AppState } from '@core/app.store';
 
 export const LoginScreen: NavigationFunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
+
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const error = useSelector((state: AppState) => state.auth.error);

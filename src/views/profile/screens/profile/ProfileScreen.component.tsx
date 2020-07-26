@@ -2,6 +2,7 @@ import { PostActions } from '@core/actions/post.actions';
 import { ProfileActions } from '@core/actions/profile.actions';
 import { AppState } from '@core/app.store';
 import { PostList } from '@shared/components/post-list/PostList.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
@@ -12,7 +13,7 @@ import {
 	TabBar,
 	TabView,
 } from 'react-native-tab-view';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 
@@ -26,7 +27,8 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 	profileId,
 	componentId,
 }) => {
-	const dispatcher = useDispatch();
+	const dispatcher = useAppDispatch();
+
 	const [index, setIndex] = React.useState(0);
 	const [routes] = React.useState<Route[]>([
 		{ key: 'posts', title: 'Posts' },
@@ -83,7 +85,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 			case 'posts':
 				return (
 					<PostList
-						currentProfile={profile}
+						currentProfile={currentProfile}
 						posts={profilePosts.posts}
 						stackId={componentId}
 						onRefresh={() => refreshProfile(profileId)}

@@ -1,11 +1,12 @@
 import { TimelineActions } from '@core/actions/timeline.actions';
 import { AppState } from '@core/app.store';
 import { PostList } from '@shared/components/post-list/PostList.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
 import { FAB } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { HomeStyles as styles } from './Home.styles';
 
 export interface HomeProps {
@@ -13,7 +14,8 @@ export interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
-	const dispatcher = useDispatch();
+	const dispatcher = useAppDispatch();
+
 	const { timeline, profile } = useSelector((state: AppState) => ({
 		timeline: state.timeline.timelineByProfile[state.profile.self.current],
 		profile: state.profile.self.current,

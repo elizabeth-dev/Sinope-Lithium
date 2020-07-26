@@ -1,13 +1,14 @@
 import { PostActions } from '@core/actions/post.actions';
 import { AppState } from '@core/app.store';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
-import { KeyboardAvoidingView, View, TextInput } from 'react-native';
+import { KeyboardAvoidingView, TextInput, View } from 'react-native';
 import {
 	Navigation,
 	NavigationFunctionComponent,
 } from 'react-native-navigation';
 import { Button, Divider } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
 
 export interface ComposeScreenProps {
@@ -18,11 +19,12 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 	componentId,
 	replyTo,
 }) => {
+	const dispatcher = useAppDispatch();
+
 	const [content, setContent] = React.useState('');
 	const profile = useSelector(
 		(state: AppState) => state.profile.self.current,
 	);
-	const dispatcher = useDispatch();
 
 	// TODO: Remove input underline on selection
 	return (
