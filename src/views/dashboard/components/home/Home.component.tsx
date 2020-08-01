@@ -1,5 +1,6 @@
 import { TimelineActions } from '@core/actions/timeline.actions';
-import { AppState } from '@core/app.store';
+import { fromProfile } from '@core/selectors/profile.selectors';
+import { fromTimeline } from '@core/selectors/timeline.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
@@ -16,27 +17,14 @@ export interface HomeProps {
 export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	const dispatcher = useAppDispatch();
 
-	const { timeline, profile } = useSelector((state: AppState) => ({
-		timeline: state.timeline.timelineByProfile[state.profile.self.current],
-		profile: state.profile.self.current,
-	}));
-
-	if (!timeline) dispatcher(TimelineActions.request(profile));
-
-	const posts = useSelector((state: AppState) =>
-		timeline?.timeline?.map((postId) => ({
-			...state.post.postsById[postId]?.post,
-			// TODO: Profile may be inexistent
-			profile:
-				state.profile.profilesById[
-					state.post.postsById[postId].post.profile
-				]?.profile,
-		})),
-	);
+	const currentProfile = useSelector(fromProfile.currentId);
+	const timeline = useSelector(fromTimeline.current);
 
 	const onRefresh = () => {
-		dispatcher(TimelineActions.request(profile));
+		dispatcher(TimelineActions.request(currentProfile));
 	};
+
+	if (!timeline) onRefresh();
 
 	const onCompose = () => Navigation.push(stackId, composeScreenLayer());
 
@@ -44,10 +32,10 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	return (
 		<>
 			<PostList
-				currentProfile={profile}
-				posts={posts || []}
+				currentProfile={currentProfile}
+				posts={timeline?.timeline || []}
 				onRefresh={onRefresh}
-				refreshing={timeline ? timeline.isFetching : true}
+				refreshing={timeline?.isFetching ?? true}
 				stackId={stackId}
 			/>
 			<FAB style={styles.fab} icon="message-reply" onPress={onCompose} />

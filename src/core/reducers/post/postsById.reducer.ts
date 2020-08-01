@@ -5,12 +5,14 @@ import {
 	RequestPostAction,
 	SentPostAction,
 } from '@core/actions/post.actions';
-import { IPost } from '@shared/types/entities/post.interface';
-import { FetchFields } from '@shared/types/fetchFields.interface';
-import { IReceiveTimelineAction, ReceiveTimelineAction } from '@core/actions/timeline.actions';
+import {
+	IReceiveTimelineAction,
+	ReceiveTimelineAction,
+} from '@core/actions/timeline.actions';
+import { PostEntity } from '@shared/types/entities/post.interface';
 
 export type PostsByIdState = {
-	[id: string]: { post: IPost } & FetchFields;
+	[id: string]: PostEntity;
 };
 
 const initialState: PostsByIdState = {};

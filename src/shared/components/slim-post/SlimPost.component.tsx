@@ -4,8 +4,7 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
-import { IPost } from '@shared/types/entities/post.interface';
-import { IProfile } from '@shared/types/entities/profile.interface';
+import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -21,7 +20,7 @@ import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
-	post: Omit<IPost, 'profile'> & { profile: IProfile };
+	post: FullPost;
 	currentProfile: string;
 	stackId: string;
 }

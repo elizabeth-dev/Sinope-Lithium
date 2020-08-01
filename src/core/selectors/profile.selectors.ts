@@ -1,20 +1,15 @@
 import { AppState } from '@core/app.store';
-import { createSelector } from '@reduxjs/toolkit';
-import { ProfilesByIdState } from '@core/reducers/profile/profilesById.reducer';
 
-const selectProfileState = (state: AppState) => state.profile;
+const selectProfileById = (state: AppState, id: string) =>
+	state.profile.profilesById[id];
 
-const selectProfiles = createSelector(selectProfileState, (state) => state.profilesById);
+const selectCurrentProfileId = (state: AppState) => state.profile.self.current;
 
-const selectProfileById = createSelector(selectProfiles, (id: string, state: ProfilesByIdState) => state[id]);
-
-const selectSelfProfiles = createSelector(selectProfileState, (state) => state.self);
-
-const selectCurrentProfileId = createSelector(selectSelfProfiles, (state) => state.current);
-
-const selectCurrentProfile = createSelector(selectCurrentProfileId, selectProfileById);
+const selectCurrentProfile = (state: AppState) =>
+	state.profile.profilesById[state.profile.self.current];
 
 export const fromProfile = {
+	byId: selectProfileById,
 	currentId: selectCurrentProfileId,
 	current: selectCurrentProfile,
 };

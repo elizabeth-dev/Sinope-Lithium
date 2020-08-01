@@ -10,6 +10,7 @@ import {
 import { Button, Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
+import { fromProfile } from '@core/selectors/profile.selectors';
 
 export interface ComposeScreenProps {
 	replyTo?: string;
@@ -22,9 +23,7 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 	const dispatcher = useAppDispatch();
 
 	const [content, setContent] = React.useState('');
-	const profile = useSelector(
-		(state: AppState) => state.profile.self.current,
-	);
+	const currentProfile = useSelector(fromProfile.currentId);
 
 	// TODO: Remove input underline on selection
 	return (
@@ -47,7 +46,7 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 					onPress={() => {
 						dispatcher(
 							PostActions.send({
-								profile,
+								profile: currentProfile,
 								content,
 								tmpId: Date.now().toString(),
 							}),

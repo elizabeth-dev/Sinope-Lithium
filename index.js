@@ -1,7 +1,3 @@
-/**
- * @format
- */
-
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { Navigation } from 'react-native-navigation';
 import { AppScreens } from './src/core/app.screens';

@@ -1,6 +1,5 @@
 import { SlimPost } from '@shared/components/slim-post/SlimPost.component';
-import { IPost } from '@shared/types/entities/post.interface';
-import { IProfile } from '@shared/types/entities/profile.interface';
+import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import {
 	Animated,
@@ -10,7 +9,7 @@ import {
 import { Divider } from 'react-native-paper';
 
 interface PostListProps {
-	posts: (Omit<IPost, 'profile'> & { profile: IProfile })[];
+	posts: FullPost[];
 	currentProfile: string;
 	onRefresh?: () => void;
 	refreshing?: boolean;

@@ -1,3 +1,6 @@
+import { FetchEntity } from '../fetchFields.interface';
+import { IProfile } from './profile.interface';
+
 export interface IPost {
 	id: string;
 	content: string;
@@ -19,3 +22,9 @@ export interface CreatePostDto {
 	content: string;
 	question?: string;
 }
+
+export type PostEntity = FetchEntity<'post', IPost>;
+
+export type FullPost = Omit<IPost, 'profile'> & { profile: IProfile };
+
+export type FullPostEntity = FetchEntity<'post', FullPost>;

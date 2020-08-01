@@ -1,3 +1,5 @@
+import { FetchEntity } from '../fetchFields.interface';
+
 export interface IProfile {
 	id: string;
 	tag: string;
@@ -17,3 +19,5 @@ export interface UpdateProfileDto {
 	name: string;
 	description: string;
 }
+
+export type ProfileEntity = FetchEntity<'profile', IProfile>;

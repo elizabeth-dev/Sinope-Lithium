@@ -1,8 +1,9 @@
-import { loggerMiddleware } from '@shared/middleware/logger.middleware';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { authEpic } from './epics/auth.epic';
 import { postEpic } from './epics/post.epic';
+import { profileEpic } from './epics/profile.epic';
 import { timelineEpic } from './epics/timeline.epic';
 import { userEpic } from './epics/user.epic';
 import { authReducer } from './reducers/auth.reducer';
@@ -10,8 +11,6 @@ import { postReducer } from './reducers/post.reducer';
 import { profileReducer } from './reducers/profile.reducer';
 import { timelineReducer } from './reducers/timeline.reducer';
 import { userReducer } from './reducers/user.reducer';
-import { profileEpic } from './epics/profile.epic';
-import { configureStore } from '@reduxjs/toolkit';
 
 const appReducer = combineReducers({
 	auth: authReducer,
@@ -36,7 +35,11 @@ const configStore = () => {
 		reducer: appReducer,
 		middleware: (defaultMiddleware) =>
 			defaultMiddleware({ thunk: false }).concat(epicMiddleware),
-		devTools: __DEV__,
+		devTools: false,
+		enhancers: (defaultEnhancers) => [
+			...defaultEnhancers,
+			// ...(__DEV__ ? [reactotron.createEnhancer!()] : []),
+		],
 	});
 
 	epicMiddleware.run(appEpic);

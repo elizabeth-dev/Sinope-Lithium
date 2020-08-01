@@ -3,10 +3,10 @@ import {
 	RequestTimelineAction,
 	TimelineActionsDto,
 } from '@core/actions/timeline.actions';
-import { FetchFields } from '@shared/types/fetchFields.interface';
+import { FetchEntity } from '@shared/types/fetchFields.interface';
 
 export interface TimelineByProfileState {
-	[profile: string]: { timeline: string[] } & FetchFields;
+	[profile: string]: FetchEntity<'timeline', string[]>;
 }
 
 const initialState: TimelineByProfileState = {};

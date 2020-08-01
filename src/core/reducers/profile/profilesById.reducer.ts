@@ -7,11 +7,10 @@ import {
 	IReceiveSelfUserAction,
 	ReceiveSelfUserAction,
 } from '@core/actions/user.actions';
-import { IProfile } from '@shared/types/entities/profile.interface';
-import { FetchFields } from '@shared/types/fetchFields.interface';
+import { ProfileEntity } from '@shared/types/entities/profile.interface';
 
 export interface ProfilesByIdState {
-	[id: string]: { profile: IProfile } & FetchFields;
+	[id: string]: ProfileEntity;
 }
 
 const initialState: ProfilesByIdState = {};

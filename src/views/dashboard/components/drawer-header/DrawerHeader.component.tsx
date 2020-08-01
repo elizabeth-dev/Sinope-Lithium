@@ -5,6 +5,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { useSelector } from 'react-redux';
 import { AppState } from '@core/app.store';
+import { fromProfile } from '@core/selectors/profile.selectors';
 
 export const DrawerHeader: React.FC = () => {
 	const otherProfiles = useSelector((state: AppState) =>
@@ -12,10 +13,7 @@ export const DrawerHeader: React.FC = () => {
 			.filter((profile) => profile !== state.profile.self.current)
 			.map((profile) => state.profile.profilesById[profile]),
 	);
-	const currentProfile = useSelector(
-		(state: AppState) =>
-			state.profile.profilesById[state.profile.self.current],
-	);
+	const currentProfile = useSelector(fromProfile.current);
 
 	return (
 		<View style={styles.root}>

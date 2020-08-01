@@ -1,5 +1,7 @@
 import { PostActions } from '@core/actions/post.actions';
 import { AppState } from '@core/app.store';
+import { fromPost } from '@core/selectors/post.selectors';
+import { fromProfile } from '@core/selectors/profile.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { Post } from '@shared/components/post/Post.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
@@ -18,12 +20,13 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
 	componentId,
 }) => {
 	const dispatcher = useAppDispatch();
+	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
 
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const post = useSelector((state: AppState) => state.post.postsById[postId]);
-	const currentProfile = useSelector(
-		(state: AppState) => state.profile.self.current,
+	const post = useSelector((state: AppState) =>
+		selectPostById(state, postId),
 	);
+	const currentProfile = useSelector(fromProfile.currentId);
 
 	React.useEffect(() => {
 		dispatcher(PostActions.request(postId));

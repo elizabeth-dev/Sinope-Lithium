@@ -2,11 +2,10 @@ import {
 	ReceiveSelfUserAction,
 	UserActionsDto,
 } from '@core/actions/user.actions';
-import { IUser } from '@shared/types/entities/user.interface';
-import { FetchFields } from '@shared/types/fetchFields.interface';
+import { UserEntity } from '@shared/types/entities/user.interface';
 
 export interface UsersByIdState {
-	[id: string]: { user: IUser } & FetchFields;
+	[id: string]: UserEntity;
 }
 
 const initialState: UsersByIdState = {};

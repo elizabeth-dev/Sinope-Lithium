@@ -1,3 +1,5 @@
+import { FetchEntity } from '../fetchFields.interface';
+
 export interface IUser {
 	id: string;
 	name: string;
@@ -13,3 +15,5 @@ export interface CreateUserDto {
 export interface UpdateUserDto {
 	name?: string;
 }
+
+export type UserEntity = FetchEntity<'user', IUser>;

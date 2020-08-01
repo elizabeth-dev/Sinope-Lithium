@@ -1,6 +1,8 @@
 import { PostActions } from '@core/actions/post.actions';
 import { ProfileActions } from '@core/actions/profile.actions';
 import { AppState } from '@core/app.store';
+import { fromPost } from '@core/selectors/post.selectors';
+import { fromProfile } from '@core/selectors/profile.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
@@ -23,11 +25,17 @@ export interface ProfileScreenProps {
 	profileId: string;
 }
 
+// TODO: [SLI-54] Refactor component
 export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 	profileId,
 	componentId,
 }) => {
 	const dispatcher = useAppDispatch();
+
+	const selectPostsByProfile = React.useMemo(
+		() => fromPost.make.byProfile(),
+		[],
+	);
 
 	const [index, setIndex] = React.useState(0);
 	const [routes] = React.useState<Route[]>([
@@ -48,24 +56,15 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 		profileId,
 	]);
 
-	const profile = useSelector(
-		(state: AppState) => state.profile.profilesById[profileId],
+	const profile = useSelector((state: AppState) =>
+		fromProfile.byId(state, profileId),
 	);
 
-	const currentProfile = useSelector(
-		(state: AppState) => state.profile.self.current,
-	);
+	const currentProfile = useSelector(fromProfile.currentId);
 
-	const profilePosts = useSelector((state: AppState) => ({
-		...state.post.postsByProfile[profileId],
-		posts: state.post.postsByProfile[profileId]?.posts?.map((postId) => ({
-			...state.post.postsById[postId]?.post,
-			profile:
-				state.profile.profilesById[
-					state.post.postsById[postId].post.profile
-				]?.profile,
-		})),
-	}));
+	const profilePosts = useSelector((state: AppState) =>
+		selectPostsByProfile(state, profileId),
+	);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const headerY = scroll.interpolate({
@@ -86,7 +85,9 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 				return (
 					<PostList
 						currentProfile={currentProfile}
-						posts={profilePosts.posts}
+						posts={profilePosts.posts.map(
+							(postEntity) => postEntity.post,
+						)}
 						stackId={componentId}
 						onRefresh={() => refreshProfile(profileId)}
 						refreshing={profilePosts.isFetching}

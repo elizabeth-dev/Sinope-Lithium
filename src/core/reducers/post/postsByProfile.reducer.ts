@@ -4,10 +4,10 @@ import {
 	RequestProfilePostsAction,
 	SentPostAction,
 } from '@core/actions/post.actions';
-import { FetchFields } from '@shared/types/fetchFields.interface';
+import { FetchEntity } from '@shared/types/fetchFields.interface';
 
 export type PostsByProfileState = {
-	[profileId: string]: { posts: string[] } & FetchFields;
+	[profileId: string]: FetchEntity<'posts', string[]>;
 };
 
 const initialState: PostsByProfileState = {};
