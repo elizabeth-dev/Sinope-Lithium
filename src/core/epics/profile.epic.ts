@@ -23,10 +23,7 @@ const requestProfileEpic: Epic<
 				payload.profile,
 				state.auth.accessToken as string,
 			).pipe(
-				map((profile) => {
-					console.log(profile);
-					return ProfileActions.receive([profile], Date.now());
-				}),
+				map((profile) => ProfileActions.receive([profile], Date.now())),
 			),
 		),
 	);

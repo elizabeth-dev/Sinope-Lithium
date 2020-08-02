@@ -10,6 +10,7 @@ import { Animated, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 import { PostScreenStyles as styles } from './PostScreen.styles';
+import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
 
 export interface PostScreenProps {
 	postId: string;
@@ -40,32 +41,40 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
 	});
 
 	return (
-		<View style={styles.root}>
-			{headerHeight !== 0 && (
-				<PostList
-					currentProfile={currentProfile}
-					posts={[]}
-					stackId={componentId}
-					onScroll={Animated.event(
-						[{ nativeEvent: { contentOffset: { y: scroll } } }],
-						{
-							useNativeDriver: true,
-						},
-					)}
-					containerPaddingTop={headerHeight}
-					progressViewOffset={headerHeight}
-					refreshing={post.isFetching}
+		<>
+			{post.isFetching && (
+				<ProgressBar
+					backgroundColor="#4a0072"
+					style={styles.progress}
 				/>
 			)}
-			<Post
-				post={post.post}
-				currentProfile={currentProfile}
-				mainPostY={(mainPostY as unknown) as number}
-				onLayout={({ nativeEvent }) =>
-					setHeaderHeight(nativeEvent.layout.height)
-				}
-				stackId={componentId}
-			/>
-		</View>
+			<View style={styles.root}>
+				{headerHeight !== 0 && (
+					<PostList
+						currentProfile={currentProfile}
+						posts={[]}
+						stackId={componentId}
+						onScroll={Animated.event(
+							[{ nativeEvent: { contentOffset: { y: scroll } } }],
+							{
+								useNativeDriver: true,
+							},
+						)}
+						containerPaddingTop={headerHeight}
+						progressViewOffset={headerHeight}
+						refreshing={post.isFetching}
+					/>
+				)}
+				<Post
+					post={post.post}
+					currentProfile={currentProfile}
+					mainPostY={(mainPostY as unknown) as number}
+					onLayout={({ nativeEvent }) =>
+						setHeaderHeight(nativeEvent.layout.height)
+					}
+					stackId={componentId}
+				/>
+			</View>
+		</>
 	);
 };

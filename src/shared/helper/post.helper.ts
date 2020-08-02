@@ -9,13 +9,14 @@ import {
 export const populatePostEntity = (
 	post: PostEntity,
 	profilesById: ProfilesByIdState,
-): FullPostEntity => ({
-	...post,
-	post: {
-		...post.post,
-		profile: profilesById[post?.post?.profile]?.profile,
-	},
-});
+): FullPostEntity =>
+	post && {
+		...post,
+		post: {
+			...post.post,
+			profile: profilesById[post?.post?.profile]?.profile,
+		},
+	};
 
 export const populatePost = (
 	post: IPost,

@@ -2,17 +2,34 @@ import React from 'react';
 import { Animated, LayoutChangeEvent, View } from 'react-native';
 import { Avatar, Paragraph, Subheading, Text, Title } from 'react-native-paper';
 import { ProfileHeaderStyles as styles } from './ProfileHeader.styles';
+import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
 
 export interface ProfileHeaderProps {
 	name: string;
 	tag: string;
 	description: string;
 	headerY: number;
+	isFetching: boolean;
 	onLayout: (ev: LayoutChangeEvent) => void;
 }
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, tag, description, headerY, onLayout }) => {
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+	name,
+	tag,
+	description,
+	headerY,
+	isFetching,
+	onLayout,
+}) => {
 	return (
-		<Animated.View style={[styles.root, { transform: [{ translateY: headerY }] }]} onLayout={onLayout}>
+		<Animated.View
+			style={[styles.root, { transform: [{ translateY: headerY }] }]}
+			onLayout={onLayout}>
+			{isFetching && (
+				<ProgressBar
+					backgroundColor="#4a0072"
+					style={styles.progress}
+				/>
+			)}
 			<View style={styles.cover} />
 			<View style={styles.content}>
 				<Avatar.Text style={styles.avatar} label="E" size={72} />

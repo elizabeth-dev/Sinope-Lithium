@@ -27,12 +27,14 @@ const selectPostsByProfile = () =>
 			profilePosts,
 			postsById,
 			profilesById,
-		): FetchEntity<'posts', FullPostEntity[]> => ({
-			...profilePosts,
-			posts: profilePosts?.posts?.map((id) =>
-				populatePostEntity(postsById[id], profilesById),
-			),
-		}),
+		): FetchEntity<'posts', FullPostEntity[]> =>
+			profilePosts && {
+				...profilePosts,
+				// FIX: Will return undefined if post is false
+				posts: profilePosts?.posts?.map((id) =>
+					populatePostEntity(postsById[id], profilesById),
+				),
+			},
 	);
 
 export const fromPost = {

@@ -35,11 +35,8 @@ const configStore = () => {
 		reducer: appReducer,
 		middleware: (defaultMiddleware) =>
 			defaultMiddleware({ thunk: false }).concat(epicMiddleware),
-		devTools: false,
-		enhancers: (defaultEnhancers) => [
-			...defaultEnhancers,
-			// ...(__DEV__ ? [reactotron.createEnhancer!()] : []),
-		],
+		devTools: __DEV__,
+		// enhancers: [devToolsEnhancer({ hostname: '192.168.1.131', port: 8081 })],
 	});
 
 	epicMiddleware.run(appEpic);

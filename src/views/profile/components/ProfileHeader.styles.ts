@@ -7,6 +7,10 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 		position: 'absolute',
 	},
+	progress: {
+		position: 'absolute',
+		zIndex: 5,
+	},
 	cover: {
 		paddingBottom: 160,
 		backgroundColor: Colors.yellow200,

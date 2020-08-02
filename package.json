@@ -24,6 +24,7 @@
 		"react-redux": "^7.2.0",
 		"redux": "^4.0.5",
 		"redux-observable": "^1.2.0",
+		"remote-redux-devtools": "^0.5.16",
 		"rxjs": "^6.5.5",
 		"typesafe-actions": "^5.1.0"
 	},
@@ -36,6 +37,7 @@
 		"@types/react-native-vector-icons": "^6.4.5",
 		"@types/react-redux": "^7.1.7",
 		"@types/react-test-renderer": "16.9.2",
+		"@types/remote-redux-devtools": "^0.5.4",
 		"@typescript-eslint/eslint-plugin": "^3.3.0",
 		"@typescript-eslint/parser": "^3.3.0",
 		"babel-jest": "^24.9.0",
@@ -46,8 +48,6 @@
 		"metro-react-native-babel-preset": "^0.59.0",
 		"prettier": "^2.0.4",
 		"react-test-renderer": "16.11.0",
-		"reactotron-react-native": "^5.0.0",
-		"reactotron-redux": "^3.1.3",
 		"redux-devtools": "^3.5.0",
 		"typescript": "^3.8.3"
 	},

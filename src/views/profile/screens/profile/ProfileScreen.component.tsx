@@ -85,12 +85,12 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 				return (
 					<PostList
 						currentProfile={currentProfile}
-						posts={profilePosts.posts.map(
-							(postEntity) => postEntity.post,
-						)}
+						posts={
+							profilePosts?.posts?.map(
+								(postEntity) => postEntity.post,
+							) ?? []
+						}
 						stackId={componentId}
-						onRefresh={() => refreshProfile(profileId)}
-						refreshing={profilePosts.isFetching}
 						onScroll={Animated.event(
 							[{ nativeEvent: { contentOffset: { y: scroll } } }],
 							{
@@ -138,9 +138,13 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 				/>
 			)}
 			<ProfileHeader
-				name={profile.profile.name}
-				tag={profile.profile.tag}
-				description={profile.profile.description}
+				name={profile?.profile?.name}
+				tag={profile?.profile?.tag}
+				description={profile?.profile?.description}
+				isFetching={
+					(profile?.isFetching ?? true) ||
+					(profilePosts?.isFetching ?? true)
+				}
 				headerY={(headerY as unknown) as number}
 				onLayout={({ nativeEvent }) =>
 					setHeaderHeight(nativeEvent.layout.height)
