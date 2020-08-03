@@ -16,7 +16,6 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SceneRoute } from '../../../../shared/types/scene-route.type';
 import { Home } from '../../components/home/Home.component';
-import { Notifications } from '../../components/notifications/Notifications.component';
 import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
 
 const initialLayout = { width: Dimensions.get('window').width };
@@ -50,25 +49,19 @@ export const DashboardScreen: NavigationFunctionComponent = ({
 
 	const [routes] = React.useState<SceneRoute[]>([
 		{ key: 'home', accessibilityLabel: 'Home', icon: 'home' },
-		{
-			key: 'notifications',
-			accessibilityLabel: 'Notifications',
-			icon: 'bell',
-		},
 	]);
 
-	const renderScene = ({
-		route,
-	}: SceneRendererProps & { route: SceneRoute }) => {
-		switch (route.key) {
-			case 'home':
-				return <Home stackId={componentId} />;
-			case 'notifications':
-				return <Notifications />;
-			default:
-				return null;
-		}
-	};
+	const renderScene = React.useCallback(
+		({ route }: SceneRendererProps & { route: SceneRoute }) => {
+			switch (route.key) {
+				case 'home':
+					return <Home stackId={componentId} />;
+				default:
+					return null;
+			}
+		},
+		[componentId],
+	);
 
 	React.useEffect(() => {
 		const listener: NavigationComponentListener = {

@@ -20,11 +20,13 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	const currentProfile = useSelector(fromProfile.currentId);
 	const timeline = useSelector(fromTimeline.current);
 
-	const onRefresh = () => {
+	const onRefresh = React.useCallback(() => {
 		dispatcher(TimelineActions.request(currentProfile));
-	};
+	}, [currentProfile, dispatcher]);
 
-	if (!timeline) onRefresh();
+	React.useEffect(() => {
+		if (!timeline) onRefresh();
+	}, [onRefresh, timeline]);
 
 	const onCompose = () => Navigation.push(stackId, composeScreenLayer());
 

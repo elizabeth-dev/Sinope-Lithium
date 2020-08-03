@@ -1,34 +1,59 @@
+import { ProfileActions } from '@core/actions/profile.actions';
+import { fromProfile } from '@core/selectors/profile.selectors';
+import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import React from 'react';
 import { View } from 'react-native';
-import { Avatar, Colors, Subheading, Title } from 'react-native-paper';
+import { Navigation } from 'react-native-navigation';
+import { Colors, Subheading, Title } from 'react-native-paper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { useSelector } from 'react-redux';
-import { AppState } from '@core/app.store';
-import { fromProfile } from '@core/selectors/profile.selectors';
+import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 
-export const DrawerHeader: React.FC = () => {
-	const otherProfiles = useSelector((state: AppState) =>
-		state.profile.self.profiles
-			.filter((profile) => profile !== state.profile.self.current)
-			.map((profile) => state.profile.profilesById[profile]),
-	);
+export interface DrawerHeaderProps {
+	componentId: string;
+}
+export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
+	const dispatcher = useAppDispatch();
+
 	const currentProfile = useSelector(fromProfile.current);
+	const myProfiles = useSelector(fromProfile.mine).filter(
+		(el) => el.profile?.id !== currentProfile?.profile?.id,
+	);
+
+	const onCurrentClick = () =>
+		Navigation.push(
+			'centerStack',
+			profileScreenLayer(currentProfile?.profile?.id),
+		);
+
+	const onOtherClick = (profileId: string) => {
+		dispatcher(ProfileActions.switch(profileId));
+		Navigation.mergeOptions(componentId, {
+			sideMenu: { left: { visible: false } },
+		});
+	};
 
 	return (
 		<View style={styles.root}>
 			<View style={styles.avatarBox}>
-				<Avatar.Text
+				<ProfileAvatar
 					size={72}
-					label={currentProfile.profile.name[0].toUpperCase()}
+					label={currentProfile?.profile?.name[0]?.toUpperCase()}
+					onPress={onCurrentClick}
 				/>
-				{otherProfiles.length !== 0 && (
+				{myProfiles.length !== 0 && (
 					<View style={styles.otherProfiles}>
-						{otherProfiles.map((profile) => (
-							<Avatar.Text
+						{myProfiles.map((profile) => (
+							<ProfileAvatar
 								size={48}
-								label={profile.profile.name[0].toUpperCase()}
+								label={profile.profile?.name[0]?.toUpperCase()}
 								style={styles.otherProfileAvatar}
+								onPress={() =>
+									onOtherClick(profile.profile?.id)
+								}
+								key={profile.profile.id}
 							/>
 						))}
 					</View>

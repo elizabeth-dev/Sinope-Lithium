@@ -12,7 +12,7 @@ export const dashboardRoot = (menuIcon: ImageSource): LayoutRoot => ({
 			},
 			center: {
 				stack: {
-					id: 'testComponentId',
+					id: 'centerStack',
 					children: [
 						{
 							component: {

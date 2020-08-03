@@ -10,7 +10,7 @@ import { Avatar } from 'react-native-paper';
 export interface ProfileAvatarProps {
 	label: string;
 	size: number;
-	style: StyleProp<ViewStyle>;
+	style?: StyleProp<ViewStyle>;
 	onPress?: (event: GestureResponderEvent) => void;
 }
 
