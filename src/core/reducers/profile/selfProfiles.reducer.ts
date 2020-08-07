@@ -1,4 +1,6 @@
 import {
+	CreatedFirstProfileAction,
+	CreatedProfileAction,
 	ProfileActionsDto,
 	SwitchProfileAction,
 } from '@core/actions/profile.actions';
@@ -31,6 +33,13 @@ export function selfProfilesReducer(
 					(profile) => profile.id,
 				),
 				current: action.payload.user.profiles[0]?.id,
+			};
+		case CreatedFirstProfileAction:
+		case CreatedProfileAction:
+			return {
+				...state,
+				profiles: [...state.profiles, action.payload.profile.id],
+				current: action.payload.profile.id,
 			};
 		default:
 			return state;

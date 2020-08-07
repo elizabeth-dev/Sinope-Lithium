@@ -2,7 +2,11 @@ import { AppScreens } from '@core/app.screens';
 import { LayoutRoot } from 'react-native-navigation';
 import { ImageSource } from 'react-native-vector-icons/Icon';
 
-export const dashboardRoot = (menuIcon: ImageSource): LayoutRoot => ({
+export const dashboardRoot = (
+	menuIcon: ImageSource,
+	profileName: string,
+	profileTag: string,
+): LayoutRoot => ({
 	root: {
 		sideMenu: {
 			left: {
@@ -34,8 +38,8 @@ export const dashboardRoot = (menuIcon: ImageSource): LayoutRoot => ({
 					options: {
 						topBar: {
 							elevation: 0,
-							title: { text: 'Elizabeth' },
-							subtitle: { text: '@Elizabeth' },
+							title: { text: profileName },
+							subtitle: { text: `@${profileTag}` },
 						},
 					},
 				},

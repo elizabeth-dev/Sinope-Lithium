@@ -9,6 +9,7 @@ import {
 } from '@core/actions/user.actions';
 import { AppState } from '@core/app.store';
 import { UserService } from '@core/http/user.service';
+import { fromProfile } from '@core/selectors/profile.selectors';
 import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -48,14 +49,26 @@ const loadSelfUserEpic: Epic<
 	);
 
 // TODO: [SLI-43] Implement custom flow for first login
-const loadedSelfUserEpic: Epic<AppActionsDto> = (action$) =>
+const loadedSelfUserEpic: Epic<AppActionsDto, any, AppState> = (
+	action$,
+	state$,
+) =>
 	action$.pipe(
 		filter(isOfType(ReceiveSelfUserAction)),
-		tap(() =>
+		withLatestFrom(state$),
+		tap(([, state]) =>
 			Promise.all([
 				MaterialCommunityIcons.getImageSource('menu', 25),
 			]).then(([menuIcon]) => {
-				Navigation.setRoot(dashboardRoot(menuIcon));
+				const currentProfile = fromProfile.current(state);
+
+				Navigation.setRoot(
+					dashboardRoot(
+						menuIcon,
+						currentProfile?.profile?.name,
+						currentProfile?.profile?.tag,
+					),
+				);
 			}),
 		),
 		ignoreElements(),

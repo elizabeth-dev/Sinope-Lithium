@@ -11,7 +11,7 @@ export interface IProfile {
 export interface CreateProfileDto {
 	tag: string;
 	name: string;
-	description: string;
+	description?: string;
 }
 
 export interface UpdateProfileDto {

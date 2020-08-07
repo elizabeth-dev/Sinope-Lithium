@@ -6,10 +6,12 @@ import { reduxProviderHOC } from './src/shared/hoc/redux-provider/reduxProviderH
 import { ComposeScreen } from './src/views/compose/screens/compose/ComposeScreen.component';
 import { DashboardScreen } from './src/views/dashboard/screens/dashboard/DashboardScreen.component';
 import { DrawerScreen } from './src/views/dashboard/screens/drawer/DrawerScreen.component';
-import { LoginScreen } from './src/views/login/screens/login/LoginScreen.component';
 import { PostScreen } from './src/views/post/screens/post/PostScreen.component';
 import { ProfileScreen } from './src/views/profile/screens/profile/ProfileScreen.component';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
+import { LoginScreen } from './src/views/reception/screens/login/LoginScreen.component';
+import { RegisterScreen } from './src/views/reception/screens/register/RegisterScreen.component';
+import { FirstProfileScreen } from './src/views/reception/screens/first-profile/FirstProfileScreen.component';
 
 Navigation.registerComponent(AppScreens.SplashScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(SplashScreen, appStore)),
@@ -28,6 +30,12 @@ Navigation.registerComponent(AppScreens.PostScreen, () =>
 );
 Navigation.registerComponent(AppScreens.LoginScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(LoginScreen, appStore)),
+);
+Navigation.registerComponent(AppScreens.RegisterScreen, () =>
+	gestureHandlerRootHOC(reduxProviderHOC(RegisterScreen, appStore)),
+);
+Navigation.registerComponent(AppScreens.FirstProfileScreen, () =>
+	gestureHandlerRootHOC(reduxProviderHOC(FirstProfileScreen, appStore)),
 );
 Navigation.registerComponent(AppScreens.ComposeScreen, () =>
 	gestureHandlerRootHOC(reduxProviderHOC(ComposeScreen, appStore)),

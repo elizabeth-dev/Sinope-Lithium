@@ -3,6 +3,7 @@ import { TokenPair } from '@shared/types/auth.interface';
 import { Observable, throwError } from 'rxjs';
 import { ajax, AjaxError } from 'rxjs/ajax';
 import { catchError, map } from 'rxjs/operators';
+import { CreateUserDto } from '@shared/types/entities/user.interface';
 
 const login = (email: string, password: string): Observable<TokenPair> => {
 	return ajax
@@ -19,6 +20,17 @@ const login = (email: string, password: string): Observable<TokenPair> => {
 				return throwError(err.status);
 			}),
 		);
+};
+
+const register = (newUser: CreateUserDto): Observable<TokenPair> => {
+	return ajax.post(`${developmentEnv.apiUrl}/auth/register`, newUser).pipe(
+		map((res) => res.response as TokenPair),
+		catchError((err: AjaxError) => {
+			console.error(JSON.stringify(err));
+
+			return throwError(err.status);
+		}),
+	);
 };
 
 const refresh = (refreshToken: string): Observable<TokenPair> => {
@@ -39,6 +51,7 @@ const logout = (refreshToken: string): Observable<void> => {
 
 export const AuthService = {
 	login,
+	register,
 	refresh,
 	logout,
 };

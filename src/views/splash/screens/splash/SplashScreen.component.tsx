@@ -8,14 +8,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useSelector } from 'react-redux';
 import { SplashScreenStyles as styles } from './SplashScreen.styles';
 import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
+import { fromProfile } from '@core/selectors/profile.selectors';
 
 export const SplashScreen: React.FC = () => {
 	const loggedIn = useSelector<AppState>((state) => state.auth.loggedIn);
+	const currentProfile = useSelector(fromProfile.current);
 
 	if (!loggedIn) Navigation.setRoot(loginRoot());
 	else
 		Promise.all([MaterialCommunityIcons.getImageSource('menu', 25)]).then(([menuIcon]) => {
-			Navigation.setRoot(dashboardRoot(menuIcon));
+			Navigation.setRoot(dashboardRoot(menuIcon, currentProfile?.profile?.name, currentProfile?.profile?.tag));
 		});
 
 	return (

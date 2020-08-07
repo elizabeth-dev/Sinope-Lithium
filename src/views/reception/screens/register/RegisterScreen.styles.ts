@@ -1,20 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-export const LoginScreenStyles = StyleSheet.create({
+export const RegisterScreenStyles = StyleSheet.create({
 	root: {
 		flex: 1,
 		padding: 24,
 		justifyContent: 'center',
-	},
-	input: {
+    },
+    input: {
 		alignSelf: 'stretch',
 		marginVertical: 8,
-	},
-	loginButton: {
+    },
+    registerButton: {
 		marginLeft: 'auto',
 		marginVertical: 12,
 	},
-	loginButtonContent: {
+	registerButtonContent: {
 		paddingVertical: 4,
 	},
 	disclaimer: {

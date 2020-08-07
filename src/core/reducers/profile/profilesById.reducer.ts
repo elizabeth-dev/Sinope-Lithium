@@ -1,4 +1,6 @@
 import {
+	CreatedFirstProfileAction,
+	CreatedProfileAction,
 	ProfileActionsDto,
 	ReceiveProfilesAction,
 	RequestProfileAction,
@@ -57,6 +59,16 @@ export function profilesByIdReducer(
 					}),
 					{} as ProfilesByIdState,
 				),
+			};
+		case CreatedProfileAction:
+		case CreatedFirstProfileAction:
+			return {
+				...state,
+				[action.payload.profile.id]: {
+					profile: action.payload.profile,
+					isFetching: false,
+					receivedAt: action.payload.receivedAt,
+				},
 			};
 		default:
 			return state;

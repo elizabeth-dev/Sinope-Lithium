@@ -11,6 +11,7 @@ import { postReducer } from './reducers/post.reducer';
 import { profileReducer } from './reducers/profile.reducer';
 import { timelineReducer } from './reducers/timeline.reducer';
 import { userReducer } from './reducers/user.reducer';
+import { receptionReducer } from './reducers/reception.reducer';
 
 const appReducer = combineReducers({
 	auth: authReducer,
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
 	profile: profileReducer,
 	user: userReducer,
 	timeline: timelineReducer,
+	reception: receptionReducer,
 });
 export type AppState = ReturnType<typeof appReducer>;
 

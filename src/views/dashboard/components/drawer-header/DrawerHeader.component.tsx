@@ -10,6 +10,7 @@ import { Colors, Subheading, Title } from 'react-native-paper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
+import { IProfile } from '@shared/types/entities/profile.interface';
 
 export interface DrawerHeaderProps {
 	componentId: string;
@@ -28,8 +29,14 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 			profileScreenLayer(currentProfile?.profile?.id),
 		);
 
-	const onOtherClick = (profileId: string) => {
-		dispatcher(ProfileActions.switch(profileId));
+	const onOtherClick = (profile: IProfile) => {
+		dispatcher(ProfileActions.switch(profile?.id));
+		Navigation.mergeOptions('centerStack', {
+			topBar: {
+				title: { text: profile?.name },
+				subtitle: { text: `@${profile?.tag}` },
+			},
+		});
 		Navigation.mergeOptions(componentId, {
 			sideMenu: { left: { visible: false } },
 		});
@@ -50,9 +57,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 								size={48}
 								label={profile.profile?.name[0]?.toUpperCase()}
 								style={styles.otherProfileAvatar}
-								onPress={() =>
-									onOtherClick(profile.profile?.id)
-								}
+								onPress={() => onOtherClick(profile.profile)}
 								key={profile.profile.id}
 							/>
 						))}

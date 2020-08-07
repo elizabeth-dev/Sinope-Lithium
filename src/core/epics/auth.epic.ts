@@ -4,14 +4,27 @@ import {
 	ILoginSuccessAction,
 	LoginAction,
 	TokenExpiredAction,
+	IRegisterSuccessAction,
+	IRegisterFailureAction,
+	RegisterAction,
+	RegisterSuccessAction,
 } from '@core/actions/auth.actions';
 import { AppState } from '@core/app.store';
 import { AuthService } from '@core/http/auth.service';
 import { combineEpics, Epic } from 'redux-observable';
 import { of, throwError } from 'rxjs';
-import { catchError, filter, map, mergeMap } from 'rxjs/operators';
+import {
+	catchError,
+	filter,
+	map,
+	mergeMap,
+	tap,
+	ignoreElements,
+} from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { AppActionsDto } from '../actions';
+import { Navigation } from 'react-native-navigation';
+import { firstProfileRoot } from '@shared/navigation/roots/firstProfile.root';
 
 const loginEpic: Epic<
 	AppActionsDto,
@@ -40,6 +53,41 @@ const loginEpic: Epic<
 		),
 	);
 
+const registerEpic: Epic<
+	AppActionsDto,
+	IRegisterSuccessAction | IRegisterFailureAction
+> = (action$) =>
+	action$.pipe(
+		filter(isOfType(RegisterAction)),
+		mergeMap(({ payload }) =>
+			AuthService.register({
+				name: payload.name,
+				email: payload.email,
+				password: payload.password,
+			}).pipe(
+				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+					AuthActions.registerSuccess(
+						accessToken,
+						refreshToken,
+						expiresAt,
+					),
+				),
+				catchError((err: number) => {
+					if (err === 401) return of(AuthActions.registerFailure());
+
+					return throwError(err);
+				}),
+			),
+		),
+	);
+
+const registeredEpic: Epic<AppActionsDto> = (action$) =>
+	action$.pipe(
+		filter(isOfType(RegisterSuccessAction)),
+		tap(() => Navigation.setRoot(firstProfileRoot())),
+		ignoreElements(),
+	);
+
 const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 	action$,
 	state$,
@@ -55,4 +103,9 @@ const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 		),
 	);
 
-export const authEpic = combineEpics(loginEpic, accessTokenExpiredEpic);
+export const authEpic = combineEpics(
+	loginEpic,
+	accessTokenExpiredEpic,
+	registerEpic,
+	registeredEpic,
+);

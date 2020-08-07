@@ -1,13 +1,9 @@
-import { Observable } from 'rxjs';
-import {
-	IUser,
-	CreateUserDto,
-	UpdateUserDto,
-} from '@shared/types/entities/user.interface';
-import { ajax } from 'rxjs/ajax';
 import { developmentEnv } from '@core/environments/development.env';
-import { map } from 'rxjs/operators';
 import { IProfile } from '@shared/types/entities/profile.interface';
+import { IUser, UpdateUserDto } from '@shared/types/entities/user.interface';
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { map } from 'rxjs/operators';
 
 const getSelf = (
 	token: string,
@@ -21,12 +17,6 @@ const getById = (id: string, token: string): Observable<IUser> => {
 	return ajax.getJSON(`${developmentEnv.apiUrl}/users/${id}`, {
 		Authorization: `Bearer ${token}`,
 	});
-};
-
-const create = (newUser: CreateUserDto): Observable<IUser> => {
-	return ajax
-		.post(`${developmentEnv.apiUrl}/users`, newUser)
-		.pipe(map((res) => res.response as IUser));
 };
 
 const update = (
@@ -52,7 +42,6 @@ const remove = (id: string, token: string): Observable<void> => {
 export const UserService = {
 	getSelf,
 	getById,
-	create,
 	remove,
 	update,
 };

@@ -87,13 +87,66 @@ const refreshedTokenFn = (
 	payload: { accessToken, refreshToken, expiresAt },
 });
 
+export const RegisterAction = 'auth/RegisterAction';
+
+export interface IRegisterAction {
+	type: typeof RegisterAction;
+	payload: {
+		name: string;
+		email: string;
+		password: string;
+	};
+}
+
+const registerFn = (
+	name: string,
+	email: string,
+	password: string,
+): IRegisterAction => ({
+	type: RegisterAction,
+	payload: { name, email, password },
+});
+
+export const RegisterSuccessAction = 'auth/RegisterSuccessAction';
+
+export interface IRegisterSuccessAction {
+	type: typeof RegisterSuccessAction;
+	payload: {
+		accessToken: string;
+		refreshToken: string;
+		expiresAt: number;
+	};
+}
+
+const registerSuccessFn = (
+	accessToken: string,
+	refreshToken: string,
+	expiresAt: number,
+): IRegisterSuccessAction => ({
+	type: RegisterSuccessAction,
+	payload: { accessToken, refreshToken, expiresAt },
+});
+
+export const RegisterFailureAction = 'auth/RegisterFailureAction';
+
+export interface IRegisterFailureAction {
+	type: typeof RegisterFailureAction;
+}
+
+const registerFailureFn = (): IRegisterFailureAction => ({
+	type: RegisterFailureAction,
+});
+
 export type AuthActionsDto =
 	| ILoginAction
 	| ILoginSuccessAction
 	| ILoginFailureAction
 	| ILogoutAction
 	| IRefreshedTokenAction
-	| ITokenExpiredAction;
+	| ITokenExpiredAction
+	| IRegisterAction
+	| IRegisterSuccessAction
+	| IRegisterFailureAction;
 
 export const AuthActions = {
 	login: loginFn,
@@ -102,4 +155,7 @@ export const AuthActions = {
 	logout: logoutFn,
 	expired: tokenExpiredFn,
 	refreshed: refreshedTokenFn,
+	register: registerFn,
+	registerSuccess: registerSuccessFn,
+	registerFailure: registerFailureFn,
 };
