@@ -2,29 +2,19 @@ import {
 	AuthActions,
 	ILoginFailureAction,
 	ILoginSuccessAction,
-	LoginAction,
-	TokenExpiredAction,
-	IRegisterSuccessAction,
 	IRegisterFailureAction,
+	IRegisterSuccessAction,
+	LoginAction,
 	RegisterAction,
-	RegisterSuccessAction,
+	TokenExpiredAction,
 } from '@core/actions/auth.actions';
 import { AppState } from '@core/app.store';
 import { AuthService } from '@core/http/auth.service';
 import { combineEpics, Epic } from 'redux-observable';
 import { of, throwError } from 'rxjs';
-import {
-	catchError,
-	filter,
-	map,
-	mergeMap,
-	tap,
-	ignoreElements,
-} from 'rxjs/operators';
+import { catchError, filter, map, mergeMap } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { AppActionsDto } from '../actions';
-import { Navigation } from 'react-native-navigation';
-import { firstProfileRoot } from '@shared/navigation/roots/firstProfile.root';
 
 const loginEpic: Epic<
 	AppActionsDto,
@@ -81,13 +71,6 @@ const registerEpic: Epic<
 		),
 	);
 
-const registeredEpic: Epic<AppActionsDto> = (action$) =>
-	action$.pipe(
-		filter(isOfType(RegisterSuccessAction)),
-		tap(() => Navigation.setRoot(firstProfileRoot())),
-		ignoreElements(),
-	);
-
 const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 	action$,
 	state$,
@@ -107,5 +90,4 @@ export const authEpic = combineEpics(
 	loginEpic,
 	accessTokenExpiredEpic,
 	registerEpic,
-	registeredEpic,
 );

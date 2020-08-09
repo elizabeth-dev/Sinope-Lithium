@@ -1,25 +1,20 @@
 import { AppActionsDto } from '@core/actions';
 import {
+	CreateFirstProfileAction,
+	CreateProfileAction,
+	ICreatedFirstProfileAction,
+	ICreatedProfileAction,
+	IFailedCreateFirstProfileAction,
+	IFailedCreateProfileAction,
 	IReceiveProfilesAction,
 	ProfileActions,
 	RequestProfileAction,
-	ICreatedProfileAction,
-	IFailedCreateProfileAction,
-	CreateProfileAction,
-	ICreatedFirstProfileAction,
-	IFailedCreateFirstProfileAction,
-	CreateFirstProfileAction,
-	CreatedFirstProfileAction,
 } from '@core/actions/profile.actions';
 import { AppState } from '@core/app.store';
 import { ProfileService } from '@core/http/profile.service';
 import { combineEpics, Epic } from 'redux-observable';
-import { filter, map, mergeMap, withLatestFrom, tap, ignoreElements } from 'rxjs/operators';
+import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
-import { Navigation } from 'react-native-navigation';
-import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { fromProfile } from '@core/selectors/profile.selectors';
 
 const requestProfileEpic: Epic<
 	AppActionsDto,
@@ -77,34 +72,8 @@ const createFirstProfileEpic: Epic<
 		),
 	);
 
-const createdFirstProfileEpic: Epic<AppActionsDto, any, AppState> = (
-	action$,
-	state$,
-) =>
-	action$.pipe(
-		filter(isOfType(CreatedFirstProfileAction)),
-		withLatestFrom(state$),
-		tap(([, state]) =>
-			Promise.all([
-				MaterialCommunityIcons.getImageSource('menu', 25),
-			]).then(([menuIcon]) => {
-				const currentProfile = fromProfile.current(state);
-
-				Navigation.setRoot(
-					dashboardRoot(
-						menuIcon,
-						currentProfile?.profile?.name,
-						currentProfile?.profile?.tag,
-					),
-				);
-			}),
-		),
-		ignoreElements(),
-	);
-
 export const profileEpic = combineEpics(
 	requestProfileEpic,
 	createProfileEpic,
 	createFirstProfileEpic,
-	createdFirstProfileEpic,
 );

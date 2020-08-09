@@ -1,8 +1,6 @@
 import { AppActionsDto } from '@core/actions';
-import { LoginSuccessAction } from '@core/actions/auth.actions';
 import {
 	IReceiveSelfUserAction,
-	IRequestSelfUserAction,
 	ReceiveSelfUserAction,
 	RequestSelfUserAction,
 	UserActions,
@@ -18,20 +16,11 @@ import {
 	filter,
 	ignoreElements,
 	map,
-	mapTo,
 	mergeMap,
 	tap,
 	withLatestFrom,
 } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
-
-const requestSelfUserEpic: Epic<AppActionsDto, IRequestSelfUserAction> = (
-	action$,
-) =>
-	action$.pipe(
-		filter(isOfType(LoginSuccessAction)),
-		mapTo(UserActions.requestSelf()),
-	);
 
 const loadSelfUserEpic: Epic<
 	AppActionsDto,
@@ -74,8 +63,4 @@ const loadedSelfUserEpic: Epic<AppActionsDto, any, AppState> = (
 		ignoreElements(),
 	);
 
-export const userEpic = combineEpics(
-	requestSelfUserEpic,
-	loadSelfUserEpic,
-	loadedSelfUserEpic,
-);
+export const userEpic = combineEpics(loadSelfUserEpic, loadedSelfUserEpic);

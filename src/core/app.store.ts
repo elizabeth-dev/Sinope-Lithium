@@ -12,6 +12,7 @@ import { profileReducer } from './reducers/profile.reducer';
 import { timelineReducer } from './reducers/timeline.reducer';
 import { userReducer } from './reducers/user.reducer';
 import { receptionReducer } from './reducers/reception.reducer';
+import { receptionEpic } from './epics/reception.epic';
 
 const appReducer = combineReducers({
 	auth: authReducer,
@@ -29,6 +30,7 @@ const appEpic = combineEpics(
 	userEpic,
 	timelineEpic,
 	profileEpic,
+	receptionEpic,
 );
 const epicMiddleware = createEpicMiddleware();
 

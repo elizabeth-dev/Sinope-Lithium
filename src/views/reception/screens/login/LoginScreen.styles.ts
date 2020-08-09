@@ -18,7 +18,10 @@ export const LoginScreenStyles = StyleSheet.create({
 		paddingVertical: 4,
 	},
 	registerButton: {
-		marginTop: 'auto',
+		position: 'absolute',
+		bottom: 12,
+		right: 12,
+		left: 12,
 		marginVertical: 12,
 	},
 	registerButtonContent: {
