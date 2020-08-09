@@ -1,13 +1,12 @@
-import React from 'react';
-import { RegisterScreenStyles as styles } from './RegisterScreen.styles';
-import { View, Keyboard } from 'react-native';
-import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
-import { TextInput, Button } from 'react-native-paper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { AuthActions } from '@core/actions/auth.actions';
-import { useSelector } from 'react-redux';
 import { AppState } from '@core/app.store';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import React from 'react';
+import { Keyboard, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
+import { Button, TextInput } from 'react-native-paper';
+import { useSelector } from 'react-redux';
+import { RegisterScreenStyles as styles } from './RegisterScreen.styles';
 
 export interface RegisterScreenProps {
 	passEmail?: string;
@@ -33,9 +32,6 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 
 	return (
 		<View style={styles.root}>
-			<Disclaimer style={[styles.disclaimer, styles.disclaimerTop]}>
-				UNSTABLE - INSECURE
-			</Disclaimer>
 			<TextInput
 				style={styles.input}
 				label="Name"
@@ -76,10 +72,6 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 				onPress={onRegister}>
 				Register
 			</Button>
-
-			<Disclaimer style={[styles.disclaimer, styles.disclaimerBottom]}>
-				UNSTABLE - INSECURE
-			</Disclaimer>
 		</View>
 	);
 };

@@ -1,17 +1,16 @@
 import { AuthActions } from '@core/actions/auth.actions';
 import { AppState } from '@core/app.store';
-import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { registerRoot } from '@shared/navigation/roots/register.root';
 import React from 'react';
 import { Keyboard, View } from 'react-native';
 import {
-	NavigationFunctionComponent,
 	Navigation,
+	NavigationFunctionComponent,
 } from 'react-native-navigation';
 import { Button, TextInput } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
-import { registerRoot } from '@shared/navigation/roots/register.root';
 
 export const LoginScreen: NavigationFunctionComponent = () => {
 	const dispatch = useAppDispatch();
@@ -32,9 +31,6 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 
 	return (
 		<View style={styles.root}>
-			<Disclaimer style={[styles.disclaimer, styles.disclaimerTop]}>
-				UNSTABLE - INSECURE
-			</Disclaimer>
 			<TextInput
 				style={styles.input}
 				label="Email"
@@ -71,9 +67,6 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 				onPress={onRegister}>
 				Register
 			</Button>
-			<Disclaimer style={[styles.disclaimer, styles.disclaimerBottom]}>
-				UNSTABLE - INSECURE
-			</Disclaimer>
 		</View>
 	);
 };

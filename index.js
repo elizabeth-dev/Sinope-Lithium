@@ -1,44 +1,43 @@
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { screenHOC } from '@shared/hoc/screenHOC/screenHOC';
 import { Navigation } from 'react-native-navigation';
 import { AppScreens } from './src/core/app.screens';
 import { appStore } from './src/core/app.store';
-import { reduxProviderHOC } from './src/shared/hoc/redux-provider/reduxProviderHOC';
 import { ComposeScreen } from './src/views/compose/screens/compose/ComposeScreen.component';
 import { DashboardScreen } from './src/views/dashboard/screens/dashboard/DashboardScreen.component';
 import { DrawerScreen } from './src/views/dashboard/screens/drawer/DrawerScreen.component';
 import { PostScreen } from './src/views/post/screens/post/PostScreen.component';
 import { ProfileScreen } from './src/views/profile/screens/profile/ProfileScreen.component';
-import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
+import { FirstProfileScreen } from './src/views/reception/screens/first-profile/FirstProfileScreen.component';
 import { LoginScreen } from './src/views/reception/screens/login/LoginScreen.component';
 import { RegisterScreen } from './src/views/reception/screens/register/RegisterScreen.component';
-import { FirstProfileScreen } from './src/views/reception/screens/first-profile/FirstProfileScreen.component';
+import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 
 Navigation.registerComponent(AppScreens.SplashScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(SplashScreen, appStore)),
+	screenHOC(SplashScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.DashboardScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(DashboardScreen, appStore)),
+	screenHOC(DashboardScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.DrawerScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(DrawerScreen, appStore)),
+	screenHOC(DrawerScreen, appStore, false),
 );
 Navigation.registerComponent(AppScreens.ProfileScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(ProfileScreen, appStore)),
+	screenHOC(ProfileScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.PostScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(PostScreen, appStore)),
+	screenHOC(PostScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.LoginScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(LoginScreen, appStore)),
+	screenHOC(LoginScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.RegisterScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(RegisterScreen, appStore)),
+	screenHOC(RegisterScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.FirstProfileScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(FirstProfileScreen, appStore)),
+	screenHOC(FirstProfileScreen, appStore),
 );
 Navigation.registerComponent(AppScreens.ComposeScreen, () =>
-	gestureHandlerRootHOC(reduxProviderHOC(ComposeScreen, appStore)),
+	screenHOC(ComposeScreen, appStore),
 );
 
 Navigation.events().registerAppLaunchedListener(() => {
