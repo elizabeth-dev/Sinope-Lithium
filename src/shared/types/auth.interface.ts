@@ -1,5 +1,5 @@
 export interface TokenPair {
-	jwt: string;
+	accessToken: string;
 	refreshToken: string;
 	expiresAt: number;
 }

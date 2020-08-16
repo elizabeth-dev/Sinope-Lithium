@@ -27,7 +27,7 @@ const loginEpic: Epic<
 				action.payload.username,
 				action.payload.password,
 			).pipe(
-				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+				map(({ accessToken, refreshToken, expiresAt }) =>
 					AuthActions.loginSuccess(
 						accessToken,
 						refreshToken,
@@ -55,7 +55,7 @@ const registerEpic: Epic<
 				email: payload.email,
 				password: payload.password,
 			}).pipe(
-				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+				map(({ accessToken, refreshToken, expiresAt }) =>
 					AuthActions.registerSuccess(
 						accessToken,
 						refreshToken,
@@ -79,7 +79,7 @@ const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 		filter(isOfType(TokenExpiredAction)),
 		mergeMap(() =>
 			AuthService.refresh(state$.value.auth.refreshToken as string).pipe(
-				map(({ jwt: accessToken, refreshToken, expiresAt }) =>
+				map(({ accessToken, refreshToken, expiresAt }) =>
 					AuthActions.refreshed(accessToken, refreshToken, expiresAt),
 				),
 			),
