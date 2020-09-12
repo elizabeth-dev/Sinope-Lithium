@@ -8,13 +8,7 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import React from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
-import {
-	NavigationState,
-	Route,
-	SceneRendererProps,
-	TabBar,
-	TabView,
-} from 'react-native-tab-view';
+import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
 import { useSelector } from 'react-redux';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';

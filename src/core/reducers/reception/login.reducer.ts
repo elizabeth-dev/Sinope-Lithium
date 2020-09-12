@@ -1,9 +1,4 @@
-import {
-	AuthActionsDto,
-	LoginAction,
-	LoginSuccessAction,
-	LoginFailureAction,
-} from '@core/actions/auth.actions';
+import { AuthActionsDto, LoginAction, LoginFailureAction, LoginSuccessAction } from '@core/actions/auth.actions';
 
 export interface LoginState {
 	error: boolean;

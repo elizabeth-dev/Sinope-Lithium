@@ -5,10 +5,7 @@ import {
 	ReceiveProfilesAction,
 	RequestProfileAction,
 } from '@core/actions/profile.actions';
-import {
-	IReceiveSelfUserAction,
-	ReceiveSelfUserAction,
-} from '@core/actions/user.actions';
+import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/actions/user.actions';
 import { ProfileEntity } from '@shared/types/entities/profile.interface';
 
 export interface ProfilesByIdState {

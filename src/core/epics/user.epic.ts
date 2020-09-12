@@ -12,21 +12,12 @@ import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { combineEpics, Epic } from 'redux-observable';
-import {
-	filter,
-	ignoreElements,
-	map,
-	mergeMap,
-	tap,
-	withLatestFrom,
-} from 'rxjs/operators';
+import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 
-const loadSelfUserEpic: Epic<
-	AppActionsDto,
+const loadSelfUserEpic: Epic<AppActionsDto,
 	IReceiveSelfUserAction,
-	AppState
-> = (action$, state$) =>
+	AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(RequestSelfUserAction)),
 		withLatestFrom(state$),

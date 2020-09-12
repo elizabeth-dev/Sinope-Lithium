@@ -1,10 +1,5 @@
 import { ProfilesByIdState } from '@core/reducers/profile/profilesById.reducer';
-import {
-	FullPostEntity,
-	PostEntity,
-	IPost,
-	FullPost,
-} from '@shared/types/entities/post.interface';
+import { FullPost, FullPostEntity, IPost, PostEntity } from '@shared/types/entities/post.interface';
 
 export const populatePostEntity = (
 	post: PostEntity,

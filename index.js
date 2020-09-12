@@ -1,7 +1,7 @@
 import { screenHOC } from '@shared/hoc/screenHOC/screenHOC';
 import { Navigation } from 'react-native-navigation';
-import { AppScreens } from './src/core/app.screens';
-import { appStore } from './src/core/app.store';
+import { AppScreens } from '@core/app.screens';
+import { appStore } from '@core/app.store';
 import { ComposeScreen } from './src/views/compose/screens/compose/ComposeScreen.component';
 import { DashboardScreen } from './src/views/dashboard/screens/dashboard/DashboardScreen.component';
 import { DrawerScreen } from './src/views/dashboard/screens/drawer/DrawerScreen.component';

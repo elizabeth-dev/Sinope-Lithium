@@ -16,10 +16,8 @@ import { catchError, filter, map, mergeMap } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { AppActionsDto } from '../actions';
 
-const loginEpic: Epic<
-	AppActionsDto,
-	ILoginSuccessAction | ILoginFailureAction
-> = (action$) =>
+const loginEpic: Epic<AppActionsDto,
+	ILoginSuccessAction | ILoginFailureAction> = (action$) =>
 	action$.pipe(
 		filter(isOfType(LoginAction)),
 		mergeMap((action) =>
@@ -43,10 +41,8 @@ const loginEpic: Epic<
 		),
 	);
 
-const registerEpic: Epic<
-	AppActionsDto,
-	IRegisterSuccessAction | IRegisterFailureAction
-> = (action$) =>
+const registerEpic: Epic<AppActionsDto,
+	IRegisterSuccessAction | IRegisterFailureAction> = (action$) =>
 	action$.pipe(
 		filter(isOfType(RegisterAction)),
 		mergeMap(({ payload }) =>

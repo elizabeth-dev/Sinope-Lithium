@@ -1,8 +1,5 @@
 import { developmentEnv } from '@core/environments/development.env';
-import {
-	CreateQuestionDto,
-	IQuestion,
-} from '@shared/types/entities/question.interface';
+import { CreateQuestionDto, IQuestion } from '@shared/types/entities/question.interface';
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map } from 'rxjs/operators';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FirstProfileScreenStyles as styles } from './FirstProfileScreen.styles';
-import { View, Keyboard } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { Keyboard, View } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { ProfileActions } from '@core/actions/profile.actions';
 import { useSelector } from 'react-redux';
@@ -30,8 +30,8 @@ export const FirstProfileScreen: React.FC = () => {
 				autoCompleteType="name"
 				autoCapitalize="sentences"
 				keyboardType="default"
-                mode="outlined"
-                error={error}
+				mode="outlined"
+				error={error}
 				value={name}
 				onChangeText={setName}
 			/>
@@ -41,8 +41,8 @@ export const FirstProfileScreen: React.FC = () => {
 				autoCompleteType="username"
 				autoCapitalize="none"
 				keyboardType="default"
-                mode="outlined"
-                error={error}
+				mode="outlined"
+				error={error}
 				value={tag}
 				onChangeText={setTag}
 			/>

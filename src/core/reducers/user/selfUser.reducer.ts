@@ -1,7 +1,4 @@
-import {
-	UserActionsDto,
-	ReceiveSelfUserAction,
-} from '@core/actions/user.actions';
+import { ReceiveSelfUserAction, UserActionsDto } from '@core/actions/user.actions';
 
 export type SelfUserState = string;
 

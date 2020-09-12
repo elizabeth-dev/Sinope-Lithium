@@ -1,7 +1,4 @@
-import {
-	ReceiveSelfUserAction,
-	UserActionsDto,
-} from '@core/actions/user.actions';
+import { ReceiveSelfUserAction, UserActionsDto } from '@core/actions/user.actions';
 import { UserEntity } from '@shared/types/entities/user.interface';
 
 export interface UsersByIdState {

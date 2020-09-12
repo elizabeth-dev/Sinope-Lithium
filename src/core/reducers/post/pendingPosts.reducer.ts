@@ -1,4 +1,4 @@
-import { SendPostAction, SentPostAction, FailedSentPostAction, PostActionsDto } from '@core/actions/post.actions';
+import { FailedSentPostAction, PostActionsDto, SendPostAction, SentPostAction } from '@core/actions/post.actions';
 import { INewPost } from '@shared/types/entities/post.interface';
 
 export type PendingPostsState = INewPost[];

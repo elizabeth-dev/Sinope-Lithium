@@ -71,11 +71,9 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
 		),
 	);
 
-const requestProfilePostsEpic: Epic<
-	AppActionsDto,
+const requestProfilePostsEpic: Epic<AppActionsDto,
 	IReceiveProfilePostsAction,
-	AppState
-> = (actions$, state$) =>
+	AppState> = (actions$, state$) =>
 	actions$.pipe(
 		filter(isOfType(RequestProfilePostsAction)),
 		withLatestFrom(state$),

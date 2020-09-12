@@ -1,13 +1,7 @@
 import { AppActionsDto } from '@core/actions';
-import {
-	LoginSuccessAction,
-	RegisterSuccessAction,
-} from '@core/actions/auth.actions';
+import { LoginSuccessAction, RegisterSuccessAction } from '@core/actions/auth.actions';
 import { CreatedFirstProfileAction } from '@core/actions/profile.actions';
-import {
-	IRequestSelfUserAction,
-	UserActions,
-} from '@core/actions/user.actions';
+import { IRequestSelfUserAction, UserActions } from '@core/actions/user.actions';
 import { firstProfileRoot } from '@shared/navigation/roots/firstProfile.root';
 import { Navigation } from 'react-native-navigation';
 import { combineEpics, Epic } from 'redux-observable';

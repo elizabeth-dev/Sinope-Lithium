@@ -1,10 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
 import { IPost } from '@shared/types/entities/post.interface';
-import {
-	CreateProfileDto,
-	IProfile,
-	UpdateProfileDto,
-} from '@shared/types/entities/profile.interface';
+import { CreateProfileDto, IProfile, UpdateProfileDto } from '@shared/types/entities/profile.interface';
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map } from 'rxjs/operators';
@@ -31,7 +27,8 @@ const remove = (id: string, token: string): Observable<void> => {
 		.delete(`${developmentEnv.apiUrl}/profiles/${id}`, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const update = (
@@ -57,7 +54,8 @@ const addManager = (
 			undefined,
 			{ Authorization: `Bearer, ${token}` },
 		)
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const removeManager = (
@@ -69,7 +67,8 @@ const removeManager = (
 		.delete(`${developmentEnv.apiUrl}/profiles/${id}/managers/${manager}`, {
 			Authorization: `Bearer, ${token}`,
 		})
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const getFollowers = (id: string, token: string): Observable<IProfile[]> => {
@@ -95,7 +94,8 @@ const follow = (
 			undefined,
 			{ Authorization: `Bearer ${token}` },
 		)
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const unfollow = (
@@ -108,7 +108,8 @@ const unfollow = (
 			`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`,
 			{ Authorization: `Bearer ${token}` },
 		)
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const timeline = (profile: string, token: string): Observable<IPost[]> => {

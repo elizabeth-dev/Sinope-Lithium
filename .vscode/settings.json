@@ -3,12 +3,12 @@
         "--variant",
         "debug",
         "--appIdSuffix",
-        "adebug"
+        "debug"
     ],
     "react-native.android.runArguments.simulator": [
         "--variant",
         "debug",
         "--appIdSuffix",
-        "adebug"
+        "debug"
     ]
 }

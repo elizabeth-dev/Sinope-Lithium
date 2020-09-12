@@ -1,4 +1,9 @@
-import { AuthActionsDto, RegisterAction, RegisterSuccessAction, RegisterFailureAction } from '@core/actions/auth.actions';
+import {
+	AuthActionsDto,
+	RegisterAction,
+	RegisterFailureAction,
+	RegisterSuccessAction,
+} from '@core/actions/auth.actions';
 
 export interface RegisterState {
 	error: boolean;

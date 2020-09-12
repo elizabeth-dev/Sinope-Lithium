@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, ViewStyle, Dimensions } from 'react-native';
+import { Animated, Dimensions, ViewStyle } from 'react-native';
 import { ProgressBarStyles as styles } from './ProgressBar.styles';
 
 export interface ProgressBarProps {
@@ -8,6 +8,7 @@ export interface ProgressBarProps {
 	indeterminateDuration?: number;
 	backgroundColor: string;
 }
+
 export const ProgressBar: React.FC<ProgressBarProps> = ({
 	height = 4,
 	indeterminateDuration = 1000,

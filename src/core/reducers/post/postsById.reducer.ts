@@ -5,10 +5,7 @@ import {
 	RequestPostAction,
 	SentPostAction,
 } from '@core/actions/post.actions';
-import {
-	IReceiveTimelineAction,
-	ReceiveTimelineAction,
-} from '@core/actions/timeline.actions';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@core/actions/timeline.actions';
 import { PostEntity } from '@shared/types/entities/post.interface';
 
 export type PostsByIdState = {

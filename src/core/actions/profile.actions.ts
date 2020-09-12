@@ -1,7 +1,4 @@
-import {
-	IProfile,
-	CreateProfileDto,
-} from '@shared/types/entities/profile.interface';
+import { CreateProfileDto, IProfile } from '@shared/types/entities/profile.interface';
 
 export const RequestProfileAction = 'profile/RequestProfileAction';
 

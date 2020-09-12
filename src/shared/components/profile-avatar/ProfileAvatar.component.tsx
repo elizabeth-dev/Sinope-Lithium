@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-	GestureResponderEvent,
-	StyleProp,
-	TouchableNativeFeedback,
-	ViewStyle,
-} from 'react-native';
+import { GestureResponderEvent, StyleProp, TouchableNativeFeedback, ViewStyle } from 'react-native';
 import { Avatar } from 'react-native-paper';
 
 export interface ProfileAvatarProps {

@@ -10,11 +10,11 @@ export const DrawerMenu: React.FC = () => {
 
 	return (
 		<FlatList
-			data={ items }
-			renderItem={ ({ item }) => <Drawer.Item icon={ item.icon } label={ item.label } /> }
-			keyExtractor={ (item) => item.key }
-			showsVerticalScrollIndicator={ false }
-			style={ styles.root }
+			data={items}
+			renderItem={({ item }) => <Drawer.Item icon={item.icon} label={item.label} />}
+			keyExtractor={(item) => item.key}
+			showsVerticalScrollIndicator={false}
+			style={styles.root}
 		/>
 	);
 };

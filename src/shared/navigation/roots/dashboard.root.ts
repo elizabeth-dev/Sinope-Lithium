@@ -27,7 +27,7 @@ export const dashboardRoot = (
 											{
 												id: 'DASHBOARD_MENU',
 												icon: menuIcon,
-												text: 'Menú',
+												text: 'Menu',
 											},
 										],
 									},

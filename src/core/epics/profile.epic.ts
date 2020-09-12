@@ -16,11 +16,9 @@ import { combineEpics, Epic } from 'redux-observable';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 
-const requestProfileEpic: Epic<
-	AppActionsDto,
+const requestProfileEpic: Epic<AppActionsDto,
 	IReceiveProfilesAction,
-	AppState
-> = (action$, state$) =>
+	AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(RequestProfileAction)),
 		withLatestFrom(state$),
@@ -34,11 +32,9 @@ const requestProfileEpic: Epic<
 		),
 	);
 
-const createProfileEpic: Epic<
-	AppActionsDto,
+const createProfileEpic: Epic<AppActionsDto,
 	ICreatedProfileAction | IFailedCreateProfileAction,
-	AppState
-> = (action$, state$) =>
+	AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(CreateProfileAction)),
 		withLatestFrom(state$),
@@ -52,11 +48,9 @@ const createProfileEpic: Epic<
 		),
 	);
 
-const createFirstProfileEpic: Epic<
-	AppActionsDto,
+const createFirstProfileEpic: Epic<AppActionsDto,
 	ICreatedFirstProfileAction | IFailedCreateFirstProfileAction,
-	AppState
-> = (action$, state$) =>
+	AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(CreateFirstProfileAction)),
 		withLatestFrom(state$),

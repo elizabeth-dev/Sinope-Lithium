@@ -5,12 +5,12 @@ export const RegisterScreenStyles = StyleSheet.create({
 		flex: 1,
 		padding: 24,
 		justifyContent: 'center',
-    },
-    input: {
+	},
+	input: {
 		alignSelf: 'stretch',
 		marginVertical: 8,
-    },
-    registerButton: {
+	},
+	registerButton: {
 		marginLeft: 'auto',
 		marginVertical: 12,
 	},

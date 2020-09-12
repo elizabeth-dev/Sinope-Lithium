@@ -1,12 +1,8 @@
 import { PostActions } from '@core/actions/post.actions';
-import { AppState } from '@core/app.store';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { KeyboardAvoidingView, TextInput, View } from 'react-native';
-import {
-	Navigation,
-	NavigationFunctionComponent,
-} from 'react-native-navigation';
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { Button, Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';

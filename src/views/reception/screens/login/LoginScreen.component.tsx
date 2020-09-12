@@ -4,10 +4,7 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import { registerRoot } from '@shared/navigation/roots/register.root';
 import React from 'react';
 import { Keyboard, View } from 'react-native';
-import {
-	Navigation,
-	NavigationFunctionComponent,
-} from 'react-native-navigation';
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { Button, TextInput } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';

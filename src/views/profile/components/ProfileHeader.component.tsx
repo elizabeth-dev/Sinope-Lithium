@@ -12,6 +12,7 @@ export interface ProfileHeaderProps {
 	isFetching: boolean;
 	onLayout: (ev: LayoutChangeEvent) => void;
 }
+
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 	name,
 	tag,

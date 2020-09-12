@@ -36,7 +36,8 @@ const remove = (id: string, token: string): Observable<void> => {
 		.delete(`${developmentEnv.apiUrl}/users/${id}`, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 export const UserService = {

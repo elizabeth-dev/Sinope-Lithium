@@ -21,7 +21,8 @@ const remove = (id: string, token: string): Observable<void> => {
 		.delete(`${developmentEnv.apiUrl}/posts/${id}`, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map(() => {}));
+		.pipe(map(() => {
+		}));
 };
 
 const create = (newPost: CreatePostDto, token: string): Observable<IPost> => {

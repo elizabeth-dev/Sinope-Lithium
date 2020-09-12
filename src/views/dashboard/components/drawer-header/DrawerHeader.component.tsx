@@ -15,6 +15,7 @@ import { IProfile } from '@shared/types/entities/profile.interface';
 export interface DrawerHeaderProps {
 	componentId: string;
 }
+
 export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 	const dispatcher = useAppDispatch();
 

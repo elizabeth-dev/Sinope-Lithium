@@ -8,14 +8,7 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import {
-	Caption,
-	Colors,
-	IconButton,
-	Paragraph,
-	Subheading,
-	Title,
-} from 'react-native-paper';
+import { Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {

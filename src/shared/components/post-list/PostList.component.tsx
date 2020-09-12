@@ -1,11 +1,7 @@
 import { SlimPost } from '@shared/components/slim-post/SlimPost.component';
 import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
-import {
-	Animated,
-	NativeScrollEvent,
-	NativeSyntheticEvent,
-} from 'react-native';
+import { Animated, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Divider } from 'react-native-paper';
 
 interface PostListProps {

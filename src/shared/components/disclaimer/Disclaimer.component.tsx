@@ -1,6 +1,6 @@
 import React from 'react';
 import { DisclaimerStyles as styles } from './Disclaimer.styles';
-import { Text, StyleProp, TextStyle } from 'react-native';
+import { StyleProp, Text, TextStyle } from 'react-native';
 
 export interface DisclaimerProps {
 	children: string;

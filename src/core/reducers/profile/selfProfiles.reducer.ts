@@ -4,10 +4,7 @@ import {
 	ProfileActionsDto,
 	SwitchProfileAction,
 } from '@core/actions/profile.actions';
-import {
-	IReceiveSelfUserAction,
-	ReceiveSelfUserAction,
-} from '@core/actions/user.actions';
+import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/actions/user.actions';
 
 export interface SelfProfilesState {
 	current: string;

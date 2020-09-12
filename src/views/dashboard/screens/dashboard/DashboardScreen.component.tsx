@@ -1,20 +1,11 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import {
-	Navigation,
-	NavigationButtonPressedEvent,
-	NavigationFunctionComponent,
-} from 'react-native-navigation';
+import { Navigation, NavigationButtonPressedEvent, NavigationFunctionComponent } from 'react-native-navigation';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { Colors } from 'react-native-paper';
-import {
-	NavigationState,
-	SceneRendererProps,
-	TabBar,
-	TabView,
-} from 'react-native-tab-view';
+import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SceneRoute } from '../../../../shared/types/scene-route.type';
+import { SceneRoute } from '@shared/types/scene-route.type';
 import { Home } from '../../components/home/Home.component';
 import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
 

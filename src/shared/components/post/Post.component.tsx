@@ -6,16 +6,7 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import {
-	Button,
-	Caption,
-	Colors,
-	Divider,
-	IconButton,
-	Paragraph,
-	Subheading,
-	Title,
-} from 'react-native-paper';
+import { Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
 import { ProfileAvatar } from '../profile-avatar/ProfileAvatar.component';
 import { PostStyles as styles } from './Post.styles';
 
