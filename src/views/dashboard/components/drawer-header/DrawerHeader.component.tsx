@@ -1,4 +1,3 @@
-import { ProfileActions } from '@core/actions/profile.actions';
 import { fromProfile } from '@core/selectors/profile.selectors';
 import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
@@ -11,6 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { IProfile } from '@shared/types/entities/profile.interface';
+import { SelfActions } from '@core/actions/self.actions';
 
 export interface DrawerHeaderProps {
 	componentId: string;
@@ -31,7 +31,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 		);
 
 	const onOtherClick = (profile: IProfile) => {
-		dispatcher(ProfileActions.switch(profile?.id));
+		dispatcher(SelfActions.switchProfile(profile?.id));
 		Navigation.mergeOptions('centerStack', {
 			topBar: {
 				title: { text: profile?.name },

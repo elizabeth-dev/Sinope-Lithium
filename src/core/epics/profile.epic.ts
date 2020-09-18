@@ -13,8 +13,9 @@ import {
 import { AppState } from '@core/app.store';
 import { ProfileService } from '@core/http/profile.service';
 import { combineEpics, Epic } from 'redux-observable';
-import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
+import { of, throwError } from 'rxjs';
 
 const requestProfileEpic: Epic<AppActionsDto,
 	IReceiveProfilesAction,
@@ -62,6 +63,12 @@ const createFirstProfileEpic: Epic<AppActionsDto,
 				map((profile) =>
 					ProfileActions.createdFirst(profile, Date.now()),
 				),
+				catchError((err: number) => {
+					console.log(err);
+					if (err === 401) return of(ProfileActions.failedCreateFirst());
+
+					return throwError(err);
+				}),
 			),
 		),
 	);

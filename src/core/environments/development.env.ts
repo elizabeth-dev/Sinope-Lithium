@@ -1,3 +1,3 @@
 export const developmentEnv = {
-	apiUrl: 'http://192.168.1.131:3000/v1',
+	apiUrl: 'http://34.74.47.202:3000/v1',
 };

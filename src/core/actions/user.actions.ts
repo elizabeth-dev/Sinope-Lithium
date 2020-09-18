@@ -16,13 +16,13 @@ export const ReceiveSelfUserAction = 'user/ReceiveSelfUserAction';
 export interface IReceiveSelfUserAction {
 	type: typeof ReceiveSelfUserAction;
 	payload: {
-		user: Omit<IUser, 'profiles'> & { profiles: IProfile[] };
+		user: IUser;
 		receivedAt: number;
 	};
 }
 
 const receiveSelfUserFn = (
-	user: Omit<IUser, 'profiles'> & { profiles: IProfile[] },
+	user: IUser,
 	receivedAt: number,
 ): IReceiveSelfUserAction => ({
 	type: ReceiveSelfUserAction,

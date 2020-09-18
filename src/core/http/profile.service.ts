@@ -1,9 +1,9 @@
 import { developmentEnv } from '@core/environments/development.env';
 import { IPost } from '@shared/types/entities/post.interface';
 import { CreateProfileDto, IProfile, UpdateProfileDto } from '@shared/types/entities/profile.interface';
-import { Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { ajax, AjaxError } from 'rxjs/ajax';
+import { catchError, map } from 'rxjs/operators';
 
 const getById = (id: string, token: string): Observable<IProfile> => {
 	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}`, {
@@ -19,7 +19,14 @@ const create = (
 		.post(`${developmentEnv.apiUrl}/profiles`, newProfile, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map((res) => res.response as IProfile));
+		.pipe(
+			map((res) => res.response as IProfile),
+			catchError((err: AjaxError) => {
+				console.error(JSON.stringify(err));
+
+				return throwError(err.status);
+			}),
+		);
 };
 
 const remove = (id: string, token: string): Observable<void> => {

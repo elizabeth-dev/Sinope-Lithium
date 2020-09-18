@@ -32,20 +32,6 @@ const receiveProfileFn = (
 	payload: { profiles, receivedAt },
 });
 
-export const SwitchProfileAction = 'profile/SwitchProfileAction';
-
-export interface ISwitchProfileAction {
-	type: typeof SwitchProfileAction;
-	payload: {
-		profileId: string;
-	};
-}
-
-const switchProfileFn = (profileId: string): ISwitchProfileAction => ({
-	type: SwitchProfileAction,
-	payload: { profileId },
-});
-
 export const CreateProfileAction = 'profile/CreateProfileAction';
 
 export interface ICreateProfileAction {
@@ -137,7 +123,6 @@ const failedCreateFirstProfileFn = (): IFailedCreateFirstProfileAction => ({
 export type ProfileActionsDto =
 	| IRequestProfileAction
 	| IReceiveProfilesAction
-	| ISwitchProfileAction
 	| ICreateProfileAction
 	| ICreatedProfileAction
 	| IFailedCreateProfileAction
@@ -146,7 +131,6 @@ export type ProfileActionsDto =
 	| IFailedCreateFirstProfileAction;
 
 export const ProfileActions = {
-	switch: switchProfileFn,
 	receive: receiveProfileFn,
 	request: requestProfileFn,
 	create: createProfileFn,

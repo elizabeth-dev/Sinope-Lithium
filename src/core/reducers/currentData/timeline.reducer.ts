@@ -1,16 +1,16 @@
 import { ReceiveTimelineAction, RequestTimelineAction, TimelineActionsDto } from '@core/actions/timeline.actions';
 import { FetchEntity } from '@shared/types/fetchFields.interface';
 
-export interface TimelineByProfileState {
+export interface TimelineState {
 	[profile: string]: FetchEntity<'timeline', string[]>;
 }
 
-const initialState: TimelineByProfileState = {};
+const initialState: TimelineState = {};
 
-export function timelineByProfileReducer(
+export function timelineReducer(
 	state = initialState,
 	action: TimelineActionsDto,
-): TimelineByProfileState {
+): TimelineState {
 	switch (action.type) {
 		case RequestTimelineAction:
 			return {

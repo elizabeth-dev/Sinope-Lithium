@@ -4,23 +4,20 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { authEpic } from './epics/auth.epic';
 import { postEpic } from './epics/post.epic';
 import { profileEpic } from './epics/profile.epic';
+import { selfEpic } from './epics/self.epic';
 import { timelineEpic } from './epics/timeline.epic';
 import { userEpic } from './epics/user.epic';
 import { authReducer } from './reducers/auth.reducer';
-import { postReducer } from './reducers/post.reducer';
-import { profileReducer } from './reducers/profile.reducer';
-import { timelineReducer } from './reducers/timeline.reducer';
-import { userReducer } from './reducers/user.reducer';
 import { receptionReducer } from './reducers/reception.reducer';
 import { receptionEpic } from './epics/reception.epic';
+import { selfReducer } from './reducers/self.reducer';
+import { currentDataReducer } from './reducers/currentData.reducer';
 
 const appReducer = combineReducers({
 	auth: authReducer,
-	post: postReducer,
-	profile: profileReducer,
-	user: userReducer,
-	timeline: timelineReducer,
 	reception: receptionReducer,
+	self: selfReducer,
+	currentData: currentDataReducer,
 });
 export type AppState = ReturnType<typeof appReducer>;
 
@@ -31,6 +28,7 @@ const appEpic = combineEpics(
 	timelineEpic,
 	profileEpic,
 	receptionEpic,
+	selfEpic,
 );
 const epicMiddleware = createEpicMiddleware();
 

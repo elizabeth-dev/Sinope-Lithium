@@ -1,9 +1,11 @@
 import { FetchEntity } from '../fetchFields.interface';
+import { IProfile } from '@shared/types/entities/profile.interface';
 
 export interface IUser {
 	id: string;
 	name: string;
 	email: string;
+	profiles: IProfile[];
 }
 
 export interface CreateUserDto {

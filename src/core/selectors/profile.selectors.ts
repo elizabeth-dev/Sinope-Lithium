@@ -1,16 +1,16 @@
 import { AppState } from '@core/app.store';
 
 const selectProfileById = (state: AppState, id: string) =>
-	state.profile.profilesById[id];
+	state.currentData.profile.profilesById[id];
 
-const selectCurrentProfileId = (state: AppState) => state.profile.self.current;
+const selectCurrentProfileId = (state: AppState) => state.self.currentProfile;
 
 const selectCurrentProfile = (state: AppState) =>
-	state.profile.profilesById[state.profile.self.current];
+	state.currentData.profile.profilesById[state.self.currentProfile];
 
 const selectMyProfiles = (state: AppState) =>
-	state.profile.self.profiles.map(
-		(profile) => state.profile.profilesById[profile],
+	state.self.user?.user?.profiles?.map(
+		(profile) => state.currentData.profile.profilesById[profile.id],
 	);
 
 export const fromProfile = {
