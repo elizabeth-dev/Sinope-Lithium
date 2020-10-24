@@ -1,5 +1,5 @@
-import { AuthActions } from '@core/actions/auth.actions';
-import { AppState } from '@core/app.store';
+import { AuthActions } from '@core/state/actions/auth.actions';
+import { AppState } from '@core/state/app.store';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { Keyboard, View } from 'react-native';

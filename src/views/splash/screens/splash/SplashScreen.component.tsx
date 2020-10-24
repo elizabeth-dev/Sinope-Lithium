@@ -1,5 +1,5 @@
-import { AppState } from '@core/app.store';
-import { fromProfile } from '@core/selectors/profile.selectors';
+import { AppState } from '@core/state/app.store';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
 import { loginRoot } from '@shared/navigation/roots/login.root';
 import React from 'react';

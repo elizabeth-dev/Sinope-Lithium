@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { CurrentDataState } from '@core/reducers/currentData.reducer';
+import { CurrentDataState } from '@core/state/reducers/currentData.reducer';
 import { from, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

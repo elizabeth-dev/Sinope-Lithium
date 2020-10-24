@@ -1,6 +1,6 @@
-import { TimelineActions } from '@core/actions/timeline.actions';
-import { fromProfile } from '@core/selectors/profile.selectors';
-import { fromTimeline } from '@core/selectors/timeline.selectors';
+import { TimelineActions } from '@core/state/actions/timeline.actions';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { fromTimeline } from '@core/state/selectors/timeline.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';

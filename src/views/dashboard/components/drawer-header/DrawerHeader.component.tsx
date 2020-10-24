@@ -1,4 +1,4 @@
-import { fromProfile } from '@core/selectors/profile.selectors';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
@@ -10,7 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { IProfile } from '@shared/types/entities/profile.interface';
-import { SelfActions } from '@core/actions/self.actions';
+import { SelfActions } from '@core/state/actions/self.actions';
 
 export interface DrawerHeaderProps {
 	componentId: string;

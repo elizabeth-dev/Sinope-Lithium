@@ -1,4 +1,4 @@
-import { PostActions } from '@core/actions/post.actions';
+import { PostActions } from '@core/state/actions/post.actions';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { KeyboardAvoidingView, TextInput, View } from 'react-native';
@@ -6,7 +6,7 @@ import { Navigation, NavigationFunctionComponent } from 'react-native-navigation
 import { Button, Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
-import { fromProfile } from '@core/selectors/profile.selectors';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
 
 export interface ComposeScreenProps {
 	replyTo?: string;

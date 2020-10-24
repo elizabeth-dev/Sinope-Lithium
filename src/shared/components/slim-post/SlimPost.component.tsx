@@ -1,4 +1,4 @@
-import { PostActions } from '@core/actions/post.actions';
+import { PostActions } from '@core/state/actions/post.actions';
 import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';

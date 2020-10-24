@@ -1,8 +1,8 @@
-import { PostActions } from '@core/actions/post.actions';
-import { ProfileActions } from '@core/actions/profile.actions';
-import { AppState } from '@core/app.store';
-import { fromPost } from '@core/selectors/post.selectors';
-import { fromProfile } from '@core/selectors/profile.selectors';
+import { PostActions } from '@core/state/actions/post.actions';
+import { ProfileActions } from '@core/state/actions/profile.actions';
+import { AppState } from '@core/state/app.store';
+import { fromPost } from '@core/state/selectors/post.selectors';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';

@@ -3,9 +3,9 @@ import { FirstProfileScreenStyles as styles } from './FirstProfileScreen.styles'
 import { Keyboard, View } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { ProfileActions } from '@core/actions/profile.actions';
+import { ProfileActions } from '@core/state/actions/profile.actions';
 import { useSelector } from 'react-redux';
-import { AppState } from '@core/app.store';
+import { AppState } from '@core/state/app.store';
 
 export const FirstProfileScreen: React.FC = () => {
 	const dispatcher = useAppDispatch();
