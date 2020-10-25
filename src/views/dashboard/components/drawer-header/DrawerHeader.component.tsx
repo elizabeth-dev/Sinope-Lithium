@@ -3,7 +3,7 @@ import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.c
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import React from 'react';
-import { View } from 'react-native';
+import { GestureResponderEvent, Pressable, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Colors, Subheading, Title } from 'react-native-paper';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,21 +14,19 @@ import { SelfActions } from '@core/state/actions/self.actions';
 
 export interface DrawerHeaderProps {
 	componentId: string;
+	onSwitch: (ev: GestureResponderEvent) => void;
+	profileTab: boolean;
 }
 
-export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
+export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitch, profileTab }) => {
 	const dispatcher = useAppDispatch();
 
 	const currentProfile = useSelector(fromProfile.current);
-	const myProfiles = useSelector(fromProfile.mine).filter(
-		(el) => el.profile?.id !== currentProfile?.profile?.id,
-	);
+	const myProfiles = useSelector(fromProfile.mine)!.filter((el) => el.profile?.id !== currentProfile?.profile?.id);
 
-	const onCurrentClick = () =>
-		Navigation.push(
-			'centerStack',
-			profileScreenLayer(currentProfile?.profile?.id),
-		);
+	const onCurrentClick = () => Navigation.push('centerStack',
+		profileScreenLayer(currentProfile?.profile?.id),
+	);
 
 	const onOtherClick = (profile: IProfile) => {
 		dispatcher(SelfActions.switchProfile(profile?.id));
@@ -43,18 +41,15 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 		});
 	};
 
-	return (
-		<View style={styles.root}>
+	return (<Pressable style={styles.root} onPress={onSwitch}>
 			<View style={styles.avatarBox}>
 				<ProfileAvatar
 					size={72}
 					label={currentProfile?.profile?.name[0]?.toUpperCase()}
 					onPress={onCurrentClick}
 				/>
-				{myProfiles.length !== 0 && (
-					<View style={styles.otherProfiles}>
-						{myProfiles.map((profile) => (
-							<ProfileAvatar
+				{myProfiles.length !== 0 && (<View style={styles.otherProfiles}>
+						{myProfiles.map((profile) => (<ProfileAvatar
 								size={48}
 								label={profile.profile?.name[0]?.toUpperCase()}
 								style={styles.otherProfileAvatar}
@@ -73,11 +68,11 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId }) => {
 					</Subheading>
 				</View>
 				<MaterialIcon
-					name="chevron-down"
+					name={profileTab ? 'chevron-up' : 'chevron-down'}
 					size={24}
 					color={Colors.grey600}
 				/>
 			</View>
-		</View>
+		</Pressable>
 	);
 };

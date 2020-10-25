@@ -5,7 +5,7 @@ import { Drawer } from 'react-native-paper';
 
 export const DrawerMenu: React.FC = () => {
 	const items = [
-		{ key: 'settings', label: 'Settings', icon: 'settings' },
+		{ key: 'settings', label: 'Settings', icon: 'cog' },
 	];
 
 	return (

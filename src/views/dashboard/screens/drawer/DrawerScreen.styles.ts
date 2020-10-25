@@ -2,6 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export const DrawerScreenStyles = StyleSheet.create({
 	root: {
-		backgroundColor: '#ffffff',
+		flex: 1, backgroundColor: '#ffffff', position: 'absolute',
 	},
 });

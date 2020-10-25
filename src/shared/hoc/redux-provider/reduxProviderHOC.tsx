@@ -9,7 +9,7 @@ export const reduxProviderHOC = <P extends {}, A extends Action = AnyAction>(Wra
 																			 store: Store<any, A>,
 																			 persistGate: boolean): React.FC<P> => (props) => (
 	<Provider store={store}>
-		{persistGate ? <PersistGate persistor={appPersistor} loading={SplashLoading}>
+		{persistGate ? <PersistGate persistor={appPersistor} loading={<SplashLoading />}>
 			<WrappedComponent {...props} />
 		</PersistGate> : <WrappedComponent {...props} />}
 	</Provider>);
