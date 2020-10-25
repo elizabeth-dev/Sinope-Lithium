@@ -12,6 +12,12 @@ import { receptionReducer } from './reducers/reception.reducer';
 import { receptionEpic } from './epics/reception.epic';
 import { selfReducer } from './reducers/self.reducer';
 import { currentDataReducer } from './reducers/currentData.reducer';
+import {
+	FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE,
+} from 'redux-persist';
+import AsyncStorage from '@react-native-community/async-storage';
+
+export type AppState = ReturnType<typeof appReducer>;
 
 const appReducer = combineReducers({
 	auth: authReducer,
@@ -19,10 +25,12 @@ const appReducer = combineReducers({
 	self: selfReducer,
 	currentData: currentDataReducer,
 });
-export type AppState = ReturnType<typeof appReducer>;
 
-const appEpic = combineEpics(
-	authEpic,
+const persistedAppReducer = persistReducer({
+	key: 'appData', storage: AsyncStorage, version: 1,
+}, appReducer);
+
+const appEpic = combineEpics(authEpic,
 	postEpic,
 	userEpic,
 	timelineEpic,
@@ -30,15 +38,17 @@ const appEpic = combineEpics(
 	receptionEpic,
 	selfEpic,
 );
+
 const epicMiddleware = createEpicMiddleware();
 
 const configStore = () => {
 	const store = configureStore({
-		reducer: appReducer,
-		middleware: (defaultMiddleware) =>
-			defaultMiddleware({ thunk: false }).concat(epicMiddleware),
-		devTools: __DEV__,
-		// enhancers: [devToolsEnhancer({ hostname: '192.168.1.131', port: 8081 })],
+		reducer: persistedAppReducer, middleware: (defaultMiddleware) => defaultMiddleware({
+			thunk: false, serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		})
+			.concat(epicMiddleware), devTools: __DEV__,
 	});
 
 	epicMiddleware.run(appEpic);
@@ -47,3 +57,4 @@ const configStore = () => {
 };
 
 export const appStore = configStore();
+export const appPersistor = persistStore(appStore);

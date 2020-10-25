@@ -3,11 +3,10 @@ import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
 import { loginRoot } from '@shared/navigation/roots/login.root';
 import React from 'react';
-import { Text, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
-import { SplashScreenStyles as styles } from './SplashScreen.styles';
+import { SplashLoading } from '../../components/splash-loading/SplashLoading.component';
 
 export const SplashScreen: React.FC = () => {
 	const loggedIn = useSelector<AppState>((state) => state.auth.loggedIn);
@@ -17,19 +16,11 @@ export const SplashScreen: React.FC = () => {
 	else
 		Promise.all([MaterialCommunityIcons.getImageSource('menu', 25)]).then(
 			([menuIcon]) => {
-				Navigation.setRoot(
-					dashboardRoot(
-						menuIcon,
-						currentProfile?.profile?.name,
-						currentProfile?.profile?.tag,
-					),
-				);
-			},
-		);
+				Navigation.setRoot(dashboardRoot(menuIcon,
+					currentProfile?.profile?.name,
+					currentProfile?.profile?.tag,
+				));
+			},);
 
-	return (
-		<View style={styles.root}>
-			<Text>Splash</Text>
-		</View>
-	);
+	return <SplashLoading />;
 };
