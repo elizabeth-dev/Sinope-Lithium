@@ -13,7 +13,7 @@ import { RegisterScreen } from './src/views/reception/screens/register/RegisterS
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 
 Navigation.registerComponent(AppScreens.SplashScreen, () =>
-	screenHOC(SplashScreen, appStore),
+	screenHOC(SplashScreen, appStore, true, true),
 );
 Navigation.registerComponent(AppScreens.DashboardScreen, () =>
 	screenHOC(DashboardScreen, appStore),

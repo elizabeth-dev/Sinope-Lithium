@@ -9,10 +9,11 @@ module.exports = {
 		'object-curly-spacing': ['warn', 'always'],
 		'prettier/prettier': 0,
 		//indent: ['warn', 'tab'],
-		'max-len': ['warn', { code: 120, ignoreStrings: true }],
+		'max-len': ['warn', {code: 120, ignoreStrings: true}],
 		'comma-dangle': ['error', 'always-multiline'],
 		'jsx-quotes': ['error', 'prefer-double'],
 		quotes: ['error', 'single'],
 		'no-unused-vars': ['error'],
+		'no-mixed-spaces-and-tabs': 0,
 	},
 };
