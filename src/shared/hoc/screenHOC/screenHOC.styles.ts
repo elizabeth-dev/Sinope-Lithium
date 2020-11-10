@@ -11,6 +11,6 @@ export const screenHOCStyles = StyleSheet.create({
 	},
 	disclaimerBottom: {
 		bottom: 0,
-		right: 0,
+		left: 0,
 	},
 });

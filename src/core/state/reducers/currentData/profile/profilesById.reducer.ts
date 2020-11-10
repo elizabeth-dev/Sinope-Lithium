@@ -7,6 +7,7 @@ import {
 } from '@core/state/actions/profile.actions';
 import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/state/actions/user.actions';
 import { ProfileEntity } from '@shared/types/entities/profile.interface';
+import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
 
 export interface ProfilesByIdState {
 	[id: string]: ProfileEntity;
@@ -16,8 +17,7 @@ const initialState: ProfilesByIdState = {};
 
 export function profilesByIdReducer(
 	state = initialState,
-	action: ProfileActionsDto | IReceiveSelfUserAction,
-): ProfilesByIdState {
+	action: ProfileActionsDto | IReceiveSelfUserAction | IReceiveSearchAction): ProfilesByIdState {
 	switch (action.type) {
 		case RequestProfileAction:
 			return {
@@ -28,34 +28,27 @@ export function profilesByIdReducer(
 				},
 			};
 		case ReceiveProfilesAction:
+		case ReceiveSearchAction:
 			return {
-				...state,
-				...action.payload.profiles.reduce(
-					(acc, profile) => ({
-						...acc,
-						[profile.id]: {
-							profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...state, ...action.payload.profiles.reduce((acc, profile) => ({
+					...acc,
+					[profile.id]: {
+						profile,
+						isFetching: false,
+						receivedAt: action.payload.receivedAt,
+					},
+				}), {} as ProfilesByIdState),
 			};
 		case ReceiveSelfUserAction:
 			return {
-				...state,
-				...action.payload.user.profiles.reduce(
-					(acc, profile) => ({
-						...acc,
-						[profile.id]: {
-							profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...state, ...action.payload.user.profiles.reduce((acc, profile) => ({
+					...acc,
+					[profile.id]: {
+						profile,
+						isFetching: false,
+						receivedAt: action.payload.receivedAt,
+					},
+				}), {} as ProfilesByIdState),
 			};
 		case CreatedProfileAction:
 		case CreatedFirstProfileAction:

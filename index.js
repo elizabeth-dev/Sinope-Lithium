@@ -11,6 +11,7 @@ import { FirstProfileScreen } from './src/views/reception/screens/first-profile/
 import { LoginScreen } from './src/views/reception/screens/login/LoginScreen.component';
 import { RegisterScreen } from './src/views/reception/screens/register/RegisterScreen.component';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
+import { SearchScreen } from './src/views/search/screens/search/SearchScreen.component';
 
 Navigation.registerComponent(AppScreens.SplashScreen, () =>
 	screenHOC(SplashScreen, appStore, true, true),
@@ -38,6 +39,9 @@ Navigation.registerComponent(AppScreens.FirstProfileScreen, () =>
 );
 Navigation.registerComponent(AppScreens.ComposeScreen, () =>
 	screenHOC(ComposeScreen, appStore),
+);
+Navigation.registerComponent(AppScreens.SearchScreen, () =>
+	screenHOC(SearchScreen, appStore),
 );
 
 Navigation.events().registerAppLaunchedListener(() => {

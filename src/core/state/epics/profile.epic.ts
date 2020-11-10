@@ -24,10 +24,7 @@ const requestProfileEpic: Epic<AppActionsDto,
 		filter(isOfType(RequestProfileAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			ProfileService.getById(
-				payload.profile,
-				state.auth.accessToken as string,
-			).pipe(
+			ProfileService.getById(payload.profile, state.auth.accessToken!).pipe(
 				map((profile) => ProfileActions.receive([profile], Date.now())),
 			),
 		),
@@ -40,10 +37,7 @@ const createProfileEpic: Epic<AppActionsDto,
 		filter(isOfType(CreateProfileAction)),
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
-			ProfileService.create(
-				action.payload.newProfile,
-				state.auth.accessToken as string,
-			).pipe(
+			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
 				map((profile) => ProfileActions.created(profile, Date.now())),
 			),
 		),
@@ -56,10 +50,7 @@ const createFirstProfileEpic: Epic<AppActionsDto,
 		filter(isOfType(CreateFirstProfileAction)),
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
-			ProfileService.create(
-				action.payload.newProfile,
-				state.auth.accessToken as string,
-			).pipe(
+			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
 				map((profile) =>
 					ProfileActions.createdFirst(profile, Date.now()),
 				),

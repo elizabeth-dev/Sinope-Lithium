@@ -1,9 +1,6 @@
 import { AppActionsDto } from '@core/state/actions';
 import {
-	IReceiveSelfUserAction,
-	ReceiveSelfUserAction,
-	RequestSelfUserAction,
-	UserActions,
+	IReceiveSelfUserAction, ReceiveSelfUserAction, RequestSelfUserAction, UserActions,
 } from '@core/state/actions/user.actions';
 import { AppState } from '@core/state/app.store';
 import { UserService } from '@core/http/user.service';
@@ -21,10 +18,8 @@ const loadSelfUserEpic: Epic<AppActionsDto,
 	action$.pipe(
 		filter(isOfType(RequestSelfUserAction)),
 		withLatestFrom(state$),
-		mergeMap(([, state]) =>
-			UserService.getSelf(state.auth.accessToken as string).pipe(
-				map((self) => UserActions.receiveSelf(self, Date.now())),
-			),
+		mergeMap(([, state]) => UserService.getSelf(state.auth.accessToken!)
+			.pipe(map((self) => UserActions.receiveSelf(self, Date.now()))),
 		),
 	);
 

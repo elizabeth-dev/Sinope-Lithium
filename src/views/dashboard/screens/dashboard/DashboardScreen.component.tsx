@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Navigation, NavigationButtonPressedEvent, NavigationFunctionComponent } from 'react-native-navigation';
+import {
+	Navigation, NavigationButtonPressedEvent, NavigationFunctionComponent,
+} from 'react-native-navigation';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { Colors } from 'react-native-paper';
 import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
@@ -8,6 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SceneRoute } from '@shared/types/scene-route.type';
 import { Home } from '../../components/home/Home.component';
 import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
+import { Search } from '../../components/search/Search.component';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -39,7 +42,16 @@ export const DashboardScreen: NavigationFunctionComponent = ({
 	const [index, setIndex] = React.useState(0);
 
 	const [routes] = React.useState<SceneRoute[]>([
-		{ key: 'home', accessibilityLabel: 'Home', icon: 'home' },
+		{
+			key: 'home',
+			accessibilityLabel: 'Home',
+			icon: 'home',
+		},
+		{
+			key: 'search',
+			accessibilityLabel: 'Search',
+			icon: 'magnify',
+		},
 	]);
 
 	const renderScene = React.useCallback(
@@ -47,6 +59,8 @@ export const DashboardScreen: NavigationFunctionComponent = ({
 			switch (route.key) {
 				case 'home':
 					return <Home stackId={componentId} />;
+				case 'search':
+					return <Search stackId={componentId} />;
 				default:
 					return null;
 			}

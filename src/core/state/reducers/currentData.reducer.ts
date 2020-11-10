@@ -3,12 +3,14 @@ import { ISwitchedProfileAction, SwitchedProfileAction } from '../actions/self.a
 import { postReducer } from './currentData/post.reducer';
 import { profileReducer } from './currentData/profile.reducer';
 import { timelineReducer } from './currentData/timeline.reducer';
+import { searchReducer } from './currentData/search.reducer';
 
 
 export const _currentDataReducer = combineReducers({
 	post: postReducer,
 	profile: profileReducer,
 	timeline: timelineReducer,
+	search: searchReducer,
 });
 
 export type CurrentDataState = ReturnType<typeof currentDataReducer>;

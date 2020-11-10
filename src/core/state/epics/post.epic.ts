@@ -24,14 +24,11 @@ const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (
 		filter(isOfType(SendPostAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			PostService.create(
-				{
-					content: payload.newPost.content,
-					question: payload.newPost.question,
-					profile: payload.newPost.profile,
-				},
-				state.auth.accessToken as string,
-			).pipe(
+			PostService.create({
+				content: payload.newPost.content,
+				question: payload.newPost.question,
+				profile: payload.newPost.profile,
+			}, state.auth.accessToken!).pipe(
 				map((post) =>
 					PostActions.sent(post, Date.now(), payload.newPost.tmpId),
 				),
@@ -47,11 +44,7 @@ const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
 		filter(isOfType(LikePostAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			PostService.like(
-				payload.post,
-				payload.fromProfile,
-				state.auth.accessToken as string,
-			).pipe(map((post) => PostActions.receive([post], Date.now()))),
+			PostService.like(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(map((post) => PostActions.receive([post], Date.now()))),
 		),
 	);
 
@@ -63,11 +56,7 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
 		filter(isOfType(UnlikePostAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			PostService.unlike(
-				payload.post,
-				payload.fromProfile,
-				state.auth.accessToken as string,
-			).pipe(map((post) => PostActions.receive([post], Date.now()))),
+			PostService.unlike(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(map((post) => PostActions.receive([post], Date.now()))),
 		),
 	);
 
@@ -78,10 +67,7 @@ const requestProfilePostsEpic: Epic<AppActionsDto,
 		filter(isOfType(RequestProfilePostsAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			PostService.getByProfile(
-				payload.profile,
-				state.auth.accessToken as string,
-			).pipe(
+			PostService.getByProfile(payload.profile, state.auth.accessToken!).pipe(
 				map((posts) =>
 					PostActions.receiveFromProfile(
 						payload.profile,
@@ -101,10 +87,7 @@ const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (
 		filter(isOfType(RequestPostAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
-			PostService.getById(
-				payload.post,
-				state.auth.accessToken as string,
-			).pipe(map((posts) => PostActions.receive([posts], Date.now()))),
+			PostService.getById(payload.post, state.auth.accessToken!).pipe(map((posts) => PostActions.receive([posts], Date.now()))),
 		),
 	);
 

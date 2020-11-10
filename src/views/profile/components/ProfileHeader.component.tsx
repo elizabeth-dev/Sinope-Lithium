@@ -40,10 +40,10 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 			</View>
 			<View style={styles.profileData}>
 				<Text style={styles.follows}>
-					<Text style={styles.followCount}>16</Text> following
+					<Text style={styles.followCount}>0</Text> following
 				</Text>
 				<Text style={styles.follows}>
-					<Text style={styles.followCount}>16</Text> followers
+					<Text style={styles.followCount}>0</Text> followers
 				</Text>
 			</View>
 		</Animated.View>

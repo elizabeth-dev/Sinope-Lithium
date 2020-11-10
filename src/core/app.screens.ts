@@ -8,4 +8,5 @@ export const AppScreens = {
 	ComposeScreen: 'app.sinope.lithium.compose.ComposeScreen',
 	RegisterScreen: 'app.sinope.lithium.reception.RegisterScreen',
 	FirstProfileScreen: 'app.sinope.lithium.reception.FirstProfileScreen',
+	SearchScreen: 'app.sinope.lithium.search.SearchScreen',
 };

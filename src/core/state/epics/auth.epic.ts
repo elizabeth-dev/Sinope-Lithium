@@ -73,12 +73,12 @@ const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (
 ) =>
 	action$.pipe(
 		filter(isOfType(TokenExpiredAction)),
-		mergeMap(() =>
-			AuthService.refresh(state$.value.auth.refreshToken as string).pipe(
-				map(({ accessToken, refreshToken, expiresAt }) =>
-					AuthActions.refreshed(accessToken, refreshToken, expiresAt),
-				),
-			),
+		mergeMap(() => AuthService.refresh(state$.value.auth.refreshToken!)
+			.pipe(map(({
+				accessToken,
+				refreshToken,
+				expiresAt,
+			}) => AuthActions.refreshed(accessToken, refreshToken, expiresAt))),
 		),
 	);
 

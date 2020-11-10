@@ -4,6 +4,7 @@ import { ProfileActionsDto } from './profile.actions';
 import { UserActionsDto } from './user.actions';
 import { TimelineActionsDto } from './timeline.actions';
 import { SelfActionsDto } from '@core/state/actions/self.actions';
+import { SearchActionsDto } from './search.actions';
 
 export type AppActionsDto =
 	| AuthActionsDto
@@ -11,4 +12,5 @@ export type AppActionsDto =
 	| ProfileActionsDto
 	| UserActionsDto
 	| TimelineActionsDto
-	| SelfActionsDto;
+	| SelfActionsDto
+	| SearchActionsDto;

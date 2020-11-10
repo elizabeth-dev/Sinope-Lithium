@@ -152,7 +152,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk true  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
@@ -195,7 +195,7 @@ android {
         pickFirst "lib/x86/libc++_shared.so"
         pickFirst "lib/x86_64/libc++_shared.so"
     }
-    buildToolsVersion = '29.0.2'
+    buildToolsVersion = buildToolsVersion
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -220,6 +220,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     implementation 'com.google.android.gms:play-services-cronet:17.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -233,7 +234,7 @@ dependencies {
     }
 
     // Android Gradle Plugin v4.0.0
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -255,7 +256,7 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 // react-native-vector-icons
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialCommunityIcons.ttf' ]
+    iconFontNames: [ 'MaterialCommunityIcons.ttf', 'MaterialIcons.ttf' ]
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

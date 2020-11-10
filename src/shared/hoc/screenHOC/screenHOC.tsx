@@ -7,9 +7,6 @@ import { screenHOCStyles as styles } from './screenHOC.styles';
 
 const _screenHOC = <P extends {}>(WrappedComponent: React.FC<P>,
 								  disclaimer: boolean): React.FC<P> => (props) => (<>
-	{__DEV__ && disclaimer && (<Disclaimer style={[styles.disclaimer, styles.disclaimerTop]}>
-		UNSTABLE - INSECURE
-	</Disclaimer>)}
 	<WrappedComponent {...props} />
 	{__DEV__ && disclaimer && (<Disclaimer style={[styles.disclaimer, styles.disclaimerBottom]}>
 		UNSTABLE - INSECURE
