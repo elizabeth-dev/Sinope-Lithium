@@ -1,4 +1,4 @@
-import { INewPost, IPost } from '@shared/types/entities/post.interface';
+import { FullPost, INewPost } from '@shared/types/entities/post.interface';
 
 export const RequestPostAction = 'post/RequestPostAction';
 
@@ -19,15 +19,11 @@ export const ReceivePostsAction = 'post/ReceivePostsAction';
 export interface IReceivePostsAction {
 	type: typeof ReceivePostsAction;
 	payload: {
-		posts: IPost[];
-		receivedAt: number;
+		posts: FullPost[]; receivedAt: number;
 	};
 }
 
-const receivePostsFn = (
-	posts: IPost[],
-	receivedAt: number,
-): IReceivePostsAction => ({
+const receivePostsFn = (posts: FullPost[], receivedAt: number): IReceivePostsAction => ({
 	type: ReceivePostsAction,
 	payload: { posts, receivedAt },
 });
@@ -53,17 +49,11 @@ export const ReceiveProfilePostsAction = 'post/ReceiveProfilePostsAction';
 export interface IReceiveProfilePostsAction {
 	type: typeof ReceiveProfilePostsAction;
 	payload: {
-		profile: string;
-		posts: IPost[];
-		receivedAt: number;
+		profile: string; posts: FullPost[]; receivedAt: number;
 	};
 }
 
-const receiveProfilePostsFn = (
-	profile: string,
-	posts: IPost[],
-	receivedAt: number,
-): IReceiveProfilePostsAction => ({
+const receiveProfilePostsFn = (profile: string, posts: FullPost[], receivedAt: number): IReceiveProfilePostsAction => ({
 	type: ReceiveProfilePostsAction,
 	payload: { profile, posts, receivedAt },
 });
@@ -87,17 +77,11 @@ export const SentPostAction = 'post/SentPostAction';
 export interface ISentPostAction {
 	type: typeof SentPostAction;
 	payload: {
-		post: IPost;
-		receivedAt: number;
-		tmpId: string;
+		post: FullPost; receivedAt: number; tmpId: string;
 	};
 }
 
-const sentPostFn = (
-	post: IPost,
-	receivedAt: number,
-	tmpId: string,
-): ISentPostAction => ({
+const sentPostFn = (post: FullPost, receivedAt: number, tmpId: string): ISentPostAction => ({
 	type: SentPostAction,
 	payload: { post, receivedAt, tmpId },
 });

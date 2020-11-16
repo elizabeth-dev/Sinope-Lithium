@@ -1,32 +1,28 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { IPost } from '@shared/types/entities/post.interface';
-import { CreateProfileDto, IProfile, UpdateProfileDto } from '@shared/types/entities/profile.interface';
+import { FullPost } from '@shared/types/entities/post.interface';
+import {
+	CreateProfileDto, IProfile, UpdateProfileDto,
+} from '@shared/types/entities/profile.interface';
 import { Observable, throwError } from 'rxjs';
 import { ajax, AjaxError } from 'rxjs/ajax';
 import { catchError, map } from 'rxjs/operators';
 
-const getById = (id: string, token: string): Observable<IProfile> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}`, {
+const getById = (id: string, fromProfile: string, token: string): Observable<IProfile> => {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}?profile=${fromProfile}`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
 
-const create = (
-	newProfile: CreateProfileDto,
-	token: string,
-): Observable<IProfile> => {
+const create = (newProfile: CreateProfileDto, token: string): Observable<IProfile> => {
 	return ajax
 		.post(`${developmentEnv.apiUrl}/profiles`, newProfile, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(
-			map((res) => res.response as IProfile),
-			catchError((err: AjaxError) => {
-				console.error(JSON.stringify(err));
+		.pipe(map((res) => res.response as IProfile), catchError((err: AjaxError) => {
+			console.error(JSON.stringify(err));
 
-				return throwError(err.status);
-			}),
-		);
+			return throwError(err.status);
+		}));
 };
 
 const remove = (id: string, token: string): Observable<void> => {
@@ -38,11 +34,7 @@ const remove = (id: string, token: string): Observable<void> => {
 		}));
 };
 
-const update = (
-	id: string,
-	updateBody: UpdateProfileDto,
-	token: string,
-): Observable<IProfile> => {
+const update = (id: string, updateBody: UpdateProfileDto, token: string): Observable<IProfile> => {
 	return ajax
 		.put(`${developmentEnv.apiUrl}/profiles/${id}`, updateBody, {
 			Authorization: `Bearer ${token}`,
@@ -50,11 +42,7 @@ const update = (
 		.pipe(map((res) => res.response as IProfile));
 };
 
-const addManager = (
-	id: string,
-	newManager: string,
-	token: string,
-): Observable<void> => {
+const addManager = (id: string, newManager: string, token: string): Observable<void> => {
 	return ajax
 		.put(
 			`${developmentEnv.apiUrl}/profiles/${id}/managers/${newManager}`,
@@ -65,11 +53,7 @@ const addManager = (
 		}));
 };
 
-const removeManager = (
-	id: string,
-	manager: string,
-	token: string,
-): Observable<void> => {
+const removeManager = (id: string, manager: string, token: string): Observable<void> => {
 	return ajax
 		.delete(`${developmentEnv.apiUrl}/profiles/${id}/managers/${manager}`, {
 			Authorization: `Bearer, ${token}`,
@@ -90,11 +74,7 @@ const getFollowing = (id: string, token: string): Observable<IProfile[]> => {
 	});
 };
 
-const follow = (
-	id: string,
-	fromProfile: string,
-	token: string,
-): Observable<void> => {
+const follow = (id: string, fromProfile: string, token: string): Observable<void> => {
 	return ajax
 		.put(
 			`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`,
@@ -105,11 +85,7 @@ const follow = (
 		}));
 };
 
-const unfollow = (
-	id: string,
-	fromProfile: string,
-	token: string,
-): Observable<void> => {
+const unfollow = (id: string, fromProfile: string, token: string): Observable<void> => {
 	return ajax
 		.delete(
 			`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`,
@@ -119,13 +95,10 @@ const unfollow = (
 		}));
 };
 
-const timeline = (profile: string, token: string): Observable<IPost[]> => {
-	return ajax.getJSON(
-		`${developmentEnv.apiUrl}/profiles/${profile}/timeline`,
-		{
-			Authorization: `Bearer ${token}`,
-		},
-	);
+const timeline = (profile: string, token: string): Observable<FullPost[]> => {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${profile}/timeline`, {
+		Authorization: `Bearer ${token}`,
+	});
 };
 
 export const ProfileService = {

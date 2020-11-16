@@ -1,6 +1,6 @@
 import { FetchEntity } from '../fetchFields.interface';
 import { IProfile } from './profile.interface';
-import { IPost } from './post.interface';
+import { FullPost } from './post.interface';
 
 export interface ISearch {
 	profiles: string[];
@@ -9,7 +9,7 @@ export interface ISearch {
 
 export interface ISearchResult {
 	profiles: IProfile[];
-	posts: IPost[];
+	posts: FullPost[];
 }
 
 export type SearchEntity = FetchEntity<'search', ISearch>;

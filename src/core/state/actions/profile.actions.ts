@@ -5,13 +5,16 @@ export const RequestProfileAction = 'profile/RequestProfileAction';
 export interface IRequestProfileAction {
 	type: typeof RequestProfileAction;
 	payload: {
-		profile: string;
+		profile: string; fromProfile: string;
 	};
 }
 
-const requestProfileFn = (profile: string): IRequestProfileAction => ({
+const requestProfileFn = (profile: string, fromProfile: string): IRequestProfileAction => ({
 	type: RequestProfileAction,
-	payload: { profile },
+	payload: {
+		profile,
+		fromProfile,
+	},
 });
 
 export const ReceiveProfilesAction = 'profile/ReceiveProfilesAction';
@@ -19,17 +22,16 @@ export const ReceiveProfilesAction = 'profile/ReceiveProfilesAction';
 export interface IReceiveProfilesAction {
 	type: typeof ReceiveProfilesAction;
 	payload: {
-		profiles: IProfile[];
-		receivedAt: number;
+		profiles: IProfile[]; receivedAt: number;
 	};
 }
 
-const receiveProfileFn = (
-	profiles: IProfile[],
-	receivedAt: number,
-): IReceiveProfilesAction => ({
+const receiveProfileFn = (profiles: IProfile[], receivedAt: number): IReceiveProfilesAction => ({
 	type: ReceiveProfilesAction,
-	payload: { profiles, receivedAt },
+	payload: {
+		profiles,
+		receivedAt,
+	},
 });
 
 export const CreateProfileAction = 'profile/CreateProfileAction';
@@ -41,9 +43,7 @@ export interface ICreateProfileAction {
 	};
 }
 
-const createProfileFn = (
-	newProfile: CreateProfileDto,
-): ICreateProfileAction => ({
+const createProfileFn = (newProfile: CreateProfileDto): ICreateProfileAction => ({
 	type: CreateProfileAction,
 	payload: { newProfile },
 });
@@ -53,17 +53,16 @@ export const CreatedProfileAction = 'profile/CreatedProfileAction';
 export interface ICreatedProfileAction {
 	type: typeof CreatedProfileAction;
 	payload: {
-		profile: IProfile;
-		receivedAt: number;
+		profile: IProfile; receivedAt: number;
 	};
 }
 
-const createdProfileFn = (
-	profile: IProfile,
-	receivedAt: number,
-): ICreatedProfileAction => ({
+const createdProfileFn = (profile: IProfile, receivedAt: number): ICreatedProfileAction => ({
 	type: CreatedProfileAction,
-	payload: { profile, receivedAt },
+	payload: {
+		profile,
+		receivedAt,
+	},
 });
 
 export const FailedCreateProfileAction = 'profile/FailedCreateProfileAction';
@@ -85,9 +84,7 @@ export interface ICreateFirstProfileAction {
 	};
 }
 
-const createFirstProfileFn = (
-	newProfile: CreateProfileDto,
-): ICreateFirstProfileAction => ({
+const createFirstProfileFn = (newProfile: CreateProfileDto): ICreateFirstProfileAction => ({
 	type: CreateFirstProfileAction,
 	payload: { newProfile },
 });
@@ -97,17 +94,17 @@ export const CreatedFirstProfileAction = 'profile/CreatedFirstProfileAction';
 export interface ICreatedFirstProfileAction {
 	type: typeof CreatedFirstProfileAction;
 	payload: {
-		profile: IProfile;
-		receivedAt: number;
+		profile: IProfile; receivedAt: number;
 	};
 }
 
-const createdFirstProfileFn = (
-	profile: IProfile,
-	receivedAt: number,
-): ICreatedFirstProfileAction => ({
+const createdFirstProfileFn = (profile: IProfile,
+	receivedAt: number): ICreatedFirstProfileAction => ({
 	type: CreatedFirstProfileAction,
-	payload: { profile, receivedAt },
+	payload: {
+		profile,
+		receivedAt,
+	},
 });
 
 export const FailedCreateFirstProfileAction = 'profile/FailedCreateFirstProfileAction';
@@ -120,6 +117,74 @@ const failedCreateFirstProfileFn = (): IFailedCreateFirstProfileAction => ({
 	type: FailedCreateFirstProfileAction,
 });
 
+export const FollowProfileAction = 'profile/FollowProfileAction';
+
+export interface IFollowProfileAction {
+	type: typeof FollowProfileAction;
+	payload: {
+		fromProfile: string; toProfile: string;
+	};
+}
+
+const followProfileFn = (fromProfile: string, toProfile: string): IFollowProfileAction => ({
+	type: FollowProfileAction,
+	payload: {
+		fromProfile,
+		toProfile,
+	},
+});
+
+export const UnfollowProfileAction = 'profile/UnfollowProfileAction';
+
+export interface IUnfollowProfileAction {
+	type: typeof UnfollowProfileAction;
+	payload: {
+		fromProfile: string; toProfile: string;
+	};
+}
+
+const unfollowProfileFn = (fromProfile: string, toProfile: string): IUnfollowProfileAction => ({
+	type: UnfollowProfileAction,
+	payload: {
+		fromProfile,
+		toProfile,
+	},
+});
+
+export const FollowedProfileAction = 'profile/FollowedProfileAction';
+
+export interface IFollowedProfileAction {
+	type: typeof FollowedProfileAction;
+	payload: {
+		fromProfile: string; toProfile: string;
+	};
+}
+
+const followedProfileFn = (fromProfile: string, toProfile: string): IFollowedProfileAction => ({
+	type: FollowedProfileAction,
+	payload: {
+		fromProfile,
+		toProfile,
+	},
+});
+
+export const UnfollowedProfileAction = 'profile/UnfollowedProfileAction';
+
+export interface IUnfollowedProfileAction {
+	type: typeof UnfollowedProfileAction;
+	payload: {
+		fromProfile: string; toProfile: string;
+	};
+}
+
+const unfollowedProfileFn = (fromProfile: string, toProfile: string): IUnfollowedProfileAction => ({
+	type: UnfollowedProfileAction,
+	payload: {
+		fromProfile,
+		toProfile,
+	},
+});
+
 export type ProfileActionsDto =
 	| IRequestProfileAction
 	| IReceiveProfilesAction
@@ -128,7 +193,11 @@ export type ProfileActionsDto =
 	| IFailedCreateProfileAction
 	| ICreateFirstProfileAction
 	| ICreatedFirstProfileAction
-	| IFailedCreateFirstProfileAction;
+	| IFailedCreateFirstProfileAction
+	| IFollowProfileAction
+	| IUnfollowProfileAction
+	| IFollowedProfileAction
+	| IUnfollowedProfileAction;
 
 export const ProfileActions = {
 	receive: receiveProfileFn,
@@ -139,4 +208,8 @@ export const ProfileActions = {
 	createFirst: createFirstProfileFn,
 	createdFirst: createdFirstProfileFn,
 	failedCreateFirst: failedCreateFirstProfileFn,
+	follow: followProfileFn,
+	unfollow: unfollowProfileFn,
+	followed: followedProfileFn,
+	unfollowed: unfollowedProfileFn,
 };

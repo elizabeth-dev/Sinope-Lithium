@@ -1,4 +1,4 @@
-import { IPost } from '@shared/types/entities/post.interface';
+import { FullPost } from '@shared/types/entities/post.interface';
 
 export const RequestTimelineAction = 'timeline/RequestTimelineAction';
 
@@ -19,17 +19,11 @@ export const ReceiveTimelineAction = 'timeline/ReceiveTimelineAction';
 export interface IReceiveTimelineAction {
 	type: typeof ReceiveTimelineAction;
 	payload: {
-		posts: IPost[];
-		profile: string;
-		receivedAt: number;
+		posts: FullPost[]; profile: string; receivedAt: number;
 	};
 }
 
-const receiveTimelineFn = (
-	posts: IPost[],
-	profile: string,
-	receivedAt: number,
-): IReceiveTimelineAction => ({
+const receiveTimelineFn = (posts: FullPost[], profile: string, receivedAt: number): IReceiveTimelineAction => ({
 	type: ReceiveTimelineAction,
 	payload: { posts, profile, receivedAt },
 });

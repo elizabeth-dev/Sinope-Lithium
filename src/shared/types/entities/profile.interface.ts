@@ -6,6 +6,8 @@ export interface IProfile {
 	name: string;
 	created: Date;
 	description: string;
+	followingMe: boolean;
+	followingThem: boolean;
 }
 
 export interface CreateProfileDto {

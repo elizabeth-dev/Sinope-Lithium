@@ -1,5 +1,5 @@
 import { IProfile } from '@shared/types/entities/profile.interface';
-import { IPost } from '@shared/types/entities/post.interface';
+import { FullPost } from '@shared/types/entities/post.interface';
 
 export const SearchAction = 'search/SearchAction';
 
@@ -34,13 +34,12 @@ export const ReceiveSearchAction = 'search/ReceiveSearchAction';
 export interface IReceiveSearchAction {
 	type: typeof ReceiveSearchAction;
 	payload: {
-		searchTerm: string; receivedAt: number; profiles: IProfile[]; posts: IPost[];
+		searchTerm: string; receivedAt: number; profiles: IProfile[]; posts: FullPost[];
 	};
 }
 
-const receiveSearchFn = (
-	profiles: IProfile[],
-	posts: IPost[],
+const receiveSearchFn = (profiles: IProfile[],
+	posts: FullPost[],
 	searchTerm: string,
 	receivedAt: number): IReceiveSearchAction => ({
 	type: ReceiveSearchAction,

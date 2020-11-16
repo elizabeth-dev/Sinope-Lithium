@@ -37,7 +37,10 @@ export function postsByIdReducer(
 				...state, ...action.payload.posts.reduce((acc, post) => ({
 					...acc,
 					[post.id]: {
-						post,
+						post: {
+							...post,
+							profile: post.profile.id,
+						},
 						isFetching: false,
 						receivedAt: action.payload.receivedAt,
 					},
@@ -47,7 +50,10 @@ export function postsByIdReducer(
 			return {
 				...state,
 				[action.payload.post.id]: {
-					post: action.payload.post,
+					post: {
+						...action.payload.post,
+						profile: action.payload.post.profile.id,
+					},
 					receivedAt: action.payload.receivedAt,
 					isFetching: false,
 				},
