@@ -1,14 +1,14 @@
 {
-	"name": "SinopeApp",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"android": "react-native run-android",
-      "ios": "react-native run-ios",
-      "start": "react-native start",
-      "test": "jest",
-      "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
-    },
+  "name": "SinopeApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/progress-bar-android": "^1.0.3",
@@ -39,28 +39,28 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-test-renderer": "16.9.2",
     "@types/remote-redux-devtools": "^0.5.4",
-		"@typescript-eslint/eslint-plugin": "^4.1.0",
-		"@typescript-eslint/parser": "^4.1.0",
-		"babel-jest": "25.1.0",
-		"babel-plugin-module-resolver": "^4.0.0",
-		"eslint": "^7.3.0",
-		"eslint-plugin-prettier": "^3.1.2",
-		"jest": "25.1.0",
-		"metro-react-native-babel-preset": "^0.59.0",
-		"prettier": "^2.0.4",
-		"react-test-renderer": "16.13.1",
-		"redux-devtools": "^3.5.0",
-		"typescript": "^4.0.2"
-	},
-	"jest": {
-		"preset": "react-native",
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js",
-			"jsx",
-			"json",
-			"node"
-		]
-	}
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
+    "babel-jest": "25.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^7.3.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "25.1.0",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "prettier": "^2.0.4",
+    "react-test-renderer": "16.13.1",
+    "redux-devtools": "^3.5.0",
+    "typescript": "^4.0.2"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
 }
