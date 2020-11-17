@@ -6,9 +6,13 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Button, Caption, Colors, Divider, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
-import { ProfileAvatar } from '../profile-avatar/ProfileAvatar.component';
+import {
+	Caption, Divider, Paragraph, Subheading, Title,
+} from 'react-native-paper';
+import { Avatar } from '../avatar/Avatar.component';
 import { PostStyles as styles } from './Post.styles';
+import { FlatButton } from '../flat-button/FlatButton.component';
+import { IconButton } from '../icon-button/IconButton.component';
 
 export interface PostProps {
 	post: FullPost;
@@ -30,78 +34,61 @@ export const Post: React.FC<PostProps> = ({
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 	};
-	const onAvatarClick = () =>
-		Navigation.push(stackId, profileScreenLayer(post.profile.id));
-	const onReplyClick = () =>
-		Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () =>
-		dispatcher(PostActions.like(post.id, currentProfile));
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile.id));
+	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
 
-	return (
-		<Animated.View
-			style={[styles.root, { transform: [{ translateY: mainPostY }] }]}
-			onLayout={onLayout}>
-			<View style={styles.card}>
-				<View style={styles.header}>
-					<ProfileAvatar
-						style={styles.avatar}
-						label="E"
-						size={48}
-						onPress={onAvatarClick}
-					/>
-					<View style={styles.userData}>
-						<Title style={styles.name}>{post.profile.name}</Title>
-						<Subheading
-							style={
-								styles.username
-							}>{`@${post.profile.tag}`}</Subheading>
-					</View>
-					<IconButton
-						icon="dots-vertical"
-						color={Colors.grey600}
-						size={24}
-						onPress={onClick}
-					/>
+	return (<Animated.View
+		style={[styles.root, { transform: [{ translateY: mainPostY }] }]}
+		onLayout={onLayout}
+	>
+		<View style={styles.card}>
+			<View style={styles.header}>
+				<Avatar
+					style={styles.avatar}
+					label="E"
+					onPress={onAvatarClick}
+				/>
+				<View style={styles.userData}>
+					<Title style={styles.name}>{post.profile.name}</Title>
+					<Subheading
+						style={styles.username}
+					>{`@${post.profile.tag}`}</Subheading>
 				</View>
-				<View style={styles.content}>
-					<Paragraph style={styles.text}>{post.content}</Paragraph>
-					<Caption style={styles.date}>
-						{post.date.toLocaleString()}
-					</Caption>
-				</View>
-				<Divider />
-				<View style={styles.actions}>
-					<Button
-						icon="message-reply-text"
-						onPress={onReplyClick}
-						labelStyle={styles.actionButtonLabel}
-						contentStyle={styles.actionButton}
-						style={styles.replyButton}>
-						{0}
-					</Button>
-					<Button
-						icon="star-circle"
-						onPress={onLikeClick}
-						labelStyle={styles.actionButtonLabel}
-						contentStyle={styles.actionButton}>
-						{post.likes.length}
-					</Button>
-					<Button
-						icon="share"
-						onPress={onClick}
-						labelStyle={styles.actionButtonLabel}
-						contentStyle={styles.actionButton}>
-						{0}
-					</Button>
-					{/*<Button
-			 icon="share-variant"
-			 onPress={ onClick }
-			 labelStyle={ styles.actionButtonLabel }
-			 contentStyle={ styles.actionButton }
-			 >{ '' }</Button>*/}
-				</View>
+				<IconButton
+					icon="dots-vertical"
+					onPress={onClick}
+				/>
+			</View>
+			<View style={styles.content}>
+				<Paragraph style={styles.text}>{post.content}</Paragraph>
+				<Caption style={styles.date}>
+					{post.date.toLocaleString()}
+				</Caption>
 			</View>
 			<Divider />
-		</Animated.View>
-	);
+			<View style={styles.actions}>
+				<FlatButton
+					icon="message-reply-text"
+					onPress={onReplyClick}
+					style={styles.replyButton}
+				>
+					0
+				</FlatButton>
+				<FlatButton
+					icon="star-circle"
+					onPress={onLikeClick}
+				>
+					{post.likes.length.toString()}
+				</FlatButton>
+				<FlatButton
+					icon="share"
+					onPress={onClick}
+				>
+					0
+				</FlatButton>
+			</View>
+		</View>
+		<Divider />
+	</Animated.View>);
 };

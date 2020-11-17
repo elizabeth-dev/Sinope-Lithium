@@ -1,8 +1,9 @@
 import React from 'react';
 import { Animated, LayoutChangeEvent, View } from 'react-native';
-import { Avatar, Paragraph, Subheading, Text, Title } from 'react-native-paper';
+import { Paragraph, Subheading, Text, Title } from 'react-native-paper';
 import { ProfileHeaderStyles as styles } from './ProfileHeader.styles';
 import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
+import { Avatar } from '@shared/components/avatar/Avatar.component';
 
 export interface ProfileHeaderProps {
 	name: string;
@@ -33,7 +34,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 			)}
 			<View style={styles.cover} />
 			<View style={styles.content}>
-				<Avatar.Text style={styles.avatar} label="E" size={72} />
+				<Avatar style={styles.avatar} label="E" size={72} />
 				<Title>{name}</Title>
 				<Subheading style={styles.tag}>@{tag}</Subheading>
 				<Paragraph style={styles.description}>{description}</Paragraph>

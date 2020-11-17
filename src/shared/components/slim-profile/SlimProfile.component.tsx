@@ -1,4 +1,4 @@
-import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { Avatar } from '../avatar/Avatar.component';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
@@ -28,10 +28,9 @@ export const SlimProfile: React.FC<SlimProfileProps> = ({
 		onPress={onProfileClick}
 	>
 		<View style={styles.root}>
-			<ProfileAvatar
+			<Avatar
 				style={styles.avatar}
 				label={profile.name[0].toUpperCase()}
-				size={48}
 			/>
 			<View style={styles.body}>
 				<View style={styles.header}>
@@ -43,12 +42,6 @@ export const SlimProfile: React.FC<SlimProfileProps> = ({
 							{`@${profile.tag}`}
 						</Subheading>
 					</View>
-					{/*<IconButton
-							icon="dots-vertical"
-							color={Colors.grey600}
-							size={24}
-							onPress={onClick}
-						/>*/}
 				</View>
 				<View style={styles.content}>
 					<Paragraph style={styles.text}>

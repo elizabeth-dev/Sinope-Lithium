@@ -1,5 +1,5 @@
 import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { Avatar } from '@shared/components/avatar/Avatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import React from 'react';
@@ -43,13 +43,13 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 
 	return (<Pressable style={styles.root} onPress={onSwitch}>
 			<View style={styles.avatarBox}>
-				<ProfileAvatar
+				<Avatar
 					size={72}
 					label={currentProfile?.profile?.name[0]?.toUpperCase()}
 					onPress={onCurrentClick}
 				/>
 				{myProfiles.length !== 0 && (<View style={styles.otherProfiles}>
-						{myProfiles.map((profile) => (<ProfileAvatar
+						{myProfiles.map((profile) => (<Avatar
 								size={48}
 								label={profile.profile?.name[0]?.toUpperCase()}
 								style={styles.otherProfileAvatar}

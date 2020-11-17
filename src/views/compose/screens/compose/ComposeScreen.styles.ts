@@ -14,14 +14,11 @@ export const ComposeScreenStyles = StyleSheet.create({
 		flexDirection: 'row',
 		backgroundColor: '#ffffff',
 		paddingHorizontal: 12,
-		paddingVertical: 8,
+		paddingVertical: 4,
 		borderTopColor: '#0000001f',
 		borderTopWidth: 1,
 	},
 	sendButton: {
 		marginLeft: 'auto',
-	},
-	sendButtonContent: {
-		padding: 4,
 	},
 });

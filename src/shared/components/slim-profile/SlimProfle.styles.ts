@@ -4,6 +4,7 @@ import { Colors } from 'react-native-paper';
 export const SlimProfleStyles = StyleSheet.create({
 	root: {
 		flexDirection: 'row',
+		alignItems: 'flex-start',
 		paddingTop: 16,
 		paddingBottom: 12,
 		paddingRight: 20,

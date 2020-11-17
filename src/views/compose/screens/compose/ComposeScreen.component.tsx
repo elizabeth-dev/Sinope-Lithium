@@ -7,6 +7,7 @@ import { Button, Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
 
 export interface ComposeScreenProps {
 	replyTo?: string;
@@ -35,10 +36,8 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 				multiline
 			/>
 			<View style={styles.actionBar}>
-				<Button
+				<FlatButton
 					style={styles.sendButton}
-					contentStyle={styles.sendButtonContent}
-					mode="contained"
 					onPress={() => {
 						dispatcher(
 							PostActions.send({
@@ -50,7 +49,7 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 						Navigation.pop(componentId);
 					}}>
 					Send
-				</Button>
+				</FlatButton>
 			</View>
 		</KeyboardAvoidingView>
 	);

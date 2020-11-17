@@ -1,5 +1,5 @@
 import { PostActions } from '@core/state/actions/post.actions';
-import { ProfileAvatar } from '@shared/components/profile-avatar/ProfileAvatar.component';
+import { Avatar } from '../avatar/Avatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
@@ -8,8 +8,9 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Caption, Colors, IconButton, Paragraph, Subheading, Title } from 'react-native-paper';
+import { Caption, Colors, Paragraph, Subheading, Title } from 'react-native-paper';
 import { SlimPostStyles as styles } from './SlimPost.styles';
+import { IconButton } from '../icon-button/IconButton.component';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
@@ -21,6 +22,9 @@ export interface SlimPostProps {
 const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 };
+
+const actionButtonSize = 20;
+
 export const SlimPost: React.FC<SlimPostProps> = ({
 	post,
 	currentProfile,
@@ -42,10 +46,9 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 			underlayColor={Colors.grey200}
 			onPress={onPostClick}>
 			<View style={styles.root}>
-				<ProfileAvatar
+				<Avatar
 					style={styles.avatar}
 					label={post.profile.name[0].toUpperCase()}
-					size={48}
 					onPress={onAvatarClick}
 				/>
 				<View style={styles.body}>
@@ -60,9 +63,9 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 						</View>
 						<IconButton
 							icon="dots-vertical"
-							color={Colors.grey600}
 							size={24}
 							onPress={onClick}
+							style={styles.menuButton}
 						/>
 					</View>
 					<View style={styles.content}>
@@ -78,21 +81,18 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 							icon="message-reply-text"
 							style={[styles.actionButton, styles.replyButton]}
 							onPress={onReplyClick}
-							size={18}
-							color={Colors.grey600}
+							size={actionButtonSize}
 						/>
 						<IconButton
 							icon="star-circle"
 							onPress={onLikeClick}
-							size={18}
-							color={Colors.grey600}
+							size={actionButtonSize}
 							style={styles.actionButton}
 						/>
 						<IconButton
 							icon="share"
 							onPress={onClick}
-							size={18}
-							color={Colors.grey600}
+							size={actionButtonSize}
 							style={styles.actionButton}
 						/>
 					</View>
