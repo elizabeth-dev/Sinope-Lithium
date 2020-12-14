@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native-paper';
 
 export const PostStyles = StyleSheet.create({
 	root: {
@@ -24,22 +23,9 @@ export const PostStyles = StyleSheet.create({
 		justifyContent: 'center',
 		marginHorizontal: 12,
 	},
-	name: {
-		fontSize: 18,
-		lineHeight: 20,
-	},
-	username: {
-		color: Colors.grey600,
-		fontSize: 16,
-		lineHeight: 16,
-	},
 	content: {
 		paddingVertical: 4,
 	},
-	text: {
-		lineHeight: 18,
-	},
-	date: {},
 	actions: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',

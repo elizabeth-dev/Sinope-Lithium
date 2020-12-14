@@ -5,9 +5,10 @@ import { registerRoot } from '@shared/navigation/roots/register.root';
 import React from 'react';
 import { Keyboard, View } from 'react-native';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
-import { Button, TextInput } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
+import { Button } from '@shared/components/button/Button.component';
+import { TextInput } from '@shared/components/text-input/TextInput.component';
 
 export const LoginScreen: NavigationFunctionComponent = () => {
 	const dispatch = useAppDispatch();
@@ -29,38 +30,30 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 	return (
 		<View style={styles.root}>
 			<TextInput
-				style={styles.input}
-				label="Email"
+				placeholder="Email"
 				autoCompleteType="email"
 				autoCapitalize="none"
 				keyboardType="email-address"
-				mode="outlined"
 				error={error}
 				value={email}
 				onChangeText={setEmail}
 			/>
 			<TextInput
-				style={styles.input}
-				label="Password"
+				placeholder="Password"
 				autoCompleteType="password"
 				autoCapitalize="none"
 				secureTextEntry={true}
-				mode="outlined"
 				error={error}
 				value={password}
 				onChangeText={setPassword}
 			/>
 			<Button
 				style={styles.loginButton}
-				contentStyle={styles.loginButtonContent}
-				mode="contained"
 				onPress={onLogin}>
 				Log In
 			</Button>
 			<Button
 				style={styles.registerButton}
-				contentStyle={styles.registerButtonContent}
-				mode="contained"
 				onPress={onRegister}>
 				Register
 			</Button>

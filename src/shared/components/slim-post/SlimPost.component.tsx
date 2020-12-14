@@ -8,9 +8,10 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Caption, Colors, Paragraph, Subheading, Title } from 'react-native-paper';
+import { Colors } from 'react-native-paper';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 import { IconButton } from '../icon-button/IconButton.component';
+import { Typography } from '../typography/Typography.component';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
@@ -32,19 +33,15 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 }) => {
 	const dispatcher = useAppDispatch();
 
-	const onPostClick = () =>
-		Navigation.push(stackId, postScreenLayer(post.id));
-	const onAvatarClick = () =>
-		Navigation.push(stackId, profileScreenLayer(post.profile.id));
-	const onReplyClick = () =>
-		Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () =>
-		dispatcher(PostActions.like(post.id, currentProfile));
+	const onPostClick = () => Navigation.push(stackId, postScreenLayer(post.id));
+	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile.id));
+	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
+	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
 
-	return (
-		<TouchableHighlight
+	return (<TouchableHighlight
 			underlayColor={Colors.grey200}
-			onPress={onPostClick}>
+			onPress={onPostClick}
+		>
 			<View style={styles.root}>
 				<Avatar
 					style={styles.avatar}
@@ -54,12 +51,8 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 				<View style={styles.body}>
 					<View style={styles.header}>
 						<View style={styles.userData}>
-							<Title style={styles.name}>
-								{post.profile.name}
-							</Title>
-							<Subheading style={styles.username}>
-								{`@${post.profile.tag}`}
-							</Subheading>
+							<Typography.Headline>{post.profile.name}</Typography.Headline>
+							<Typography.Subtitle>@{post.profile.tag}</Typography.Subtitle>
 						</View>
 						<IconButton
 							icon="dots-vertical"
@@ -69,12 +62,8 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 						/>
 					</View>
 					<View style={styles.content}>
-						<Paragraph style={styles.text}>
-							{post.content}
-						</Paragraph>
-						<Caption style={styles.date}>
-							{post.date.toLocaleString()}
-						</Caption>
+						<Typography.Body>{post.content}</Typography.Body>
+						<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
 					</View>
 					<View style={styles.actions}>
 						<IconButton
@@ -98,6 +87,5 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 					</View>
 				</View>
 			</View>
-		</TouchableHighlight>
-	);
+		</TouchableHighlight>);
 };

@@ -1,13 +1,15 @@
 import React from 'react';
 import { SearchStyles as styles } from './Search.styles';
 import { FlatList, Pressable, View } from 'react-native';
-import { Divider, Text, TextInput } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { fromSearch } from '@core/state/selectors/search.selectors';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { SearchActions } from '@core/state/actions/search.actions';
 import { Navigation } from 'react-native-navigation';
 import { searchScreenLayer } from '@shared/navigation/layers/search-screen.layer';
+import { TextInput } from '@shared/components/text-input/TextInput.component';
+import { Typography } from '@shared/components/typography/Typography.component';
 
 export interface SearchProps {
 	stackId: string;
@@ -31,8 +33,7 @@ export const Search: React.FC<SearchProps> = ({ stackId }) => {
 
 	return (<View style={styles.root}>
 		<TextInput
-			label="Search"
-			style={styles.searchBar}
+			placeholder="Search"
 			value={searchText}
 			onChangeText={text => setSearchText(text)}
 			onSubmitEditing={() => onSearch(searchText)}
@@ -49,7 +50,7 @@ export const Search: React.FC<SearchProps> = ({ stackId }) => {
 				onPress={() => onSearch(item)}
 				onLongPress={() => onRemoveSearch(item)}
 			>
-				<Text style={styles.historyText}>{item}</Text>
+				<Typography.Body>{item}</Typography.Body>
 			</Pressable>)}
 			keyExtractor={item => item}
 			ItemSeparatorComponent={Divider}

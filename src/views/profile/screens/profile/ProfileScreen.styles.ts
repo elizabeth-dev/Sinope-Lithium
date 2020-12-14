@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native-paper';
 
 export const ProfileScreenStyles = StyleSheet.create({
 	root: { flex: 1 },
@@ -12,6 +11,7 @@ export const ProfileScreenStyles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 	},
 	tabBarLabel: {
-		color: Colors.grey900,
+		color: '#000000',
+		opacity: 0.87,
 	},
 });

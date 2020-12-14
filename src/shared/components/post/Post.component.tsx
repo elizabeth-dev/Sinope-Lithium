@@ -6,13 +6,12 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import {
-	Caption, Divider, Paragraph, Subheading, Title,
-} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { Avatar } from '../avatar/Avatar.component';
 import { PostStyles as styles } from './Post.styles';
 import { FlatButton } from '../flat-button/FlatButton.component';
 import { IconButton } from '../icon-button/IconButton.component';
+import { Typography } from '../typography/Typography.component';
 
 export interface PostProps {
 	post: FullPost;
@@ -50,10 +49,8 @@ export const Post: React.FC<PostProps> = ({
 					onPress={onAvatarClick}
 				/>
 				<View style={styles.userData}>
-					<Title style={styles.name}>{post.profile.name}</Title>
-					<Subheading
-						style={styles.username}
-					>{`@${post.profile.tag}`}</Subheading>
+					<Typography.Headline>{post.profile.name}</Typography.Headline>
+					<Typography.Subtitle>@{post.profile.tag}</Typography.Subtitle>
 				</View>
 				<IconButton
 					icon="dots-vertical"
@@ -61,10 +58,8 @@ export const Post: React.FC<PostProps> = ({
 				/>
 			</View>
 			<View style={styles.content}>
-				<Paragraph style={styles.text}>{post.content}</Paragraph>
-				<Caption style={styles.date}>
-					{post.date.toLocaleString()}
-				</Caption>
+				<Typography.Body>{post.content}</Typography.Body>
+				<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
 			</View>
 			<Divider />
 			<View style={styles.actions}>

@@ -31,12 +31,14 @@ const switchedProfileEpic: Epic<AppActionsDto, any, AppState> = (action$, state$
 	tap(([, state]) =>
 		Promise.all([
 			MaterialCommunityIcons.getImageSource('menu', 25),
-		]).then(([menuIcon]) => {
+			MaterialCommunityIcons.getImageSource('message-reply', 25),
+		]).then(([menuIcon, composeIcon]) => {
 			const currentProfile = fromProfile.current(state);
 
 			Navigation.setRoot(
 				dashboardRoot(
 					menuIcon,
+					composeIcon,
 					currentProfile?.profile?.name,
 					currentProfile?.profile?.tag,
 				),

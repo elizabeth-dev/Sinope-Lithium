@@ -24,11 +24,6 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		position: 'relative',
 		// bottom: 36,
 	},
-	tag: {
-		lineHeight: 16,
-		fontSize: 16,
-		color: Colors.grey600,
-	},
 	description: {
 		marginVertical: 16,
 		marginHorizontal: 16,
@@ -41,11 +36,16 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		marginBottom: 16,
 	},
 	follows: {
+		flexDirection: 'row',
 		marginHorizontal: 8,
-		color: Colors.grey600,
 	},
 	followCount: {
-		color: Colors.grey900,
+		color: '#000000',
 		fontWeight: '700',
+		opacity: 0.87,
+	},
+	followTag: {
+		color: '#000000',
+		opacity: 0.60,
 	},
 });

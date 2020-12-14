@@ -6,10 +6,6 @@ export const LoginScreenStyles = StyleSheet.create({
 		padding: 24,
 		justifyContent: 'center',
 	},
-	input: {
-		alignSelf: 'stretch',
-		marginVertical: 8,
-	},
 	loginButton: {
 		marginLeft: 'auto',
 		marginVertical: 12,

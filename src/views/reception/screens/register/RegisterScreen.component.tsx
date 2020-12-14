@@ -4,9 +4,10 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import React from 'react';
 import { Keyboard, View } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
-import { Button, TextInput } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { RegisterScreenStyles as styles } from './RegisterScreen.styles';
+import { Button } from '@shared/components/button/Button.component';
+import { TextInput } from '@shared/components/text-input/TextInput.component';
 
 export interface RegisterScreenProps {
 	passEmail?: string;
@@ -33,42 +34,34 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 	return (
 		<View style={styles.root}>
 			<TextInput
-				style={styles.input}
-				label="Name"
+				placeholder="Name"
 				autoCompleteType="name"
 				autoCapitalize="sentences"
 				keyboardType="default"
-				mode="outlined"
 				error={error}
 				value={name}
 				onChangeText={setName}
 			/>
 			<TextInput
-				style={styles.input}
-				label="Email"
+				placeholder="Email"
 				autoCompleteType="email"
 				autoCapitalize="none"
 				keyboardType="email-address"
-				mode="outlined"
 				error={error}
 				value={email}
 				onChangeText={setEmail}
 			/>
 			<TextInput
-				style={styles.input}
-				label="Password"
+				placeholder="Password"
 				autoCompleteType="password"
 				autoCapitalize="none"
 				secureTextEntry={true}
-				mode="outlined"
 				error={error}
 				value={password}
 				onChangeText={setPassword}
 			/>
 			<Button
 				style={styles.registerButton}
-				contentStyle={styles.registerButtonContent}
-				mode="contained"
 				onPress={onRegister}>
 				Register
 			</Button>

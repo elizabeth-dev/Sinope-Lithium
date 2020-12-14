@@ -4,6 +4,7 @@ import { ImageSource } from 'react-native-vector-icons/Icon';
 
 export const dashboardRoot = (
 	menuIcon: ImageSource,
+	composeIcon: ImageSource,
 	profileName: string,
 	profileTag: string,
 ): LayoutRoot => ({

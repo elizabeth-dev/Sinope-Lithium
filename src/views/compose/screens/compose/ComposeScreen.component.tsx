@@ -3,7 +3,7 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import React from 'react';
 import { KeyboardAvoidingView, TextInput, View } from 'react-native';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
-import { Button, Divider } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
 import { fromProfile } from '@core/state/selectors/profile.selectors';

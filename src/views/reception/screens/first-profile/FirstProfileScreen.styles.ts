@@ -6,10 +6,6 @@ export const FirstProfileScreenStyles = StyleSheet.create({
 		padding: 24,
 		justifyContent: 'center',
 	},
-	input: {
-		alignSelf: 'stretch',
-		marginVertical: 8,
-	},
 	createButton: {
 		marginLeft: 'auto',
 		marginVertical: 12,

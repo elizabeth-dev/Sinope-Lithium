@@ -3,8 +3,6 @@ import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-nati
 import { SceneRoute } from '@shared/types/scene-route.type';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { Dimensions } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialVanillaIcon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from 'react-native-paper';
 import { DashboardScreenStyles as styles } from '../../../dashboard/screens/dashboard/DashboardScreen.styles';
 import { SearchPosts } from '../../components/search-posts/SearchPosts.component';
@@ -12,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { fromSearch } from '@core/state/selectors/search.selectors';
 import { AppState } from '@core/state/app.store';
 import { SearchProfiles } from '../../components/search-profiles/SearchProfiles.component';
+import { Icon } from '@shared/components/icon/Icon.component';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -21,15 +20,22 @@ const renderIcon = ({
 	focused,
 }: {
 	route: SceneRoute; focused: boolean; color: string;
-}) => (route.icon.startsWith('vanilla/') ? <MaterialVanillaIcon
-	name={route.icon.split('/')[1]}
-	size={26}
-	color={focused ? Colors.purple400 : undefined}
-/> : <MaterialIcon
-	name={route.icon}
-	size={26}
-	color={focused ? Colors.purple400 : undefined}
-/>);
+}) => {
+	if (route.icon.startsWith('vanilla/')) {
+		return <Icon
+			icon={route.icon.split('/')[1]}
+			namespace="vanilla"
+			size={26}
+			color={focused ? Colors.purple400 : undefined}
+		/>;
+	}
+
+	return <Icon
+		icon={route.icon}
+		size={26}
+		color={focused ? Colors.purple400 : undefined}
+	/>;
+};
 
 const renderTabBar = (sceneProps: SceneRendererProps & {
 	navigationState: NavigationState<SceneRoute>;

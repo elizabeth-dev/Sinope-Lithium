@@ -25,22 +25,22 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	}, [currentProfile, dispatcher]);
 
 	React.useEffect(() => {
-		if (!timeline) onRefresh();
+		if (!timeline) {
+			onRefresh();
+		}
 	}, [onRefresh, timeline]);
 
 	const onCompose = () => Navigation.push(stackId, composeScreenLayer());
 
 	// TODO: [SLI-29] Check substitution with react-native-navigation FAB
-	return (
-		<>
-			<PostList
-				currentProfile={currentProfile}
-				posts={timeline?.timeline || []}
-				onRefresh={onRefresh}
-				refreshing={timeline?.isFetching ?? true}
-				stackId={stackId}
-			/>
-			<FAB style={styles.fab} icon="message-reply" onPress={onCompose} />
-		</>
-	);
+	return (<>
+		<PostList
+			currentProfile={currentProfile}
+			posts={timeline?.timeline || []}
+			onRefresh={onRefresh}
+			refreshing={timeline?.isFetching ?? true}
+			stackId={stackId}
+		/>
+		<FAB style={styles.fab} icon="message-reply" onPress={onCompose} />
+	</>);
 });

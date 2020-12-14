@@ -5,12 +5,13 @@ import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.lay
 import React from 'react';
 import { GestureResponderEvent, Pressable, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Colors, Subheading, Title } from 'react-native-paper';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Colors } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { SelfActions } from '@core/state/actions/self.actions';
+import { Typography } from '@shared/components/typography/Typography.component';
+import { Icon } from '@shared/components/icon/Icon.component';
 
 export interface DrawerHeaderProps {
 	componentId: string;
@@ -62,14 +63,11 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 			</View>
 			<View style={styles.user}>
 				<View style={styles.userInfo}>
-					<Title>{currentProfile.profile.name}</Title>
-					<Subheading style={{ color: Colors.grey600 }}>
-						{`@${currentProfile.profile.tag}`}
-					</Subheading>
+					<Typography.Headline>{currentProfile.profile.name}</Typography.Headline>
+					<Typography.Subtitle>{`@${currentProfile.profile.tag}`}</Typography.Subtitle>
 				</View>
-				<MaterialIcon
-					name={profileTab ? 'chevron-up' : 'chevron-down'}
-					size={24}
+				<Icon
+					icon={profileTab ? 'chevron-up' : 'chevron-down'}
 					color={Colors.grey600}
 				/>
 			</View>

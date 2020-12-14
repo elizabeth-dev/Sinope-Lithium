@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native-paper';
 
 export const SlimProfleStyles = StyleSheet.create({
 	root: {
@@ -22,16 +21,5 @@ export const SlimProfleStyles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'flex-start',
 	},
-	name: {
-		fontSize: 18,
-		lineHeight: 20,
-	},
-	username: {
-		color: Colors.grey600,
-		fontSize: 16,
-		lineHeight: 16,
-	},
 	content: {},
-	text: {},
-	date: {},
 });

@@ -11,7 +11,4 @@ export const SearchStyles = StyleSheet.create({
 	historyElement: {
 		padding: 16,
 	},
-	historyText: {
-		fontSize: 18,
-	},
 });

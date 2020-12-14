@@ -2,11 +2,14 @@ import { StyleSheet } from 'react-native';
 
 export const DrawerHeaderStyles = StyleSheet.create({
 	root: {
-		backgroundColor: '#ffffff', paddingVertical: 8, paddingHorizontal: 16, flexShrink: 0,
+		backgroundColor: '#ffffff',
+		paddingVertical: 8,
+		paddingHorizontal: 16,
+		flexShrink: 0,
 	},
 	avatarBox: {
 		flexDirection: 'row',
-		flex: 1,
+		flexShrink: 0,
 		paddingTop: 8,
 		paddingBottom: 12,
 	},
