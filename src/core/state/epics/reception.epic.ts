@@ -1,4 +1,4 @@
-import { AppActionsDto } from '@core/state/actions';
+import { AppActionsDto } from '../actions/app.actions';
 import { LoginSuccessAction, RegisterSuccessAction } from '@core/state/actions/auth.actions';
 import { CreatedFirstProfileAction } from '@core/state/actions/profile.actions';
 import { IRequestSelfUserAction, UserActions } from '@core/state/actions/user.actions';

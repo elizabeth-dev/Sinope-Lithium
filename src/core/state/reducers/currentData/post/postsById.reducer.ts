@@ -40,6 +40,7 @@ export function postsByIdReducer(
 						post: {
 							...post,
 							profile: post.profile.id,
+							question: post.question?.id,
 						},
 						isFetching: false,
 						receivedAt: action.payload.receivedAt,
@@ -53,6 +54,7 @@ export function postsByIdReducer(
 					post: {
 						...action.payload.post,
 						profile: action.payload.post.profile.id,
+						question: action.payload.post.question?.id,
 					},
 					receivedAt: action.payload.receivedAt,
 					isFetching: false,

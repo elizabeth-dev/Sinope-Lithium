@@ -1,5 +1,6 @@
 import { FetchEntity } from '../fetchFields.interface';
 import { IProfile } from './profile.interface';
+import { FullQuestion } from './question.interface';
 
 export interface IPost {
 	id: string;
@@ -25,6 +26,6 @@ export interface CreatePostDto {
 
 export type PostEntity = FetchEntity<'post', IPost>;
 
-export type FullPost = Omit<IPost, 'profile'> & { profile: IProfile };
+export type FullPost = Omit<Omit<IPost, 'profile'>, 'question'> & { profile: IProfile, question?: FullQuestion };
 
 export type FullPostEntity = FetchEntity<'post', FullPost>;

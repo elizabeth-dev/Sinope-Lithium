@@ -14,4 +14,10 @@ export const ProfileScreenStyles = StyleSheet.create({
 		color: '#000000',
 		opacity: 0.87,
 	},
+	fab: {
+		position: 'absolute',
+		bottom: 0,
+		right: 0,
+		margin: 16,
+	},
 });

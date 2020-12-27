@@ -2,9 +2,15 @@ import { StyleSheet } from 'react-native';
 
 export const SlimPostStyles = StyleSheet.create({
 	root: {
+		paddingHorizontal: 4,
+		paddingTop: 8,
+	},
+	questionHeader: {
+		paddingHorizontal: 8,
+	},
+	post: {
 		flexDirection: 'row',
 		alignItems: 'flex-start',
-		paddingHorizontal: 4,
 		paddingTop: 8,
 	},
 	avatar: {
@@ -24,7 +30,6 @@ export const SlimPostStyles = StyleSheet.create({
 	menuButton: {
 		margin: 4,
 	},
-	content: {},
 	actions: {
 		flexDirection: 'row',
 		paddingVertical: 0,

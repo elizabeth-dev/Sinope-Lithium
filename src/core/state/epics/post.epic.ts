@@ -1,4 +1,4 @@
-import { AppActionsDto } from '@core/state/actions';
+import { AppActionsDto } from '../actions/app.actions';
 import {
 	IReceivePostsAction,
 	IReceiveProfilePostsAction,

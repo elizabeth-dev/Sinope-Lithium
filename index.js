@@ -12,10 +12,9 @@ import { LoginScreen } from './src/views/reception/screens/login/LoginScreen.com
 import { RegisterScreen } from './src/views/reception/screens/register/RegisterScreen.component';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 import { SearchScreen } from './src/views/search/screens/search/SearchScreen.component';
+import { AskQuestionScreen } from './src/views/ask-question/screens/ask-question/AskQuestionScreen.component';
 
-Navigation.registerComponent(AppScreens.SplashScreen, () =>
-	screenHOC(SplashScreen, appStore, true, true),
-);
+Navigation.registerComponent(AppScreens.SplashScreen, () => screenHOC(SplashScreen, appStore, true, true));
 Navigation.registerComponent(AppScreens.DashboardScreen, () =>
 	screenHOC(DashboardScreen, appStore),
 );
@@ -42,6 +41,9 @@ Navigation.registerComponent(AppScreens.ComposeScreen, () =>
 );
 Navigation.registerComponent(AppScreens.SearchScreen, () =>
 	screenHOC(SearchScreen, appStore),
+);
+Navigation.registerComponent(AppScreens.AskQuestionScreen, () =>
+	screenHOC(AskQuestionScreen, appStore),
 );
 
 Navigation.events().registerAppLaunchedListener(() => {

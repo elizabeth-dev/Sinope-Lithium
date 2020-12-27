@@ -17,6 +17,7 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import { searchEpic } from './epics/search.epic';
+import { questionEpic } from './epics/question.epic';
 
 export type AppState = ReturnType<typeof appReducer>;
 
@@ -41,6 +42,7 @@ const appEpic = combineEpics(authEpic,
 	receptionEpic,
 	selfEpic,
 	searchEpic,
+	questionEpic,
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -65,6 +67,6 @@ const configStore = () => {
 
 export const appStore = configStore();
 export let appPersistor: Persistor;
-export const persistorPromise = new Promise((resolve) => {
+export const persistorPromise = new Promise<void>((resolve) => {
 	appPersistor = persistStore(appStore, undefined, () => resolve());
 });

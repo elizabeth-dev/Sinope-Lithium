@@ -9,14 +9,20 @@ export const PostStyles = StyleSheet.create({
 	card: {
 		paddingRight: 8,
 		paddingLeft: 12,
+		paddingTop: 12,
+	},
+	questionHeader: {
+		marginBottom: 12,
+		flexDirection: 'row',
+	},
+	questionData: {
+		marginHorizontal: 8,
 	},
 	header: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginTop: 12,
 		marginBottom: 8,
 	},
-	avatar: {},
 	userData: {
 		flex: 1,
 		alignItems: 'flex-start',

@@ -38,12 +38,12 @@ export function postsByProfileReducer(
 		case SentPostAction:
 			return {
 				...state,
-				[action.payload.post.profile]: {
-					...state[action.payload.post.profile],
+				[action.payload.post.profile.id]: {
+					...state[action.payload.post.profile.id],
 					posts: [
 						action.payload.post.id,
-						...(state[action.payload.post.profile]
-							? state[action.payload.post.profile].posts
+						...(state[action.payload.post.profile.id]
+							? state[action.payload.post.profile.id].posts
 							: []),
 					],
 				},

@@ -1,4 +1,4 @@
-import { AppActionsDto } from '@core/state/actions';
+import { AppActionsDto } from '../actions/app.actions';
 import {
 	IReceiveTimelineAction, RequestTimelineAction, TimelineActions,
 } from '@core/state/actions/timeline.actions';

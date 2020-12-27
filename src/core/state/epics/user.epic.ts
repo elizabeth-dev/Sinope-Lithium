@@ -1,4 +1,4 @@
-import { AppActionsDto } from '@core/state/actions';
+import { AppActionsDto } from '../actions/app.actions';
 import {
 	IReceiveSelfUserAction, ReceiveSelfUserAction, RequestSelfUserAction, UserActions,
 } from '@core/state/actions/user.actions';

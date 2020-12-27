@@ -1,5 +1,5 @@
 import { combineEpics, Epic } from 'redux-observable';
-import { AppActionsDto } from '../actions';
+import { AppActionsDto } from '../actions/app.actions';
 import { IReceiveSearchAction, SearchAction, SearchActions } from '../actions/search.actions';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';

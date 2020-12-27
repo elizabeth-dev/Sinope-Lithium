@@ -17,16 +17,11 @@ export const Avatar: React.FC<AvatarProps> = ({
 	onPress,
 	onLongPress,
 }) => {
-	return (<View style={[{ borderRadius: size }, style, styles.root]}>
+	return (<View style={[{ borderRadius: size, height: size, width: size }, style, styles.root]}>
 		<Pressable
 			onPress={onPress}
 			onLongPress={onLongPress}
-			style={[
-				{
-					height: size,
-					width: size,
-				}, styles.pressable,
-			]}
+			style={styles.pressable}
 			android_ripple={{
 				color: 'grey',
 				borderless: true,

@@ -26,11 +26,7 @@ const onClick = () => {
 
 const actionButtonSize = 20;
 
-export const SlimPost: React.FC<SlimPostProps> = ({
-	post,
-	currentProfile,
-	stackId,
-}) => {
+export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackId }) => {
 	const dispatcher = useAppDispatch();
 
 	const onPostClick = () => Navigation.push(stackId, postScreenLayer(post.id));
@@ -38,54 +34,52 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
 	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
 
-	return (<TouchableHighlight
-			underlayColor={Colors.grey200}
-			onPress={onPostClick}
-		>
+	return (
+		<TouchableHighlight underlayColor={Colors.grey200} onPress={onPostClick}>
 			<View style={styles.root}>
-				<Avatar
-					style={styles.avatar}
-					label={post.profile.name[0].toUpperCase()}
-					onPress={onAvatarClick}
-				/>
-				<View style={styles.body}>
-					<View style={styles.header}>
-						<View style={styles.userData}>
-							<Typography.Headline>{post.profile.name}</Typography.Headline>
-							<Typography.Subtitle>@{post.profile.tag}</Typography.Subtitle>
+				{post.question && (
+					<View style={styles.questionHeader}>
+						<Typography.Body>{post.question.content}</Typography.Body>
+						<Typography.Subtitle> – {post.question.from?.name ?? 'Anonymous'}</Typography.Subtitle>
+					</View>
+				)}
+				<View style={styles.post}>
+					<Avatar style={styles.avatar} label={post.profile.name[0].toUpperCase()} onPress={onAvatarClick} />
+					<View style={styles.body}>
+						<View style={styles.header}>
+							<View style={styles.userData}>
+								<Typography.Headline>{post.profile.name}</Typography.Headline>
+								<Typography.Subtitle>@{post.profile.tag}</Typography.Subtitle>
+							</View>
+							<IconButton icon="dots-vertical" size={24} onPress={onClick} style={styles.menuButton} />
 						</View>
-						<IconButton
-							icon="dots-vertical"
-							size={24}
-							onPress={onClick}
-							style={styles.menuButton}
-						/>
-					</View>
-					<View style={styles.content}>
-						<Typography.Body>{post.content}</Typography.Body>
-						<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
-					</View>
-					<View style={styles.actions}>
-						<IconButton
-							icon="message-reply-text"
-							style={[styles.actionButton, styles.replyButton]}
-							onPress={onReplyClick}
-							size={actionButtonSize}
-						/>
-						<IconButton
-							icon="star-circle"
-							onPress={onLikeClick}
-							size={actionButtonSize}
-							style={styles.actionButton}
-						/>
-						<IconButton
-							icon="share"
-							onPress={onClick}
-							size={actionButtonSize}
-							style={styles.actionButton}
-						/>
+						<View>
+							<Typography.Body>{post.content}</Typography.Body>
+							<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
+						</View>
+						<View style={styles.actions}>
+							<IconButton
+								icon="message-reply-text"
+								style={[styles.actionButton, styles.replyButton]}
+								onPress={onReplyClick}
+								size={actionButtonSize}
+							/>
+							<IconButton
+								icon="star-circle"
+								onPress={onLikeClick}
+								size={actionButtonSize}
+								style={styles.actionButton}
+							/>
+							<IconButton
+								icon="share"
+								onPress={onClick}
+								size={actionButtonSize}
+								style={styles.actionButton}
+							/>
+						</View>
 					</View>
 				</View>
 			</View>
-		</TouchableHighlight>);
+		</TouchableHighlight>
+	);
 };

@@ -1,9 +1,9 @@
 import { Layout } from 'react-native-navigation';
 import { AppScreens } from '@core/app.screens';
 
-export const composeScreenLayer = (replyTo?: string, questionId?: string): Layout => ({
+export const askQuestionScreenLayer = (recipient: string): Layout => ({
 	component: {
-		name: AppScreens.ComposeScreen,
+		name: AppScreens.AskQuestionScreen,
 		options: {
 			topBar: {
 				title: { text: '' },
@@ -17,8 +17,7 @@ export const composeScreenLayer = (replyTo?: string, questionId?: string): Layou
 			blurOnUnmount: true,
 		},
 		passProps: {
-			replyTo,
-			questionId,
+			recipient,
 		},
 	},
 });

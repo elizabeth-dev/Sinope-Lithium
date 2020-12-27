@@ -14,7 +14,7 @@ import { combineEpics, Epic } from 'redux-observable';
 import { of, throwError } from 'rxjs';
 import { catchError, filter, map, mergeMap } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
-import { AppActionsDto } from '../actions';
+import { AppActionsDto } from '../actions/app.actions';
 
 const loginEpic: Epic<AppActionsDto,
 	ILoginSuccessAction | ILoginFailureAction> = (action$) =>

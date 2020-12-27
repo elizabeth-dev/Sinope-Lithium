@@ -14,5 +14,7 @@ module.exports = {
 		quotes: ['error', 'single'],
 		'no-unused-vars': ['error'],
 		'no-mixed-spaces-and-tabs': 0,
+		curly: ['error', 'multi-line'],
+		'no-console': ['warn', { allow: ['error'] }],
 	},
 };

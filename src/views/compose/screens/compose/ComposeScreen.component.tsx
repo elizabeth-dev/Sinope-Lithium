@@ -8,29 +8,35 @@ import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
+import { QuestionActions } from '@core/state/actions/question.actions';
 
 export interface ComposeScreenProps {
 	replyTo?: string;
+	questionId?: string;
 }
 
 export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 	componentId,
 	replyTo,
+	questionId,
 }) => {
 	const dispatcher = useAppDispatch();
 
 	const [content, setContent] = React.useState('');
 	const currentProfile = useSelector(fromProfile.currentId);
 
-	// TODO: Remove input underline on selection
+	const placeholder = replyTo
+		? `Reply to ${replyTo}...`
+		: questionId
+		? `Answering ${questionId}...`
+		: 'Write a new post...';
+
 	return (
 		<KeyboardAvoidingView style={styles.root}>
 			<Divider />
 			<TextInput
 				style={styles.input}
-				placeholder={
-					replyTo ? `Reply to ${replyTo}...` : 'Write a new post...'
-				}
+				placeholder={placeholder}
 				value={content}
 				onChangeText={setContent}
 				multiline
@@ -44,8 +50,13 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 								profile: currentProfile,
 								content,
 								tmpId: Date.now().toString(),
+								question: questionId,
 							}),
 						);
+						if (questionId) {
+							dispatcher(QuestionActions.getByProfile(currentProfile));
+						}
+
 						Navigation.pop(componentId);
 					}}>
 					Send

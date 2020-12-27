@@ -9,6 +9,7 @@ export const AvatarStyles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: 'purple',
+		flex: 1,
 	},
 	text: {
 		color: 'white',

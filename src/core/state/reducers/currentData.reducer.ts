@@ -4,6 +4,7 @@ import { postReducer } from './currentData/post.reducer';
 import { profileReducer } from './currentData/profile.reducer';
 import { timelineReducer } from './currentData/timeline.reducer';
 import { searchReducer } from './currentData/search.reducer';
+import { questionReducer } from './currentData/question.reducer';
 
 
 export const _currentDataReducer = combineReducers({
@@ -11,6 +12,7 @@ export const _currentDataReducer = combineReducers({
 	profile: profileReducer,
 	timeline: timelineReducer,
 	search: searchReducer,
+	question: questionReducer,
 });
 
 export type CurrentDataState = ReturnType<typeof currentDataReducer>;
