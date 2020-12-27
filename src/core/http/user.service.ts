@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map } from 'rxjs/operators';
 
-const getSelf = (
-	token: string,
-): Observable<Omit<IUser, 'profiles'> & { profiles: IProfile[] }> => {
+const getSelf = (token: string): Observable<Omit<IUser, 'profiles'> & { profiles: IProfile[] }> => {
 	return ajax.getJSON(`${developmentEnv.apiUrl}/users/`, {
 		Authorization: `Bearer ${token}`,
 	});

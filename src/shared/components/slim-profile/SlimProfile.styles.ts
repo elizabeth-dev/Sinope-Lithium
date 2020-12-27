@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const SlimProfleStyles = StyleSheet.create({
+export const SlimProfileStyles = StyleSheet.create({
 	root: {
 		flexDirection: 'row',
 		alignItems: 'flex-start',

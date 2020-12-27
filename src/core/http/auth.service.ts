@@ -9,7 +9,10 @@ const login = (email: string, password: string): Observable<TokenPair> => {
 	return ajax
 		.post(
 			`${developmentEnv.apiUrl}/auth/login`,
-			{ email, password },
+			{
+				email,
+				password,
+			},
 			{ 'Content-Type': 'application/json' },
 		)
 		.pipe(
@@ -40,13 +43,11 @@ const refresh = (refreshToken: string): Observable<TokenPair> => {
 };
 
 const logout = (refreshToken: string): Observable<void> => {
-	return ajax
-		.post(`${developmentEnv.apiUrl}/auth/logout`, { refreshToken })
-		.pipe(
-			map(() => {
-				return;
-			}),
-		);
+	return ajax.post(`${developmentEnv.apiUrl}/auth/logout`, { refreshToken }).pipe(
+		map(() => {
+			return;
+		}),
+	);
 };
 
 export const AuthService = {

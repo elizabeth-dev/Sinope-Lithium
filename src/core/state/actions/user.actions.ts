@@ -1,4 +1,4 @@
-import {IUser} from '@shared/types/entities/user.interface';
+import { IUser } from '@shared/types/entities/user.interface';
 
 export const RequestSelfUserAction = 'user/RequestSelfUserAction';
 
@@ -20,12 +20,12 @@ export interface IReceiveSelfUserAction {
 	};
 }
 
-const receiveSelfUserFn = (
-	user: IUser,
-	receivedAt: number,
-): IReceiveSelfUserAction => ({
+const receiveSelfUserFn = (user: IUser, receivedAt: number): IReceiveSelfUserAction => ({
 	type: ReceiveSelfUserAction,
-	payload: { user, receivedAt },
+	payload: {
+		user,
+		receivedAt,
+	},
 });
 
 export type UserActionsDto = IReceiveSelfUserAction | IRequestSelfUserAction;

@@ -10,9 +10,7 @@ import {
 import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/state/actions/user.actions';
 import { ProfileEntity } from '@shared/types/entities/profile.interface';
 import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
-import {
-	IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction,
-} from '../../../actions/post.actions';
+import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '../../../actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
 
 export interface ProfilesByIdState {
@@ -23,7 +21,14 @@ const initialState: ProfilesByIdState = {};
 
 export function profilesByIdReducer(
 	state = initialState,
-	action: ProfileActionsDto | IReceiveSelfUserAction | IReceiveSearchAction | IReceivePostsAction | IReceiveProfilePostsAction | IReceiveTimelineAction): ProfilesByIdState {
+	action:
+		| ProfileActionsDto
+		| IReceiveSelfUserAction
+		| IReceiveSearchAction
+		| IReceivePostsAction
+		| IReceiveProfilePostsAction
+		| IReceiveTimelineAction,
+): ProfilesByIdState {
 	switch (action.type) {
 		case RequestProfileAction:
 			return {
@@ -35,55 +40,75 @@ export function profilesByIdReducer(
 			};
 		case ReceiveProfilesAction:
 			return {
-				...state, ...action.payload.profiles.reduce((acc, profile) => ({
-					...acc,
-					[profile.id]: {
-						profile,
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as ProfilesByIdState),
+				...state,
+				...action.payload.profiles.reduce(
+					(acc, profile) => ({
+						...acc,
+						[profile.id]: {
+							profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
 			};
 		case ReceiveSearchAction:
 			return {
-				...state, ...action.payload.profiles.reduce((acc, profile) => ({
-					...acc,
-					[profile.id]: {
-						profile,
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as ProfilesByIdState), ...action.payload.posts.reduce((acc, post) => ({
-					...acc,
-					[post.profile.id]: {
-						profile: post.profile,
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as ProfilesByIdState),
+				...state,
+				...action.payload.profiles.reduce(
+					(acc, profile) => ({
+						...acc,
+						[profile.id]: {
+							profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
+				...action.payload.posts.reduce(
+					(acc, post) => ({
+						...acc,
+						[post.profile.id]: {
+							profile: post.profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
 			};
 		case ReceiveTimelineAction:
 		case ReceivePostsAction:
 			return {
-				...state, ...action.payload.posts.reduce((acc, post) => ({
-					...acc,
-					[post.profile.id]: {
-						profile: post.profile,
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as ProfilesByIdState),
+				...state,
+				...action.payload.posts.reduce(
+					(acc, post) => ({
+						...acc,
+						[post.profile.id]: {
+							profile: post.profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
 			};
 		case ReceiveSelfUserAction:
 			return {
-				...state, ...action.payload.user.profiles.reduce((acc, profile) => ({
-					...acc,
-					[profile.id]: {
-						profile,
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as ProfilesByIdState),
+				...state,
+				...action.payload.user.profiles.reduce(
+					(acc, profile) => ({
+						...acc,
+						[profile.id]: {
+							profile,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as ProfilesByIdState,
+				),
 			};
 		case CreatedProfileAction:
 		case CreatedFirstProfileAction:

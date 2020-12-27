@@ -16,17 +16,12 @@ export interface PostScreenProps {
 	postId: string;
 }
 
-export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
-	postId,
-	componentId,
-}) => {
+export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({ postId, componentId }) => {
 	const dispatcher = useAppDispatch();
 	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
 
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const post = useSelector((state: AppState) =>
-		selectPostById(state, postId),
-	);
+	const post = useSelector((state: AppState) => selectPostById(state, postId));
 	const currentProfile = useSelector(fromProfile.currentId);
 
 	React.useEffect(() => {
@@ -42,24 +37,16 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
 
 	return (
 		<>
-			{post.isFetching && (
-				<ProgressBar
-					backgroundColor="#4a0072"
-					style={styles.progress}
-				/>
-			)}
+			{post.isFetching && <ProgressBar backgroundColor="#4a0072" style={styles.progress} />}
 			<View style={styles.root}>
 				{headerHeight !== 0 && (
 					<PostList
 						currentProfile={currentProfile}
 						posts={[]}
 						stackId={componentId}
-						onScroll={Animated.event(
-							[{ nativeEvent: { contentOffset: { y: scroll } } }],
-							{
-								useNativeDriver: true,
-							},
-						)}
+						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scroll } } }], {
+							useNativeDriver: true,
+						})}
 						containerPaddingTop={headerHeight}
 						progressViewOffset={headerHeight}
 						refreshing={post.isFetching}
@@ -69,9 +56,7 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({
 					post={post.post}
 					currentProfile={currentProfile}
 					mainPostY={(mainPostY as unknown) as number}
-					onLayout={({ nativeEvent }) =>
-						setHeaderHeight(nativeEvent.layout.height)
-					}
+					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
 					stackId={componentId}
 				/>
 			</View>

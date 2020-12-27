@@ -1,8 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
 import { FullPost } from '@shared/types/entities/post.interface';
-import {
-	CreateProfileDto, IProfile, UpdateProfileDto,
-} from '@shared/types/entities/profile.interface';
+import { CreateProfileDto, IProfile, UpdateProfileDto } from '@shared/types/entities/profile.interface';
 import { Observable, throwError } from 'rxjs';
 import { ajax, AjaxError } from 'rxjs/ajax';
 import { catchError, map } from 'rxjs/operators';

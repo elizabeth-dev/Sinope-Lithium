@@ -4,7 +4,7 @@ import React from 'react';
 import { TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Colors } from 'react-native-paper';
-import { SlimProfleStyles as styles } from './SlimProfle.styles';
+import { SlimProfileStyles as styles } from './SlimProfile.styles';
 import { IProfile } from '../../types/entities/profile.interface';
 import { Typography } from '../typography/Typography.component';
 

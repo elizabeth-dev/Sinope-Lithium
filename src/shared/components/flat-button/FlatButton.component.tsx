@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	GestureResponderEvent, Pressable, PressableStateCallbackType, StyleProp, Text, View, ViewStyle,
+	GestureResponderEvent, Pressable, StyleProp, Text, View, ViewStyle,
 } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
 import { FlatButtonStyles as styles } from './FlatButton.styles';
