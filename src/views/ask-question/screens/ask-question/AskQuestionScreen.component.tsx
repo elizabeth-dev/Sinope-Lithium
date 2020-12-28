@@ -1,6 +1,5 @@
 import React from 'react';
 import { AskQuestionScreenStyles as styles } from './AskQuestionScreen.styles';
-import { Divider } from 'react-native-paper';
 import { KeyboardAvoidingView, Switch, TextInput, View } from 'react-native';
 import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
@@ -8,6 +7,7 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import { QuestionActions } from '@core/state/actions/question.actions';
 import { useSelector } from 'react-redux';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { Divider } from '@shared/components/divider/Divider.component';
 
 export interface AskQuestionScreenProps {
 	recipient: string;

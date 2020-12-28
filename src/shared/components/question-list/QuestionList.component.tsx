@@ -1,8 +1,8 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { FullQuestion } from '../../types/entities/question.interface';
 import { SlimQuestion } from '../slim-question/SlimQuestion.component';
+import { Divider } from '../divider/Divider.component';
 
 export interface QuestionListProps {
 	questions: FullQuestion[];

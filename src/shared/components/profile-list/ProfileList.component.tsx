@@ -1,8 +1,8 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { SlimProfile } from '../slim-profile/SlimProfile.component';
 import { IProfile } from '../../types/entities/profile.interface';
+import { Divider } from '../divider/Divider.component';
 
 interface ProfileListProps {
 	profiles: IProfile[];

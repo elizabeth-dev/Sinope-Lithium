@@ -6,12 +6,12 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Divider } from 'react-native-paper';
 import { Avatar } from '../avatar/Avatar.component';
 import { PostStyles as styles } from './Post.styles';
 import { FlatButton } from '../flat-button/FlatButton.component';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
+import { Divider } from '../divider/Divider.component';
 
 export interface PostProps {
 	post: FullPost;

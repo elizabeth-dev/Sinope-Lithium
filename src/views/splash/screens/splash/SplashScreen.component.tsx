@@ -17,12 +17,10 @@ export const SplashScreen: React.FC = () => {
 	} else {
 		Promise.all([
 			MaterialCommunityIcons.getImageSource('menu', 25),
-			MaterialCommunityIcons.getImageSource('message-reply', 25),
 			persistorPromise,
-		]).then(([menuIcon, composeIcon]) => {
+		]).then(([menuIcon]) => {
 			Navigation.setRoot(dashboardRoot(
 				menuIcon,
-				composeIcon,
 				currentProfile?.profile?.name,
 				currentProfile?.profile?.tag,
 			));
