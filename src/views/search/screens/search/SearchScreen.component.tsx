@@ -3,7 +3,6 @@ import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-nati
 import { SceneRoute } from '@shared/types/scene-route.type';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { Dimensions } from 'react-native';
-import { Colors } from 'react-native-paper';
 import { DashboardScreenStyles as styles } from '../../../dashboard/screens/dashboard/DashboardScreen.styles';
 import { SearchPosts } from '../../components/search-posts/SearchPosts.component';
 import { useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import { fromSearch } from '@core/state/selectors/search.selectors';
 import { AppState } from '@core/state/app.store';
 import { SearchProfiles } from '../../components/search-profiles/SearchProfiles.component';
 import { Icon } from '@shared/components/icon/Icon.component';
+import { Colors } from '@shared/utils/colors/Colors.util';
 
 const initialLayout = { width: Dimensions.get('window').width };
 

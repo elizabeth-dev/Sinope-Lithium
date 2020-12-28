@@ -5,13 +5,13 @@ import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.lay
 import React from 'react';
 import { GestureResponderEvent, Pressable, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Colors } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { SelfActions } from '@core/state/actions/self.actions';
 import { Typography } from '@shared/components/typography/Typography.component';
 import { Icon } from '@shared/components/icon/Icon.component';
+import { Colors } from '@shared/utils/colors/Colors.util';
 
 export interface DrawerHeaderProps {
 	componentId: string;

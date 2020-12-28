@@ -4,11 +4,11 @@ import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Typography } from '../typography/Typography.component';
 import { FullQuestion } from '../../types/entities/question.interface';
 import { Avatar } from '../avatar/Avatar.component';
-import { Colors } from 'react-native-paper';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Navigation } from 'react-native-navigation';
 import { profileScreenLayer } from '../../navigation/layers/profile-screen.layer';
 import { composeScreenLayer } from '../../navigation/layers/compose-screen.layer';
+import { Colors } from '../../utils/colors/Colors.util';
 
 const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);

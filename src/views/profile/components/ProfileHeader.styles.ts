@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from 'react-native-paper';
+import { Colors } from '@shared/utils/colors/Colors.util';
 
 export const ProfileHeaderStyles = StyleSheet.create({
 	root: {

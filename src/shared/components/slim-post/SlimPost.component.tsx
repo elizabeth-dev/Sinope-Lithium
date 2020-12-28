@@ -8,10 +8,10 @@ import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { Colors } from 'react-native-paper';
 import { SlimPostStyles as styles } from './SlimPost.styles';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
+import { Colors } from '../../utils/colors/Colors.util';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only

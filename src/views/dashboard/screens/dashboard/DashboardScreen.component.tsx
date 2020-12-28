@@ -2,7 +2,6 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { Navigation, NavigationButtonPressedEvent, NavigationFunctionComponent } from 'react-native-navigation';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
-import { Colors } from 'react-native-paper';
 import { NavigationState, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
 import { SceneRoute } from '@shared/types/scene-route.type';
 import { Home } from '../../components/home/Home.component';
@@ -10,6 +9,7 @@ import { DashboardScreenStyles as styles } from './DashboardScreen.styles';
 import { Search } from '../../components/search/Search.component';
 import { Icon } from '@shared/components/icon/Icon.component';
 import { Questions } from '../../components/questions/Questions.component';
+import { Colors } from '@shared/utils/colors/Colors.util';
 
 const initialLayout = { width: Dimensions.get('window').width };
 

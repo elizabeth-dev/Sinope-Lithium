@@ -2,8 +2,8 @@ import React from 'react';
 import { ButtonStyles as styles } from './Button.styles';
 import { ColorValue, GestureResponderEvent, Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
-import { Colors } from 'react-native-paper';
 import { Typography } from '../typography/Typography.component';
+import { Colors } from '../../utils/colors/Colors.util';
 
 export interface ButtonProps {
 	icon?: string;
