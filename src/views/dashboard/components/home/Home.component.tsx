@@ -6,9 +6,9 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import React from 'react';
 import { Navigation } from 'react-native-navigation';
-import { FAB } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { HomeStyles as styles } from './Home.styles';
+import { Fab } from '@shared/components/fab/Fab.component';
 
 export interface HomeProps {
 	stackId: string;
@@ -41,6 +41,6 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 			refreshing={timeline?.isFetching ?? true}
 			stackId={stackId}
 		/>
-		<FAB style={styles.fab} icon="message-reply" onPress={onCompose} />
+		<Fab style={styles.fab} icon="message-reply" onPress={onCompose} />
 	</>);
 });

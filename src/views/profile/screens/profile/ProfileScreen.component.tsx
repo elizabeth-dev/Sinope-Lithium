@@ -14,8 +14,8 @@ import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
-import { FAB } from 'react-native-paper';
 import { askQuestionScreenLayer } from '@shared/navigation/layers/ask-question-screen.layer';
+import { Fab } from '@shared/components/fab/Fab.component';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -178,7 +178,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
 				/>
 			</View>
-			<FAB style={styles.fab} icon="comment-question" onPress={onCompose} />
+			<Fab style={styles.fab} icon="comment-question" onPress={onCompose} />
 		</>
 	);
 };
