@@ -13,9 +13,7 @@ export const SearchProfiles: React.FC<SearchProfilesProps> = ({
 	stackId,
 	profileIds,
 }) => {
-	const profiles = useSelector((state: AppState) => profileIds.map(id => fromProfile.byId(state,
-		id,
-	).profile));
+	const profiles = useSelector((state: AppState) => profileIds.map((id) => fromProfile.byId(state, id).profile));
 
 	return (<ProfileList profiles={profiles} stackId={stackId} />);
 };

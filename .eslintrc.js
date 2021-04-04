@@ -1,13 +1,11 @@
 module.exports = {
 	root: true,
-	extends: '@react-native-community',
+	extends: ['@react-native-community', 'prettier'],
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
 	rules: {
-		//'array-bracket-spacing': ['warn', 'always'],
 		'object-curly-spacing': ['warn', 'always'],
 		'prettier/prettier': 0,
-		//indent: ['warn', 'tab'],
 		'max-len': ['warn', { code: 120, ignoreStrings: true }],
 		'comma-dangle': ['error', 'always-multiline'],
 		'jsx-quotes': ['error', 'prefer-double'],

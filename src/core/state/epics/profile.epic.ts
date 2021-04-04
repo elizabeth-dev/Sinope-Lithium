@@ -8,10 +8,14 @@ import {
 	IFailedCreateFirstProfileAction,
 	IFailedCreateProfileAction,
 	IFollowedProfileAction,
+	IReceiveProfileFollowersAction,
+	IReceiveProfileFollowingAction,
 	IReceiveProfilesAction,
 	IUnfollowedProfileAction,
 	ProfileActions,
 	RequestProfileAction,
+	RequestProfileFollowersAction,
+	RequestProfileFollowingAction,
 	UnfollowProfileAction,
 } from '@core/state/actions/profile.actions';
 import { AppState } from '@core/state/app.store';
@@ -89,10 +93,34 @@ const unfollowProfileEpic: Epic<AppActionsDto, IUnfollowedProfileAction, AppStat
 		),
 	);
 
+const getProfileFollowingEpic: Epic<AppActionsDto, IReceiveProfileFollowingAction, AppState> = (action$, state$) =>
+	action$.pipe(
+		filter(isOfType(RequestProfileFollowingAction)),
+		withLatestFrom(state$),
+		mergeMap(([{ payload }, state]) =>
+			ProfileService.getFollowing(payload.profile, state.auth.accessToken!).pipe(
+				map((profiles) => ProfileActions.recvFollowing(payload.profile, profiles, Date.now())),
+			),
+		),
+	);
+
+const getProfileFollowersEpic: Epic<AppActionsDto, IReceiveProfileFollowersAction, AppState> = (action$, state$) =>
+	action$.pipe(
+		filter(isOfType(RequestProfileFollowersAction)),
+		withLatestFrom(state$),
+		mergeMap(([{ payload }, state]) =>
+			ProfileService.getFollowers(payload.profile, state.auth.accessToken!).pipe(
+				map((profiles) => ProfileActions.recvFollowers(payload.profile, profiles, Date.now())),
+			),
+		),
+	);
+
 export const profileEpic = combineEpics(
 	requestProfileEpic,
 	createProfileEpic,
 	createFirstProfileEpic,
 	followProfileEpic,
 	unfollowProfileEpic,
+	getProfileFollowingEpic,
+	getProfileFollowersEpic,
 );

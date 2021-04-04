@@ -10,4 +10,5 @@ export const AppScreens = {
 	FirstProfileScreen: 'app.sinope.lithium.reception.FirstProfileScreen',
 	SearchScreen: 'app.sinope.lithium.search.SearchScreen',
 	AskQuestionScreen: 'app.sinope.lithium.askQuestion.AskQuestionScreen',
+	ProfileListScreen: 'app.sinope.lithium.profileList.ProfileListScreen',
 };

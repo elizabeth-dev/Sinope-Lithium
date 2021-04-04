@@ -3,12 +3,16 @@ import {
 	CreatedProfileAction,
 	FollowedProfileAction,
 	ProfileActionsDto,
+	ReceiveProfileFollowersAction,
+	ReceiveProfileFollowingAction,
 	ReceiveProfilesAction,
 	RequestProfileAction,
+	RequestProfileFollowersAction,
+	RequestProfileFollowingAction,
 	UnfollowedProfileAction,
 } from '@core/state/actions/profile.actions';
 import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/state/actions/user.actions';
-import { ProfileEntity } from '@shared/types/entities/profile.interface';
+import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interface';
 import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
 import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '../../../actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
@@ -18,6 +22,32 @@ export interface ProfilesByIdState {
 }
 
 const initialState: ProfilesByIdState = {};
+
+function flattenProfile(id: string, original: ProfileEntity, obj: Partial<IProfile>): ProfilesByIdState {
+	return {
+		[id]: {
+			...original,
+			profile: {
+				...original.profile,
+				...obj,
+			},
+		},
+	};
+}
+
+function reduceProfileList(profiles: IProfile[], receivedAt: number): ProfilesByIdState {
+	return profiles.reduce(
+		(acc, profile) => ({
+			...acc,
+			[profile.id]: {
+				profile,
+				isFetching: false,
+				receivedAt: receivedAt,
+			},
+		}),
+		{} as ProfilesByIdState,
+	);
+}
 
 export function profilesByIdReducer(
 	state = initialState,
@@ -41,32 +71,12 @@ export function profilesByIdReducer(
 		case ReceiveProfilesAction:
 			return {
 				...state,
-				...action.payload.profiles.reduce(
-					(acc, profile) => ({
-						...acc,
-						[profile.id]: {
-							profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
 			};
 		case ReceiveSearchAction:
 			return {
 				...state,
-				...action.payload.profiles.reduce(
-					(acc, profile) => ({
-						...acc,
-						[profile.id]: {
-							profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
 				...action.payload.posts.reduce(
 					(acc, post) => ({
 						...acc,
@@ -98,17 +108,7 @@ export function profilesByIdReducer(
 		case ReceiveSelfUserAction:
 			return {
 				...state,
-				...action.payload.user.profiles.reduce(
-					(acc, profile) => ({
-						...acc,
-						[profile.id]: {
-							profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...reduceProfileList(action.payload.user.profiles, action.payload.receivedAt),
 			};
 		case CreatedProfileAction:
 		case CreatedFirstProfileAction:
@@ -123,24 +123,58 @@ export function profilesByIdReducer(
 		case FollowedProfileAction:
 			return {
 				...state,
-				[action.payload.toProfile]: {
-					...state[action.payload.toProfile],
-					profile: {
-						...state[action.payload.toProfile].profile,
-						followingThem: true,
-					},
-				},
+				...flattenProfile(action.payload.toProfile, state[action.payload.toProfile], { followingThem: true }),
 			};
 		case UnfollowedProfileAction:
 			return {
 				...state,
-				[action.payload.toProfile]: {
-					...state[action.payload.toProfile],
-					profile: {
-						...state[action.payload.toProfile].profile,
-						followingThem: false,
+				...flattenProfile(action.payload.toProfile, state[action.payload.toProfile], { followingThem: false }),
+			};
+		case RequestProfileFollowingAction:
+			return {
+				...state,
+				...flattenProfile(action.payload.profile, state[action.payload.profile], {
+					following: {
+						...state[action.payload.profile].profile.following,
+						isFetching: true,
 					},
-				},
+				}),
+			};
+		case RequestProfileFollowersAction:
+			return {
+				...state,
+				...flattenProfile(action.payload.profile, state[action.payload.profile], {
+					followers: {
+						...state[action.payload.profile].profile.followers,
+						isFetching: true,
+					},
+				}),
+			};
+		case ReceiveProfileFollowingAction:
+			return {
+				...state,
+				...reduceProfileList(action.payload.following, action.payload.receivedAt),
+				...flattenProfile(action.payload.profile, state[action.payload.profile], {
+					following: {
+						...state[action.payload.profile].profile.following,
+						isFetching: false,
+						receivedAt: action.payload.receivedAt,
+						profiles: action.payload.following.map((el) => el.id),
+					},
+				}),
+			};
+		case ReceiveProfileFollowersAction:
+			return {
+				...state,
+				...reduceProfileList(action.payload.followers, action.payload.receivedAt),
+				...flattenProfile(action.payload.profile, state[action.payload.profile], {
+					followers: {
+						...state[action.payload.profile].profile.followers,
+						isFetching: false,
+						receivedAt: action.payload.receivedAt,
+						profiles: action.payload.followers.map((el) => el.id),
+					},
+				}),
 			};
 		default:
 			return state;

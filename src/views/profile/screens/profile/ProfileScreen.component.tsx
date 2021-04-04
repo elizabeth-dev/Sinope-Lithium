@@ -170,9 +170,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					/>
 				)}
 				<ProfileHeader
-					name={profile?.profile?.name}
-					tag={profile?.profile?.tag}
-					description={profile?.profile?.description}
+					profile={profile?.profile} // FIXME: Check undefined. & Fix followers logic
 					isFetching={(profile?.isFetching ?? true) || (profilePosts?.isFetching ?? true)}
 					headerY={(headerY as unknown) as number}
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}

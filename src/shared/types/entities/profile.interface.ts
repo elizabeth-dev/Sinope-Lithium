@@ -8,6 +8,8 @@ export interface IProfile {
 	description: string;
 	followingMe: boolean;
 	followingThem: boolean;
+	following: FetchEntity<'profiles', string[]>;
+	followers: FetchEntity<'profiles', string[]>;
 }
 
 export interface CreateProfileDto {
