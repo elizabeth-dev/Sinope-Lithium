@@ -1,5 +1,4 @@
 import React from 'react';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { reduxProviderHOC } from '../redux-provider/reduxProviderHOC';
 import { Action, AnyAction, Store } from 'redux';
 import { Disclaimer } from '@shared/components/disclaimer/Disclaimer.component';
@@ -19,5 +18,4 @@ export const screenHOC = <P extends {}, A extends Action = AnyAction>(
 	store: Store<any, A>,
 	disclaimer = true,
 	persistGate = false,
-): React.ComponentType<P> =>
-	gestureHandlerRootHOC(reduxProviderHOC(_screenHOC(component, disclaimer), store, persistGate));
+): React.ComponentType<P> => reduxProviderHOC(_screenHOC(component, disclaimer), store, persistGate);
