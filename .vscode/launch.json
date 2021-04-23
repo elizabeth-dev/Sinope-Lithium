@@ -17,6 +17,6 @@
 			"cwd": "${workspaceFolder}",
 			"type": "reactnativedirect",
 			"request": "attach"
-        },
+		}
 	]
 }

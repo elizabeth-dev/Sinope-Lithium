@@ -16,6 +16,7 @@ import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interfac
 import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
 import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '../../../actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
+import { ProfileRS } from '@core/api/model/profile.model';
 
 export interface ProfilesByIdState {
 	[id: string]: ProfileEntity;
@@ -35,14 +36,22 @@ function flattenProfile(id: string, original: ProfileEntity, obj: Partial<IProfi
 	};
 }
 
-function reduceProfileList(profiles: IProfile[], receivedAt: number): ProfilesByIdState {
+function mapProfile(profile: ProfileRS, receivedAt: number): IProfile {
+	return {
+		...profile,
+		followers: { profiles: profile.followers, receivedAt, isFetching: false },
+		following: { profiles: profile.following, receivedAt, isFetching: false },
+	};
+}
+
+function reduceProfileList(profiles: ProfileRS[], receivedAt: number): ProfilesByIdState {
 	return profiles.reduce(
 		(acc, profile) => ({
 			...acc,
 			[profile.id]: {
-				profile,
+				profile: mapProfile(profile, receivedAt),
 				isFetching: false,
-				receivedAt: receivedAt,
+				receivedAt,
 			},
 		}),
 		{} as ProfilesByIdState,
@@ -115,7 +124,7 @@ export function profilesByIdReducer(
 			return {
 				...state,
 				[action.payload.profile.id]: {
-					profile: action.payload.profile,
+					profile: mapProfile(action.payload.profile, action.payload.receivedAt),
 					isFetching: false,
 					receivedAt: action.payload.receivedAt,
 				},

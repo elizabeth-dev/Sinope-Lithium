@@ -1,7 +1,5 @@
-import {
-	ReceiveSearchAction, RemoveSearchAction, SearchAction, SearchActionsDto,
-} from '../../actions/search.actions';
-import { SearchEntity } from '@shared/types/entities/search.entity';
+import { ReceiveSearchAction, RemoveSearchAction, SearchAction, SearchActionsDto } from '../../actions/search.actions';
+import { SearchEntity } from '@shared/types/entities/search.interface';
 
 export interface SearchState {
 	history: string[];
@@ -20,9 +18,10 @@ export function searchReducer(state = initialState, action: SearchActionsDto): S
 		case SearchAction:
 			return {
 				...state,
-				history: state.history.indexOf(action.payload.searchTerm) === -1 ?
-					[action.payload.searchTerm, ...state.history.slice(0, 4)] :
-					state.history,
+				history:
+					state.history.indexOf(action.payload.searchTerm) === -1
+						? [action.payload.searchTerm, ...state.history.slice(0, 4)]
+						: state.history,
 				cache: {
 					...state.cache,
 					[action.payload.searchTerm]: {
@@ -39,7 +38,7 @@ export function searchReducer(state = initialState, action: SearchActionsDto): S
 		case RemoveSearchAction:
 			return {
 				...state,
-				history: state.history.filter(el => el !== action.payload.searchTerm),
+				history: state.history.filter((el) => el !== action.payload.searchTerm),
 				cache: {
 					...state.cache,
 					[action.payload.searchTerm]: undefined!, // FIXME: ...
@@ -53,8 +52,8 @@ export function searchReducer(state = initialState, action: SearchActionsDto): S
 					[action.payload.searchTerm]: {
 						...state.cache[action.payload.searchTerm],
 						search: {
-							profiles: action.payload.profiles.map(el => el.id),
-							posts: action.payload.posts.map(el => el.id),
+							profiles: action.payload.profiles.map((el) => el.id),
+							posts: action.payload.posts.map((el) => el.id),
 						},
 						isFetching: false,
 						receivedAt: action.payload.receivedAt,

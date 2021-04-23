@@ -1,11 +1,10 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { TokenPair } from '@shared/types/auth.interface';
 import { Observable, throwError } from 'rxjs';
 import { ajax, AjaxError } from 'rxjs/ajax';
 import { catchError, map } from 'rxjs/operators';
-import { CreateUserDto } from '@shared/types/entities/user.interface';
+import { CreateUserReq, TokenPairRes } from '../model/api';
 
-const login = (email: string, password: string): Observable<TokenPair> => {
+const login = (email: string, password: string): Observable<TokenPairRes> => {
 	return ajax
 		.post(
 			`${developmentEnv.apiUrl}/auth/login`,
@@ -16,7 +15,7 @@ const login = (email: string, password: string): Observable<TokenPair> => {
 			{ 'Content-Type': 'application/json' },
 		)
 		.pipe(
-			map((res) => res.response as TokenPair),
+			map((res) => res.response as TokenPairRes),
 			catchError((err: AjaxError) => {
 				console.error(JSON.stringify(err));
 
@@ -25,9 +24,9 @@ const login = (email: string, password: string): Observable<TokenPair> => {
 		);
 };
 
-const register = (newUser: CreateUserDto): Observable<TokenPair> => {
+const register = (newUser: CreateUserReq): Observable<TokenPairRes> => {
 	return ajax.post(`${developmentEnv.apiUrl}/auth/register`, newUser).pipe(
-		map((res) => res.response as TokenPair),
+		map((res) => res.response as TokenPairRes),
 		catchError((err: AjaxError) => {
 			console.error(JSON.stringify(err));
 
@@ -36,10 +35,10 @@ const register = (newUser: CreateUserDto): Observable<TokenPair> => {
 	);
 };
 
-const refresh = (refreshToken: string): Observable<TokenPair> => {
+const refresh = (refreshToken: string): Observable<TokenPairRes> => {
 	return ajax
 		.post(`${developmentEnv.apiUrl}/auth/refreshToken`, { refreshToken })
-		.pipe(map((res) => res.response as TokenPair));
+		.pipe(map((res) => res.response as TokenPairRes));
 };
 
 const logout = (refreshToken: string): Observable<void> => {

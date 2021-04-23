@@ -24,11 +24,7 @@ export interface ILoginSuccessAction {
 	};
 }
 
-const loginSuccessFn = (
-	accessToken: string,
-	refreshToken: string,
-	expiresAt: number,
-): ILoginSuccessAction => ({
+const loginSuccessFn = (accessToken: string, refreshToken: string, expiresAt: number): ILoginSuccessAction => ({
 	type: LoginSuccessAction,
 	payload: { accessToken, refreshToken, expiresAt },
 });
@@ -78,11 +74,7 @@ export interface IRefreshedTokenAction {
 	};
 }
 
-const refreshedTokenFn = (
-	accessToken: string,
-	refreshToken: string,
-	expiresAt: number,
-): IRefreshedTokenAction => ({
+const refreshedTokenFn = (accessToken: string, refreshToken: string, expiresAt: number): IRefreshedTokenAction => ({
 	type: RefreshedTokenAction,
 	payload: { accessToken, refreshToken, expiresAt },
 });
@@ -92,19 +84,14 @@ export const RegisterAction = 'auth/RegisterAction';
 export interface IRegisterAction {
 	type: typeof RegisterAction;
 	payload: {
-		name: string;
 		email: string;
 		password: string;
 	};
 }
 
-const registerFn = (
-	name: string,
-	email: string,
-	password: string,
-): IRegisterAction => ({
+const registerFn = (email: string, password: string): IRegisterAction => ({
 	type: RegisterAction,
-	payload: { name, email, password },
+	payload: { email, password },
 });
 
 export const RegisterSuccessAction = 'auth/RegisterSuccessAction';
@@ -118,11 +105,7 @@ export interface IRegisterSuccessAction {
 	};
 }
 
-const registerSuccessFn = (
-	accessToken: string,
-	refreshToken: string,
-	expiresAt: number,
-): IRegisterSuccessAction => ({
+const registerSuccessFn = (accessToken: string, refreshToken: string, expiresAt: number): IRegisterSuccessAction => ({
 	type: RegisterSuccessAction,
 	payload: { accessToken, refreshToken, expiresAt },
 });

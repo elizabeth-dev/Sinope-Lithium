@@ -13,6 +13,7 @@ import { RegisterScreen } from './src/views/reception/screens/register/RegisterS
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 import { SearchScreen } from './src/views/search/screens/search/SearchScreen.component';
 import { AskQuestionScreen } from './src/views/ask-question/screens/ask-question/AskQuestionScreen.component';
+import { ProfileListScreen } from './src/views/profile-list/screens/ProfileListScreen.component';
 
 Navigation.registerComponent(
 	AppScreens.SplashScreen,
@@ -68,6 +69,11 @@ Navigation.registerComponent(
 	AppScreens.AskQuestionScreen,
 	() => screenHOC(AskQuestionScreen, appStore),
 	() => AskQuestionScreen,
+);
+Navigation.registerComponent(
+	AppScreens.ProfileListScreen,
+	() => screenHOC(ProfileListScreen, appStore),
+	() => ProfileListScreen,
 );
 
 Navigation.events().registerAppLaunchedListener(() => {

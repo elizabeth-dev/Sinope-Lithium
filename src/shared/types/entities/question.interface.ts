@@ -11,13 +11,6 @@ export interface IQuestion {
 	date: Date;
 }
 
-export interface CreateQuestionDto {
-	content: string;
-	anonymous: boolean;
-	from: string;
-	recipient: string;
-}
-
 export interface INewQuestion {
 	content: string;
 	anonymous: boolean;
@@ -31,4 +24,3 @@ export type QuestionEntity = FetchEntity<'question', IQuestion>;
 export type FullQuestion = Omit<IQuestion, 'from'> & { from?: IProfile };
 
 export type FullQuestionEntity = FetchEntity<'question', FullQuestion>;
-

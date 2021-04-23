@@ -1,16 +1,16 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { CreatePostDto, FullPost } from '@shared/types/entities/post.interface';
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map } from 'rxjs/operators';
+import { CreatePostReq, PostRes } from '../model/api';
 
-const getById = (id: string, token: string): Observable<FullPost> => {
+const getById = (id: string, token: string): Observable<PostRes> => {
 	return ajax.getJSON(`${developmentEnv.apiUrl}/posts/${id}`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
 
-const getByProfile = (profile: string, token: string): Observable<FullPost[]> => {
+const getByProfile = (profile: string, token: string): Observable<PostRes[]> => {
 	return ajax.getJSON(`${developmentEnv.apiUrl}/posts?profile=${profile}`, {
 		Authorization: `Bearer ${token}`,
 	});
@@ -21,17 +21,16 @@ const remove = (id: string, token: string): Observable<void> => {
 		.delete(`${developmentEnv.apiUrl}/posts/${id}`, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map(() => {
-		}));
+		.pipe(map(() => {}));
 };
 
-const create = (newPost: CreatePostDto, token: string): Observable<FullPost> => {
+const create = (newPost: CreatePostReq, token: string): Observable<PostRes> => {
 	return ajax
 		.post(`${developmentEnv.apiUrl}/posts`, newPost, {
 			Authorization: `Bearer ${token}`,
 			'Content-Type': 'application/json',
 		})
-		.pipe(map((res) => res.response as FullPost));
+		.pipe(map((res) => res.response as PostRes));
 };
 
 const getLikes = (id: string, token: string) => {
@@ -45,7 +44,7 @@ const like = (id: string, fromProfile: string, token: string) => {
 		.put(`${developmentEnv.apiUrl}/posts/${id}/likes/${fromProfile}`, undefined, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map((res) => res.response as FullPost));
+		.pipe(map((res) => res.response as PostRes));
 };
 
 const unlike = (id: string, fromProfile: string, token: string) => {
@@ -53,7 +52,7 @@ const unlike = (id: string, fromProfile: string, token: string) => {
 		.delete(`${developmentEnv.apiUrl}/posts/${id}/likes/${fromProfile}`, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(map((res) => res.response as FullPost));
+		.pipe(map((res) => res.response as PostRes));
 };
 
 export const PostService = {

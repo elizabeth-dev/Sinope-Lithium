@@ -170,6 +170,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					/>
 				)}
 				<ProfileHeader
+					stackId={componentId}
 					profile={profile?.profile} // FIXME: Check undefined. & Fix followers logic
 					isFetching={(profile?.isFetching ?? true) || (profilePosts?.isFetching ?? true)}
 					headerY={(headerY as unknown) as number}

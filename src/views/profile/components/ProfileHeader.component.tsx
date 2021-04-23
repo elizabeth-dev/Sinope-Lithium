@@ -6,15 +6,17 @@ import { Avatar } from '@shared/components/avatar/Avatar.component';
 import { Typography } from '@shared/components/typography/Typography.component';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { profileListScreenLayer } from '@shared/navigation/layers/profile-list-screen.layer';
+import { Navigation } from 'react-native-navigation';
 
 export interface ProfileHeaderProps {
+	stackId: string;
 	profile: IProfile;
 	headerY: number;
 	isFetching: boolean;
 	onLayout: (ev: LayoutChangeEvent) => void;
 }
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile, headerY, isFetching, onLayout }) => {
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ stackId, profile, headerY, isFetching, onLayout }) => {
 	return (
 		<Animated.View style={[styles.root, { transform: [{ translateY: headerY }] }]} onLayout={onLayout}>
 			{isFetching && <ProgressBar backgroundColor="#4a0072" style={styles.progress} />}
@@ -28,14 +30,18 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile, headerY, 
 			<View style={styles.profileData}>
 				<Pressable
 					style={styles.follows}
-					onPress={() => profileListScreenLayer(profile.following?.profiles, 'Following')}>
+					onPress={() =>
+						Navigation.push(stackId, profileListScreenLayer(profile.following?.profiles, 'Following'))
+					}>
 					<Text style={styles.followCount}>{profile.following?.profiles?.length}</Text>
 					<Text style={styles.followTag}> following</Text>
 				</Pressable>
 
 				<Pressable
 					style={styles.follows}
-					onPress={() => profileListScreenLayer(profile.followers?.profiles, 'Followers')}>
+					onPress={() =>
+						Navigation.push(stackId, profileListScreenLayer(profile.followers?.profiles, 'Followers'))
+					}>
 					<Text style={styles.followCount}>{profile.followers?.profiles?.length}</Text>
 					<Text style={styles.followTag}> followers</Text>
 				</Pressable>

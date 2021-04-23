@@ -18,14 +18,8 @@ export interface INewPost {
 	tmpId: string;
 }
 
-export interface CreatePostDto {
-	profile: string;
-	content: string;
-	question?: string;
-}
-
 export type PostEntity = FetchEntity<'post', IPost>;
 
-export type FullPost = Omit<Omit<IPost, 'profile'>, 'question'> & { profile: IProfile, question?: FullQuestion };
+export type FullPost = Omit<Omit<IPost, 'profile'>, 'question'> & { profile: IProfile; question?: FullQuestion };
 
 export type FullPostEntity = FetchEntity<'post', FullPost>;

@@ -19,7 +19,7 @@ import {
 	UnfollowProfileAction,
 } from '@core/state/actions/profile.actions';
 import { AppState } from '@core/state/app.store';
-import { ProfileService } from '@core/http/profile.service';
+import { ProfileService } from '@core/api/service/profile.service';
 import { combineEpics, Epic } from 'redux-observable';
 import { catchError, filter, map, mapTo, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';

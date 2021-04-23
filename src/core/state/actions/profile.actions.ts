@@ -1,4 +1,5 @@
-import { CreateProfileDto, IProfile } from '@shared/types/entities/profile.interface';
+import { ProfileRS } from '@core/api/model/profile.model';
+import { CreateProfileDto } from '@shared/types/entities/profile.interface';
 
 export const RequestProfileAction = 'profile/RequestProfileAction';
 
@@ -23,12 +24,12 @@ export const ReceiveProfilesAction = 'profile/ReceiveProfilesAction';
 export interface IReceiveProfilesAction {
 	type: typeof ReceiveProfilesAction;
 	payload: {
-		profiles: IProfile[];
+		profiles: ProfileRS[];
 		receivedAt: number;
 	};
 }
 
-const receiveProfileFn = (profiles: IProfile[], receivedAt: number): IReceiveProfilesAction => ({
+const receiveProfileFn = (profiles: ProfileRS[], receivedAt: number): IReceiveProfilesAction => ({
 	type: ReceiveProfilesAction,
 	payload: {
 		profiles,
@@ -55,12 +56,12 @@ export const CreatedProfileAction = 'profile/CreatedProfileAction';
 export interface ICreatedProfileAction {
 	type: typeof CreatedProfileAction;
 	payload: {
-		profile: IProfile;
+		profile: ProfileRS;
 		receivedAt: number;
 	};
 }
 
-const createdProfileFn = (profile: IProfile, receivedAt: number): ICreatedProfileAction => ({
+const createdProfileFn = (profile: ProfileRS, receivedAt: number): ICreatedProfileAction => ({
 	type: CreatedProfileAction,
 	payload: {
 		profile,
@@ -97,12 +98,12 @@ export const CreatedFirstProfileAction = 'profile/CreatedFirstProfileAction';
 export interface ICreatedFirstProfileAction {
 	type: typeof CreatedFirstProfileAction;
 	payload: {
-		profile: IProfile;
+		profile: ProfileRS;
 		receivedAt: number;
 	};
 }
 
-const createdFirstProfileFn = (profile: IProfile, receivedAt: number): ICreatedFirstProfileAction => ({
+const createdFirstProfileFn = (profile: ProfileRS, receivedAt: number): ICreatedFirstProfileAction => ({
 	type: CreatedFirstProfileAction,
 	payload: {
 		profile,
@@ -214,14 +215,14 @@ export interface IReceiveProfileFollowingAction {
 	type: typeof ReceiveProfileFollowingAction;
 	payload: {
 		profile: string;
-		following: IProfile[];
+		following: ProfileRS[];
 		receivedAt: number;
 	};
 }
 
 const receiveProfileFollowingFn = (
 	profile: string,
-	following: IProfile[],
+	following: ProfileRS[],
 	receivedAt: number,
 ): IReceiveProfileFollowingAction => ({
 	type: ReceiveProfileFollowingAction,
@@ -254,14 +255,14 @@ export interface IReceiveProfileFollowersAction {
 	type: typeof ReceiveProfileFollowersAction;
 	payload: {
 		profile: string;
-		followers: IProfile[];
+		followers: ProfileRS[];
 		receivedAt: number;
 	};
 }
 
 const receiveProfileFollowersFn = (
 	profile: string,
-	followers: IProfile[],
+	followers: ProfileRS[],
 	receivedAt: number,
 ): IReceiveProfileFollowersAction => ({
 	type: ReceiveProfileFollowersAction,
