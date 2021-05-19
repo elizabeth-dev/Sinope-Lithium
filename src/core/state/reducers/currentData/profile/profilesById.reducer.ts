@@ -16,7 +16,6 @@ import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interfac
 import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
 import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '../../../actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
-import { ProfileRS } from '@core/api/model/profile.model';
 
 export interface ProfilesByIdState {
 	[id: string]: ProfileEntity;
@@ -36,20 +35,12 @@ function flattenProfile(id: string, original: ProfileEntity, obj: Partial<IProfi
 	};
 }
 
-function mapProfile(profile: ProfileRS, receivedAt: number): IProfile {
-	return {
-		...profile,
-		followers: { profiles: profile.followers, receivedAt, isFetching: false },
-		following: { profiles: profile.following, receivedAt, isFetching: false },
-	};
-}
-
-function reduceProfileList(profiles: ProfileRS[], receivedAt: number): ProfilesByIdState {
+function reduceProfileList(profiles: IProfile[], receivedAt: number): ProfilesByIdState {
 	return profiles.reduce(
 		(acc, profile) => ({
 			...acc,
 			[profile.id]: {
-				profile: mapProfile(profile, receivedAt),
+				profile,
 				isFetching: false,
 				receivedAt,
 			},
@@ -78,41 +69,12 @@ export function profilesByIdReducer(
 				},
 			};
 		case ReceiveProfilesAction:
-			return {
-				...state,
-				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
-			};
 		case ReceiveSearchAction:
-			return {
-				...state,
-				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
-				...action.payload.posts.reduce(
-					(acc, post) => ({
-						...acc,
-						[post.profile.id]: {
-							profile: post.profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
-			};
 		case ReceiveTimelineAction:
 		case ReceivePostsAction:
 			return {
 				...state,
-				...action.payload.posts.reduce(
-					(acc, post) => ({
-						...acc,
-						[post.profile.id]: {
-							profile: post.profile,
-							isFetching: false,
-							receivedAt: action.payload.receivedAt,
-						},
-					}),
-					{} as ProfilesByIdState,
-				),
+				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
 			};
 		case ReceiveSelfUserAction:
 			return {
@@ -124,7 +86,7 @@ export function profilesByIdReducer(
 			return {
 				...state,
 				[action.payload.profile.id]: {
-					profile: mapProfile(action.payload.profile, action.payload.receivedAt),
+					profile: action.payload.profile,
 					isFetching: false,
 					receivedAt: action.payload.receivedAt,
 				},

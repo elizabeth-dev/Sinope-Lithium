@@ -6,7 +6,6 @@ import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
 import com.facebook.react.PackageList
 import android.content.Context
-import app.sinope.lithium.react.`package`.APIPackage
 import com.facebook.react.ReactInstanceManager
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
@@ -23,7 +22,6 @@ class MainApplication : NavigationApplication() {
 
 			// Packages that cannot be autolinked yet can be added manually here, for example:
 		  	// packages.add(new MyReactNativePackage())
-			packages.add(APIPackage())
 
 			return packages
 		}

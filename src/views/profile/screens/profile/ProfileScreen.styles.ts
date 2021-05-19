@@ -11,7 +11,6 @@ export const ProfileScreenStyles = StyleSheet.create({
 		backgroundColor: '#ffffff',
 	},
 	tabBarLabel: {
-		color: '#000000',
 		opacity: 0.87,
 	},
 	fab: {

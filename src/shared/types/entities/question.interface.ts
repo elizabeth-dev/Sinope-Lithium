@@ -8,7 +8,7 @@ export interface IQuestion {
 	from?: string;
 	recipient: string;
 	answer?: string;
-	date: Date;
+	date: string;
 }
 
 export interface INewQuestion {

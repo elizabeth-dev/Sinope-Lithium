@@ -14,13 +14,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { combineEpics, Epic } from 'redux-observable';
 import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
+import { userResToIUser } from '@core/mapper/user.mapper';
 
 const loadSelfUserEpic: Epic<AppActionsDto, IReceiveSelfUserAction, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(RequestSelfUserAction)),
 		withLatestFrom(state$),
 		mergeMap(([, state]) =>
-			UserService.getSelf(state.auth.accessToken!).pipe(map((self) => UserActions.receiveSelf(self, Date.now()))),
+			UserService.getSelf(state.auth.accessToken!).pipe(
+				map((self) => UserActions.receiveSelf(userResToIUser(self, Date.now()), Date.now())),
+			),
 		),
 	);
 

@@ -13,13 +13,19 @@ import {
 	SendQuestionAction,
 } from '../actions/question.actions';
 import { QuestionService } from '../../api/service/question.service';
+import { questionResToIQuestion } from '@core/mapper/question.mapper';
 
 const getQuestionsByProfileEpic: Epic<AppActionsDto, IReceiveQuestionsAction, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(GetQuestionsByProfileAction)),
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) => QuestionService.getByProfile(payload.profile, state.auth.accessToken!)),
-		map((questions) => QuestionActions.receive(questions, Date.now())),
+		map((questions) =>
+			QuestionActions.receive(
+				questions.map((question) => questionResToIQuestion(question)),
+				Date.now(),
+			),
+		),
 	);
 
 const sendQuestionEpic: Epic<AppActionsDto, ISentQuestionAction, AppState> = (action$, state$) =>
@@ -35,7 +41,11 @@ const sendQuestionEpic: Epic<AppActionsDto, ISentQuestionAction, AppState> = (ac
 					recipient: payload.newQuestion.recipient,
 				},
 				state.auth.accessToken!,
-			).pipe(map((question) => QuestionActions.sent(question, Date.now(), payload.newQuestion.tmpId))),
+			).pipe(
+				map((question) =>
+					QuestionActions.sent(questionResToIQuestion(question), Date.now(), payload.newQuestion.tmpId),
+				),
+			),
 		),
 	);
 

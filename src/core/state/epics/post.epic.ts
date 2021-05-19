@@ -15,6 +15,11 @@ import { PostService } from '@core/api/service/post.service';
 import { combineEpics, Epic } from 'redux-observable';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
+import { postResToIPost } from '@core/mapper/post.mapper';
+import { postResToIProfile, profileResToIProfile } from '@core/mapper/profile.mapper';
+import { Require } from '@shared/types/require.type';
+import { PostRes } from '@core/api/model/api';
+import { postResToIQuestion } from '@core/mapper/question.mapper';
 
 const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (actions$, state$) =>
 	actions$.pipe(
@@ -28,7 +33,17 @@ const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (actions$, 
 					profile: payload.newPost.profile,
 				},
 				state.auth.accessToken!,
-			).pipe(map((post) => PostActions.sent(post, Date.now(), payload.newPost.tmpId))),
+			).pipe(
+				map((post) =>
+					PostActions.sent(
+						postResToIPost(post),
+						postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
+						Date.now(),
+						payload.newPost.tmpId,
+						post.question ? postResToIQuestion(post as Require<PostRes, 'question'>) : undefined,
+					),
+				),
+			),
 		),
 	);
 
@@ -38,7 +53,28 @@ const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (action
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			PostService.like(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
-				map((post) => PostActions.receive([post], Date.now())),
+				map((post) =>
+					PostActions.receive(
+						[postResToIPost(post)],
+						post.profile
+							? [
+									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
+									...(post.profile.following
+										? post.profile.following.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+									...(post.profile.followers
+										? post.profile.followers.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+							  ]
+							: [],
+						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						Date.now(),
+					),
+				),
 			),
 		),
 	);
@@ -49,7 +85,28 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (acti
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			PostService.unlike(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
-				map((post) => PostActions.receive([post], Date.now())),
+				map((post) =>
+					PostActions.receive(
+						[postResToIPost(post)],
+						post.profile
+							? [
+									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
+									...(post.profile.following
+										? post.profile.following.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+									...(post.profile.followers
+										? post.profile.followers.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+							  ]
+							: [],
+						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						Date.now(),
+					),
+				),
 			),
 		),
 	);
@@ -60,7 +117,19 @@ const requestProfilePostsEpic: Epic<AppActionsDto, IReceiveProfilePostsAction, A
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			PostService.getByProfile(payload.profile, state.auth.accessToken!).pipe(
-				map((posts) => PostActions.receiveFromProfile(payload.profile, posts, Date.now())),
+				map((posts) =>
+					PostActions.receiveFromProfile(
+						payload.profile,
+						posts.map(postResToIPost),
+						posts
+							.filter((post): post is Require<PostRes, 'profile'> => !!post.profile)
+							.map((post) => postResToIProfile(post, Date.now())),
+						posts
+							.filter((post): post is Require<PostRes, 'question'> => !!post.question)
+							.map(postResToIQuestion),
+						Date.now(),
+					),
+				),
 			),
 		),
 	);
@@ -71,7 +140,28 @@ const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (act
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			PostService.getById(payload.post, state.auth.accessToken!).pipe(
-				map((posts) => PostActions.receive([posts], Date.now())),
+				map((post) =>
+					PostActions.receive(
+						[postResToIPost(post)],
+						post.profile
+							? [
+									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
+									...(post.profile.following
+										? post.profile.following.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+									...(post.profile.followers
+										? post.profile.followers.map((follow) =>
+												profileResToIProfile(follow, Date.now()),
+										  )
+										: []),
+							  ]
+							: [],
+						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						Date.now(),
+					),
+				),
 			),
 		),
 	);

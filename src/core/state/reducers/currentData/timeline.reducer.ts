@@ -7,10 +7,7 @@ export interface TimelineState {
 
 const initialState: TimelineState = {};
 
-export function timelineReducer(
-	state = initialState,
-	action: TimelineActionsDto,
-): TimelineState {
+export function timelineReducer(state = initialState, action: TimelineActionsDto): TimelineState {
 	switch (action.type) {
 		case RequestTimelineAction:
 			return {
@@ -23,8 +20,8 @@ export function timelineReducer(
 		case ReceiveTimelineAction:
 			return {
 				...state,
-				[action.payload.profile]: {
-					...state[action.payload.profile],
+				[action.payload.fromProfile]: {
+					...state[action.payload.fromProfile],
 					timeline: action.payload.posts.map((post) => post.id),
 					receivedAt: action.payload.receivedAt,
 					isFetching: false,

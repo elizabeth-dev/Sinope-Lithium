@@ -324,7 +324,7 @@ export interface QuestionRes {
 	 * @type {ProfileRes}
 	 * @memberof QuestionRes
 	 */
-	recipient: ProfileRes;
+	recipient?: ProfileRes;
 
 	/**
 	 *

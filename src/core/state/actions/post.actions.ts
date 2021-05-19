@@ -1,4 +1,6 @@
-import { FullPost, INewPost } from '@shared/types/entities/post.interface';
+import { INewPost, IPost } from '@shared/types/entities/post.interface';
+import { IProfile } from '@shared/types/entities/profile.interface';
+import { IQuestion } from '@shared/types/entities/question.interface';
 
 export const RequestPostAction = 'post/RequestPostAction';
 
@@ -19,13 +21,21 @@ export const ReceivePostsAction = 'post/ReceivePostsAction';
 export interface IReceivePostsAction {
 	type: typeof ReceivePostsAction;
 	payload: {
-		posts: FullPost[]; receivedAt: number;
+		posts: IPost[];
+		profiles: IProfile[];
+		questions: IQuestion[];
+		receivedAt: number;
 	};
 }
 
-const receivePostsFn = (posts: FullPost[], receivedAt: number): IReceivePostsAction => ({
+const receivePostsFn = (
+	posts: IPost[],
+	profiles: IProfile[],
+	questions: IQuestion[],
+	receivedAt: number,
+): IReceivePostsAction => ({
 	type: ReceivePostsAction,
-	payload: { posts, receivedAt },
+	payload: { posts, profiles, questions, receivedAt },
 });
 
 export const RequestProfilePostsAction = 'post/RequestProfilePostsAction';
@@ -37,9 +47,7 @@ export interface IRequestProfilePostsAction {
 	};
 }
 
-const requestProfilePostsFn = (
-	profile: string,
-): IRequestProfilePostsAction => ({
+const requestProfilePostsFn = (profile: string): IRequestProfilePostsAction => ({
 	type: RequestProfilePostsAction,
 	payload: { profile },
 });
@@ -49,13 +57,23 @@ export const ReceiveProfilePostsAction = 'post/ReceiveProfilePostsAction';
 export interface IReceiveProfilePostsAction {
 	type: typeof ReceiveProfilePostsAction;
 	payload: {
-		profile: string; posts: FullPost[]; receivedAt: number;
+		reqProfile: string;
+		posts: IPost[];
+		profiles: IProfile[];
+		questions: IQuestion[];
+		receivedAt: number;
 	};
 }
 
-const receiveProfilePostsFn = (profile: string, posts: FullPost[], receivedAt: number): IReceiveProfilePostsAction => ({
+const receiveProfilePostsFn = (
+	reqProfile: string,
+	posts: IPost[],
+	profiles: IProfile[],
+	questions: IQuestion[],
+	receivedAt: number,
+): IReceiveProfilePostsAction => ({
 	type: ReceiveProfilePostsAction,
-	payload: { profile, posts, receivedAt },
+	payload: { reqProfile, posts, questions, profiles, receivedAt },
 });
 
 export const SendPostAction = 'post/SendPostAction';
@@ -77,13 +95,23 @@ export const SentPostAction = 'post/SentPostAction';
 export interface ISentPostAction {
 	type: typeof SentPostAction;
 	payload: {
-		post: FullPost; receivedAt: number; tmpId: string;
+		post: IPost;
+		profile: IProfile;
+		question?: IQuestion;
+		receivedAt: number;
+		tmpId: string;
 	};
 }
 
-const sentPostFn = (post: FullPost, receivedAt: number, tmpId: string): ISentPostAction => ({
+const sentPostFn = (
+	post: IPost,
+	profile: IProfile,
+	receivedAt: number,
+	tmpId: string,
+	question?: IQuestion,
+): ISentPostAction => ({
 	type: SentPostAction,
-	payload: { post, receivedAt, tmpId },
+	payload: { post, profile, question, receivedAt, tmpId },
 });
 
 export const FailedSentPostAction = 'post/FailedSentPostAction';
@@ -139,10 +167,7 @@ export interface IUnlikePostAction {
 	};
 }
 
-const unlikePostFn = (
-	post: string,
-	fromProfile: string,
-): IUnlikePostAction => ({
+const unlikePostFn = (post: string, fromProfile: string): IUnlikePostAction => ({
 	type: UnlikePostAction,
 	payload: { post, fromProfile },
 });

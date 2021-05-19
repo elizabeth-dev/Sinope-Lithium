@@ -5,9 +5,7 @@ import {
 	RequestPostAction,
 	SentPostAction,
 } from '@core/state/actions/post.actions';
-import {
-	IReceiveTimelineAction, ReceiveTimelineAction,
-} from '@core/state/actions/timeline.actions';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@core/state/actions/timeline.actions';
 import { PostEntity } from '@shared/types/entities/post.interface';
 import { IReceiveSearchAction, ReceiveSearchAction } from '@core/state/actions/search.actions';
 
@@ -19,7 +17,8 @@ const initialState: PostsByIdState = {};
 
 export function postsByIdReducer(
 	state = initialState,
-	action: PostActionsDto | IReceiveTimelineAction | IReceiveSearchAction): PostsByIdState {
+	action: PostActionsDto | IReceiveTimelineAction | IReceiveSearchAction,
+): PostsByIdState {
 	switch (action.type) {
 		case RequestPostAction:
 			return {
@@ -29,23 +28,41 @@ export function postsByIdReducer(
 					isFetching: true,
 				},
 			};
-		case ReceivePostsAction:
 		case ReceiveProfilePostsAction:
+			return {
+				...state,
+				...action.payload.posts.reduce(
+					(acc, post) => ({
+						...acc,
+						[post.id]: {
+							post,
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
+						},
+					}),
+					{} as PostsByIdState,
+				),
+			};
+		case ReceivePostsAction:
 		case ReceiveTimelineAction:
 		case ReceiveSearchAction:
 			return {
-				...state, ...action.payload.posts.reduce((acc, post) => ({
-					...acc,
-					[post.id]: {
-						post: {
-							...post,
-							profile: post.profile.id,
-							question: post.question?.id,
+				...state,
+				...action.payload.posts.reduce(
+					(acc, post) => ({
+						...acc,
+						[post.id]: {
+							post: {
+								...post,
+								profile: post.profile,
+								question: post.question,
+							},
+							isFetching: false,
+							receivedAt: action.payload.receivedAt,
 						},
-						isFetching: false,
-						receivedAt: action.payload.receivedAt,
-					},
-				}), {} as PostsByIdState),
+					}),
+					{} as PostsByIdState,
+				),
 			};
 		case SentPostAction:
 			return {
@@ -53,8 +70,8 @@ export function postsByIdReducer(
 				[action.payload.post.id]: {
 					post: {
 						...action.payload.post,
-						profile: action.payload.post.profile.id,
-						question: action.payload.post.question?.id,
+						profile: action.payload.post.profile,
+						question: action.payload.post.question,
 					},
 					receivedAt: action.payload.receivedAt,
 					isFetching: false,

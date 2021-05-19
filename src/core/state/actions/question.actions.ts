@@ -1,4 +1,4 @@
-import { FullQuestion, INewQuestion, IQuestion } from '@shared/types/entities/question.interface';
+import { INewQuestion, IQuestion } from '@shared/types/entities/question.interface';
 
 export const GetQuestionsByProfileAction = 'question/GetQuestionsByProfileAction';
 
@@ -19,11 +19,12 @@ export const ReceiveQuestionsAction = 'question/ReceiveQuestionsAction';
 export interface IReceiveQuestionsAction {
 	type: typeof ReceiveQuestionsAction;
 	payload: {
-		questions: FullQuestion[]; receivedAt: number;
+		questions: IQuestion[];
+		receivedAt: number;
 	};
 }
 
-const receiveQuestionsFn = (questions: FullQuestion[], receivedAt: number): IReceiveQuestionsAction => ({
+const receiveQuestionsFn = (questions: IQuestion[], receivedAt: number): IReceiveQuestionsAction => ({
 	type: ReceiveQuestionsAction,
 	payload: { questions, receivedAt },
 });
@@ -47,7 +48,9 @@ export const SentQuestionAction = 'question/SentQuestionAction';
 export interface ISentQuestionAction {
 	type: typeof SentQuestionAction;
 	payload: {
-		question: IQuestion; receivedAt: number; tmpId: string;
+		question: IQuestion;
+		receivedAt: number;
+		tmpId: string;
 	};
 }
 
@@ -97,7 +100,6 @@ const removedQuestionFn = (question: string): IRemovedQuestionAction => ({
 	type: RemovedQuestionAction,
 	payload: { question },
 });
-
 
 export type QuestionActionsDto =
 	| ISendQuestionAction

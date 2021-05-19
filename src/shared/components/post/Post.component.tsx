@@ -12,6 +12,7 @@ import { FlatButton } from '../flat-button/FlatButton.component';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
 import { Divider } from '../divider/Divider.component';
+import { dateFormatter } from '@shared/utils/dates.utils';
 
 export interface PostProps {
 	post: FullPost;
@@ -57,7 +58,7 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 				</View>
 				<View style={styles.content}>
 					<Typography.Body>{post.content}</Typography.Body>
-					<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
+					<Typography.Caption>{dateFormatter(post.date)}</Typography.Caption>
 				</View>
 				<Divider />
 				<View style={styles.actions}>

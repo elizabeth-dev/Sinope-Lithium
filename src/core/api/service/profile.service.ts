@@ -5,14 +5,17 @@ import { catchError, map } from 'rxjs/operators';
 import { CreateProfileReq, PostRes, ProfileRes, UpdateProfileReq } from '../model/api';
 
 const getById = (id: string, fromProfile: string, token: string): Observable<ProfileRes> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}?profile=${fromProfile}`, {
-		Authorization: `Bearer ${token}`,
-	});
+	return ajax.getJSON(
+		`${developmentEnv.apiUrl}/profiles/${id}?profile=${fromProfile}?expand=followers&expand=following`,
+		{
+			Authorization: `Bearer ${token}`,
+		},
+	);
 };
 
 const create = (newProfile: CreateProfileReq, token: string): Observable<ProfileRes> => {
 	return ajax
-		.post(`${developmentEnv.apiUrl}/profiles`, newProfile, {
+		.post(`${developmentEnv.apiUrl}/profiles?expand=following&expand=followers`, newProfile, {
 			Authorization: `Bearer ${token}`,
 		})
 		.pipe(
@@ -35,7 +38,7 @@ const remove = (id: string, token: string): Observable<void> => {
 
 const update = (id: string, updateBody: UpdateProfileReq, token: string): Observable<ProfileRes> => {
 	return ajax
-		.put(`${developmentEnv.apiUrl}/profiles/${id}`, updateBody, {
+		.patch(`${developmentEnv.apiUrl}/profiles/${id}?expand=following&expand=followers`, updateBody, {
 			Authorization: `Bearer ${token}`,
 		})
 		.pipe(map((res) => res.response as ProfileRes));
@@ -58,13 +61,13 @@ const removeManager = (id: string, manager: string, token: string): Observable<v
 };
 
 const getFollowers = (id: string, token: string): Observable<ProfileRes[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/followers`, {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/followers?expand=following&expand=followers`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
 
 const getFollowing = (id: string, token: string): Observable<ProfileRes[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/following`, {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/following?expand=following&expand=followers`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
@@ -86,9 +89,12 @@ const unfollow = (id: string, fromProfile: string, token: string): Observable<vo
 };
 
 const timeline = (profile: string, token: string): Observable<PostRes[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${profile}/timeline`, {
-		Authorization: `Bearer ${token}`,
-	});
+	return ajax.getJSON(
+		`${developmentEnv.apiUrl}/profiles/${profile}/timeline?expand=profile&expand=question&expand=profile.following&expand=profile.followers&expand=question.from`,
+		{
+			Authorization: `Bearer ${token}`,
+		},
+	);
 };
 
 export const ProfileService = {

@@ -24,6 +24,7 @@ import { combineEpics, Epic } from 'redux-observable';
 import { catchError, filter, map, mapTo, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { of, throwError } from 'rxjs';
+import { profileResToIProfile } from '@core/mapper/profile.mapper';
 
 const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> = (action$, state$) =>
 	action$.pipe(
@@ -31,7 +32,20 @@ const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> 
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getById(payload.profile, payload.fromProfile, state.auth.accessToken!).pipe(
-				map((profile) => ProfileActions.receive([profile], Date.now())),
+				map((profile) =>
+					ProfileActions.receive(
+						[
+							profileResToIProfile(profile, Date.now()),
+							...(profile.following
+								? profile.following.map((follow) => profileResToIProfile(follow, Date.now()))
+								: []),
+							...(profile.followers
+								? profile.followers.map((follow) => profileResToIProfile(follow, Date.now()))
+								: []),
+						],
+						Date.now(),
+					),
+				),
 			),
 		),
 	);
@@ -45,7 +59,7 @@ const createProfileEpic: Epic<AppActionsDto, ICreatedProfileAction | IFailedCrea
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
 			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
-				map((profile) => ProfileActions.created(profile, Date.now())),
+				map((profile) => ProfileActions.created(profileResToIProfile(profile, Date.now()), Date.now())),
 			),
 		),
 	);
@@ -60,7 +74,7 @@ const createFirstProfileEpic: Epic<
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
 			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
-				map((profile) => ProfileActions.createdFirst(profile, Date.now())),
+				map((profile) => ProfileActions.createdFirst(profileResToIProfile(profile, Date.now()), Date.now())),
 				catchError((err: number) => {
 					console.error(err);
 					if (err === 401) return of(ProfileActions.failedCreateFirst());
@@ -99,7 +113,13 @@ const getProfileFollowingEpic: Epic<AppActionsDto, IReceiveProfileFollowingActio
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getFollowing(payload.profile, state.auth.accessToken!).pipe(
-				map((profiles) => ProfileActions.recvFollowing(payload.profile, profiles, Date.now())),
+				map((profiles) =>
+					ProfileActions.recvFollowing(
+						payload.profile,
+						profiles.map((profile) => profileResToIProfile(profile, Date.now())),
+						Date.now(),
+					),
+				),
 			),
 		),
 	);
@@ -110,7 +130,13 @@ const getProfileFollowersEpic: Epic<AppActionsDto, IReceiveProfileFollowersActio
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getFollowers(payload.profile, state.auth.accessToken!).pipe(
-				map((profiles) => ProfileActions.recvFollowers(payload.profile, profiles, Date.now())),
+				map((profiles) =>
+					ProfileActions.recvFollowers(
+						payload.profile,
+						profiles.map((profile) => profileResToIProfile(profile, Date.now())),
+						Date.now(),
+					),
+				),
 			),
 		),
 	);

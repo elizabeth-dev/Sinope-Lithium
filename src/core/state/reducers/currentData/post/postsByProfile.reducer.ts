@@ -1,3 +1,4 @@
+import { iPostToId } from '@core/mapper/post.mapper';
 import {
 	PostActionsDto,
 	ReceiveProfilePostsAction,
@@ -12,10 +13,7 @@ export type PostsByProfileState = {
 
 const initialState: PostsByProfileState = {};
 
-export function postsByProfileReducer(
-	state = initialState,
-	action: PostActionsDto,
-): PostsByProfileState {
+export function postsByProfileReducer(state = initialState, action: PostActionsDto): PostsByProfileState {
 	switch (action.type) {
 		case RequestProfilePostsAction:
 			return {
@@ -28,9 +26,9 @@ export function postsByProfileReducer(
 		case ReceiveProfilePostsAction:
 			return {
 				...state,
-				[action.payload.profile]: {
-					...state[action.payload.profile],
-					posts: action.payload.posts.map((post) => post.id),
+				[action.payload.reqProfile]: {
+					...state[action.payload.reqProfile],
+					posts: action.payload.posts.map(iPostToId),
 					receivedAt: action.payload.receivedAt,
 					isFetching: false,
 				},
@@ -38,13 +36,11 @@ export function postsByProfileReducer(
 		case SentPostAction:
 			return {
 				...state,
-				[action.payload.post.profile.id]: {
-					...state[action.payload.post.profile.id],
+				[action.payload.post.profile]: {
+					...state[action.payload.post.profile],
 					posts: [
 						action.payload.post.id,
-						...(state[action.payload.post.profile.id]
-							? state[action.payload.post.profile.id].posts
-							: []),
+						...(state[action.payload.post.profile] ? state[action.payload.post.profile].posts : []),
 					],
 				},
 			};

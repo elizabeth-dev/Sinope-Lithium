@@ -5,15 +5,18 @@ import { map } from 'rxjs/operators';
 import { UserRes } from '../model/api';
 
 const getSelf = (token: string): Observable<UserRes> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/users/`, {
+	return ajax.getJSON(`${developmentEnv.apiUrl}/users/self?expand=profiles`, {
 		Authorization: `Bearer ${token}`,
 	});
 };
 
 const getById = (id: string, token: string): Observable<UserRes> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/users/${id}`, {
-		Authorization: `Bearer ${token}`,
-	});
+	return ajax.getJSON(
+		`${developmentEnv.apiUrl}/users/${id}?expand=profiles&expand=profiles.following&expand=profiles.followers`,
+		{
+			Authorization: `Bearer ${token}`,
+		},
+	);
 };
 
 const remove = (id: string, token: string): Observable<void> => {

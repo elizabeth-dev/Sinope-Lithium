@@ -4,12 +4,14 @@ export interface IProfile {
 	id: string;
 	tag: string;
 	name: string;
-	created: Date;
+	created: string;
 	description: string;
 	followingMe: boolean;
 	followingThem: boolean;
 	following: FetchEntity<'profiles', string[]>;
 	followers: FetchEntity<'profiles', string[]>;
+	/* following: string[];
+	followers: string[]; */
 }
 
 export type ProfileEntity = FetchEntity<'profile', IProfile>;

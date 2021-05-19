@@ -6,7 +6,7 @@ module.exports = {
 	rules: {
 		'object-curly-spacing': ['warn', 'always'],
 		'prettier/prettier': 0,
-		'max-len': ['warn', { code: 120, ignoreStrings: true }],
+		'max-len': ['warn', { code: 120, ignoreStrings: true, ignoreTemplateLiterals: true }],
 		'comma-dangle': ['error', 'always-multiline'],
 		'jsx-quotes': ['error', 'prefer-double'],
 		quotes: ['error', 'single'],

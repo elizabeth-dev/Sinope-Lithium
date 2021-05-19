@@ -1,7 +1,10 @@
 import { QuestionEntity } from '@shared/types/entities/question.interface';
 import { QuestionActionsDto, ReceiveQuestionsAction } from '../../../actions/question.actions';
 import {
-	IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction, ReceiveProfilePostsAction,
+	IReceivePostsAction,
+	IReceiveProfilePostsAction,
+	ReceivePostsAction,
+	ReceiveProfilePostsAction,
 } from '../../../actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
 import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
@@ -23,6 +26,10 @@ export function questionsByIdReducer(
 ): QuestionsByIdState {
 	switch (action.type) {
 		case ReceiveQuestionsAction:
+		case ReceivePostsAction:
+		case ReceiveProfilePostsAction:
+		case ReceiveTimelineAction:
+		case ReceiveSearchAction:
 			return {
 				...state,
 				...action.payload.questions.reduce(
@@ -31,7 +38,7 @@ export function questionsByIdReducer(
 						[question.id]: {
 							question: {
 								...question,
-								from: question.from?.id,
+								from: question.from,
 							},
 							isFetching: false,
 							receivedAt: action.payload.receivedAt,
@@ -39,34 +46,6 @@ export function questionsByIdReducer(
 					}),
 					{} as QuestionsByIdState,
 				),
-			};
-		case ReceivePostsAction:
-		case ReceiveProfilePostsAction:
-		case ReceiveTimelineAction:
-		case ReceiveSearchAction:
-			return {
-				...state,
-				...action.payload.posts
-					.filter((el) => el.question)
-					.reduce(
-						(acc, post) =>
-							post.question
-								? {
-										...acc,
-										...{
-											[post.question.id]: {
-												question: {
-													...post.question,
-													from: post.question.from?.id,
-												},
-												isFetching: false,
-												receivedAt: action.payload.receivedAt,
-											},
-										},
-								  }
-								: acc,
-						{} as QuestionsByIdState,
-					),
 			};
 		default:
 			return state;

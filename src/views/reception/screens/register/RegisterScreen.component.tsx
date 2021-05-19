@@ -13,35 +13,21 @@ export interface RegisterScreenProps {
 	passEmail?: string;
 }
 
-export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = ({
-	passEmail,
-}) => {
+export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = ({ passEmail }) => {
 	const dispatch = useAppDispatch();
 
-	const [name, setName] = React.useState('');
 	const [email, setEmail] = React.useState(passEmail ?? '');
 	const [password, setPassword] = React.useState('');
 
-	const error = useSelector(
-		(state: AppState) => state.reception.register.error,
-	);
+	const error = useSelector((state: AppState) => state.reception.register.error);
 
 	const onRegister = () => {
 		Keyboard.dismiss();
-		dispatch(AuthActions.register(name, email, password));
+		dispatch(AuthActions.register(email, password));
 	};
 
 	return (
 		<View style={styles.root}>
-			<TextInput
-				placeholder="Name"
-				autoCompleteType="name"
-				autoCapitalize="sentences"
-				keyboardType="default"
-				error={error}
-				value={name}
-				onChangeText={setName}
-			/>
 			<TextInput
 				placeholder="Email"
 				autoCompleteType="email"
@@ -60,9 +46,7 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 				value={password}
 				onChangeText={setPassword}
 			/>
-			<Button
-				style={styles.registerButton}
-				onPress={onRegister}>
+			<Button style={styles.registerButton} onPress={onRegister}>
 				Register
 			</Button>
 		</View>

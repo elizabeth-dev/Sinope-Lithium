@@ -12,6 +12,7 @@ import { SlimPostStyles as styles } from './SlimPost.styles';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
 import { Colors } from '../../utils/colors/Colors.util';
+import { dateFormatter } from '@shared/utils/dates.utils';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
@@ -55,7 +56,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackI
 						</View>
 						<View>
 							<Typography.Body>{post.content}</Typography.Body>
-							<Typography.Caption>{post.date.toLocaleString()}</Typography.Caption>
+							<Typography.Caption>{dateFormatter(post.date)}</Typography.Caption>
 						</View>
 						<View style={styles.actions}>
 							<IconButton

@@ -148,7 +148,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					transform: [{ translateY: (tabBarY as unknown) as number }],
 				},
 			]}>
-			<TabBar {...sceneProps} style={styles.tabBar} labelStyle={styles.tabBarLabel} />
+			<TabBar {...sceneProps} style={styles.tabBar} labelStyle={styles.tabBarLabel} activeColor="#000000" />
 		</Animated.View>
 	);
 

@@ -5,7 +5,7 @@ import { FullQuestion } from './question.interface';
 export interface IPost {
 	id: string;
 	content: string;
-	date: Date;
+	date: string;
 	profile: string;
 	likes: string[];
 	question?: string;

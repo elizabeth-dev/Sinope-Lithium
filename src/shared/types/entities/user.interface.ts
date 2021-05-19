@@ -1,11 +1,10 @@
-import { ProfileRes } from '@core/api/model/api';
 import { FetchEntity } from '../fetchFields.interface';
+import { IProfile } from './profile.interface';
 
 export interface IUser {
 	id: string;
-	name: string;
 	email: string;
-	mprofiles: ProfileRes[]; // FIXME
+	profiles: IProfile[]; // FIXME
 }
 
 export type UserEntity = FetchEntity<'user', IUser>;
