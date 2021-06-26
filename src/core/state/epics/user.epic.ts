@@ -4,7 +4,7 @@ import {
 	ReceiveSelfUserAction,
 	RequestSelfUserAction,
 	UserActions,
-} from '@core/state/actions/user.actions';
+} from '@actions/user.actions';
 import { AppState } from '@core/state/app.store';
 import { UserService } from '@core/api/service/user.service';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
@@ -22,7 +22,9 @@ const loadSelfUserEpic: Epic<AppActionsDto, IReceiveSelfUserAction, AppState> = 
 		withLatestFrom(state$),
 		mergeMap(([, state]) =>
 			UserService.getSelf(state.auth.accessToken!).pipe(
-				map((self) => UserActions.receiveSelf(userResToIUser(self, Date.now()), Date.now())),
+				map((self) =>
+					UserActions.receiveSelf({ user: userResToIUser(self, Date.now()), receivedAt: Date.now() }),
+				),
 			),
 		),
 	);

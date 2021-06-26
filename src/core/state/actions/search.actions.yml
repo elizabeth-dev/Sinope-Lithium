@@ -1,0 +1,21 @@
+imports:
+    IPost: '@shared/types/entities/post.interface'
+    IProfile: '@shared/types/entities/profile.interface'
+    IQuestion: '@shared/types/entities/question.interface'
+actionGroups:
+    search:
+        actions:
+            search:
+                payload:
+                    searchTerm: string
+            removeSearch:
+                alias: remove
+                payload:
+                    searchTerm: string
+            receiveSearch:
+                payload:
+                    searchTerm: string
+                    receivedAt: number
+                    profiles: IProfile[]
+                    posts: IPost[]
+                    questions: IQuestion[]

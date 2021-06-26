@@ -1,4 +1,3 @@
-import { PostActions } from '@core/state/actions/post.actions';
 import { AppState } from '@core/state/app.store';
 import { fromPost } from '@core/state/selectors/post.selectors';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
@@ -11,6 +10,7 @@ import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 import { PostScreenStyles as styles } from './PostScreen.styles';
 import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
+import { PostActions } from '@actions/post.actions';
 
 export interface PostScreenProps {
 	postId: string;
@@ -25,7 +25,7 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({ postI
 	const currentProfile = useSelector(fromProfile.currentId);
 
 	React.useEffect(() => {
-		dispatcher(PostActions.request(postId));
+		dispatcher(PostActions.request({ post: postId }));
 	}, [postId, dispatcher]);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
@@ -55,7 +55,7 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({ postI
 				<Post
 					post={post.post}
 					currentProfile={currentProfile}
-					mainPostY={(mainPostY as unknown) as number}
+					mainPostY={mainPostY as unknown as number}
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
 					stackId={componentId}
 				/>

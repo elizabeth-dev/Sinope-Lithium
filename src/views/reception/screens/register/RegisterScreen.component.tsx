@@ -1,4 +1,4 @@
-import { AuthActions } from '@core/state/actions/auth.actions';
+import { AuthActions } from '@actions/auth.actions';
 import { AppState } from '@core/state/app.store';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
@@ -23,7 +23,7 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 
 	const onRegister = () => {
 		Keyboard.dismiss();
-		dispatch(AuthActions.register(email, password));
+		dispatch(AuthActions.register({ email, password }));
 	};
 
 	return (

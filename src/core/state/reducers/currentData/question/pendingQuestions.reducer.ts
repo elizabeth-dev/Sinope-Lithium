@@ -4,7 +4,7 @@ import {
 	QuestionActionsDto,
 	SendQuestionAction,
 	SentQuestionAction,
-} from '../../../actions/question.actions';
+} from '@actions/question.actions';
 
 export type PendingQuestionsState = INewQuestion[];
 

@@ -1,4 +1,4 @@
-import { ReceiveSelfUserAction, UserActionsDto } from '@core/state/actions/user.actions';
+import { ReceiveSelfUserAction, UserActionsDto } from '@actions/user.actions';
 import { UserEntity } from '@shared/types/entities/user.interface';
 
 export interface UsersByIdState {
@@ -7,10 +7,7 @@ export interface UsersByIdState {
 
 const initialState: UsersByIdState = {};
 
-export function usersByIdReducer(
-	state = initialState,
-	action: UserActionsDto,
-): UsersByIdState {
+export function usersByIdReducer(state = initialState, action: UserActionsDto): UsersByIdState {
 	switch (action.type) {
 		case ReceiveSelfUserAction:
 			return {

@@ -17,7 +17,7 @@ import {
 	RequestProfileFollowersAction,
 	RequestProfileFollowingAction,
 	UnfollowProfileAction,
-} from '@core/state/actions/profile.actions';
+} from '@actions/profile.actions';
 import { AppState } from '@core/state/app.store';
 import { ProfileService } from '@core/api/service/profile.service';
 import { combineEpics, Epic } from 'redux-observable';
@@ -33,8 +33,8 @@ const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> 
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getById(payload.profile, payload.fromProfile, state.auth.accessToken!).pipe(
 				map((profile) =>
-					ProfileActions.receive(
-						[
+					ProfileActions.receive({
+						profiles: [
 							profileResToIProfile(profile, Date.now()),
 							...(profile.following
 								? profile.following.map((follow) => profileResToIProfile(follow, Date.now()))
@@ -43,8 +43,8 @@ const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> 
 								? profile.followers.map((follow) => profileResToIProfile(follow, Date.now()))
 								: []),
 						],
-						Date.now(),
-					),
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),
@@ -59,7 +59,12 @@ const createProfileEpic: Epic<AppActionsDto, ICreatedProfileAction | IFailedCrea
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
 			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
-				map((profile) => ProfileActions.created(profileResToIProfile(profile, Date.now()), Date.now())),
+				map((profile) =>
+					ProfileActions.created({
+						profile: profileResToIProfile(profile, Date.now()),
+						receivedAt: Date.now(),
+					}),
+				),
 			),
 		),
 	);
@@ -74,7 +79,12 @@ const createFirstProfileEpic: Epic<
 		withLatestFrom(state$),
 		mergeMap(([action, state]) =>
 			ProfileService.create(action.payload.newProfile, state.auth.accessToken!).pipe(
-				map((profile) => ProfileActions.createdFirst(profileResToIProfile(profile, Date.now()), Date.now())),
+				map((profile) =>
+					ProfileActions.createdFirst({
+						profile: profileResToIProfile(profile, Date.now()),
+						receivedAt: Date.now(),
+					}),
+				),
 				catchError((err: number) => {
 					console.error(err);
 					if (err === 401) return of(ProfileActions.failedCreateFirst());
@@ -91,7 +101,7 @@ const followProfileEpic: Epic<AppActionsDto, IFollowedProfileAction, AppState> =
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.follow(payload.toProfile, payload.fromProfile, state.auth.accessToken!).pipe(
-				mapTo(ProfileActions.followed(payload.fromProfile, payload.toProfile)),
+				mapTo(ProfileActions.followed({ fromProfile: payload.fromProfile, toProfile: payload.toProfile })),
 			),
 		),
 	);
@@ -102,7 +112,7 @@ const unfollowProfileEpic: Epic<AppActionsDto, IUnfollowedProfileAction, AppStat
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.unfollow(payload.toProfile, payload.fromProfile, state.auth.accessToken!).pipe(
-				mapTo(ProfileActions.unfollowed(payload.fromProfile, payload.toProfile)),
+				mapTo(ProfileActions.unfollowed({ fromProfile: payload.fromProfile, toProfile: payload.toProfile })),
 			),
 		),
 	);
@@ -114,11 +124,11 @@ const getProfileFollowingEpic: Epic<AppActionsDto, IReceiveProfileFollowingActio
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getFollowing(payload.profile, state.auth.accessToken!).pipe(
 				map((profiles) =>
-					ProfileActions.recvFollowing(
-						payload.profile,
-						profiles.map((profile) => profileResToIProfile(profile, Date.now())),
-						Date.now(),
-					),
+					ProfileActions.recvFollowing({
+						profile: payload.profile,
+						following: profiles.map((profile) => profileResToIProfile(profile, Date.now())),
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),
@@ -131,11 +141,11 @@ const getProfileFollowersEpic: Epic<AppActionsDto, IReceiveProfileFollowersActio
 		mergeMap(([{ payload }, state]) =>
 			ProfileService.getFollowers(payload.profile, state.auth.accessToken!).pipe(
 				map((profiles) =>
-					ProfileActions.recvFollowers(
-						payload.profile,
-						profiles.map((profile) => profileResToIProfile(profile, Date.now())),
-						Date.now(),
-					),
+					ProfileActions.recvFollowers({
+						profile: payload.profile,
+						followers: profiles.map((profile) => profileResToIProfile(profile, Date.now())),
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),

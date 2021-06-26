@@ -1,9 +1,4 @@
-import {
-	AuthActionsDto,
-	RegisterAction,
-	RegisterFailureAction,
-	RegisterSuccessAction,
-} from '@core/state/actions/auth.actions';
+import { AuthActionsDto, RegisterAction, RegisterFailureAction, RegisterSuccessAction } from '@actions/auth.actions';
 
 export interface RegisterState {
 	error: boolean;
@@ -15,10 +10,7 @@ const initialState: RegisterState = {
 	isFetching: false,
 };
 
-export function registerReducer(
-	state = initialState,
-	action: AuthActionsDto,
-): RegisterState {
+export function registerReducer(state = initialState, action: AuthActionsDto): RegisterState {
 	switch (action.type) {
 		case RegisterAction:
 			return { ...state, isFetching: true, error: false };

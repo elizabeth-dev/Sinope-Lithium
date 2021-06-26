@@ -1,4 +1,4 @@
-import { PostActions } from '@core/state/actions/post.actions';
+import { PostActions } from '@actions/post.actions';
 import { Avatar } from '../avatar/Avatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
@@ -33,7 +33,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackI
 	const onPostClick = () => Navigation.push(stackId, postScreenLayer(post.id));
 	const onAvatarClick = () => Navigation.push(stackId, profileScreenLayer(post.profile.id));
 	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
+	const onLikeClick = () => dispatcher(PostActions.like({ post: post.id, fromProfile: currentProfile }));
 
 	return (
 		<TouchableHighlight underlayColor={Colors.grey200} onPress={onPostClick}>

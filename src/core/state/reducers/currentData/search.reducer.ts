@@ -1,4 +1,4 @@
-import { ReceiveSearchAction, RemoveSearchAction, SearchAction, SearchActionsDto } from '../../actions/search.actions';
+import { ReceiveSearchAction, RemoveSearchAction, SearchAction, SearchActionsDto } from '@actions/search.actions';
 import { SearchEntity } from '@shared/types/entities/search.interface';
 
 export interface SearchState {

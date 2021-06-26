@@ -4,7 +4,7 @@ import {
 	ReceiveProfilePostsAction,
 	RequestProfilePostsAction,
 	SentPostAction,
-} from '@core/state/actions/post.actions';
+} from '@actions/post.actions';
 import { FetchEntity } from '@shared/types/fetchFields.interface';
 
 export type PostsByProfileState = {

@@ -1,9 +1,5 @@
 import { FetchEntity } from '@shared/types/fetchFields.interface';
-import {
-	GetQuestionsByProfileAction,
-	QuestionActionsDto,
-	ReceiveQuestionsAction,
-} from '../../../actions/question.actions';
+import { GetQuestionsByProfileAction, QuestionActionsDto, ReceiveQuestionsAction } from '@actions/question.actions';
 
 export type ReceivedQuestionsState = FetchEntity<'questions', string[]>;
 

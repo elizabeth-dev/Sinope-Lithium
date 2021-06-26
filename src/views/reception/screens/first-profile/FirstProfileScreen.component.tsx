@@ -2,7 +2,7 @@ import React from 'react';
 import { FirstProfileScreenStyles as styles } from './FirstProfileScreen.styles';
 import { Keyboard, View } from 'react-native';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { ProfileActions } from '@core/state/actions/profile.actions';
+import { ProfileActions } from '@actions/profile.actions';
 import { useSelector } from 'react-redux';
 import { AppState } from '@core/state/app.store';
 import { Button } from '@shared/components/button/Button.component';
@@ -14,13 +14,11 @@ export const FirstProfileScreen: React.FC = () => {
 	const [name, setName] = React.useState('');
 	const [tag, setTag] = React.useState('');
 
-	const error = useSelector(
-		(state: AppState) => state.reception.firstProfile.error,
-	);
+	const error = useSelector((state: AppState) => state.reception.firstProfile.error);
 
 	const onCreate = () => {
 		Keyboard.dismiss();
-		dispatcher(ProfileActions.createFirst({ name, tag }));
+		dispatcher(ProfileActions.createFirst({ newProfile: { name, tag } }));
 	};
 
 	return (
@@ -43,9 +41,7 @@ export const FirstProfileScreen: React.FC = () => {
 				value={tag}
 				onChangeText={setTag}
 			/>
-			<Button
-				style={styles.createButton}
-				onPress={onCreate}>
+			<Button style={styles.createButton} onPress={onCreate}>
 				Create
 			</Button>
 		</View>

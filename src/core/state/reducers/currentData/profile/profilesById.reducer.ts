@@ -10,12 +10,12 @@ import {
 	RequestProfileFollowersAction,
 	RequestProfileFollowingAction,
 	UnfollowedProfileAction,
-} from '@core/state/actions/profile.actions';
-import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/state/actions/user.actions';
+} from '@actions/profile.actions';
+import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@actions/user.actions';
 import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interface';
-import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
-import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '../../../actions/post.actions';
-import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
+import { IReceiveSearchAction, ReceiveSearchAction } from '@actions/search.actions';
+import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '@actions/post.actions';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@actions/timeline.actions';
 
 export interface ProfilesByIdState {
 	[id: string]: ProfileEntity;

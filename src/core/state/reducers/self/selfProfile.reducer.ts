@@ -1,6 +1,6 @@
-import { CreatedFirstProfileAction, CreatedProfileAction, ProfileActionsDto } from '@core/state/actions/profile.actions';
-import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@core/state/actions/user.actions';
-import { SelfActionsDto, SwitchedProfileAction } from '@core/state/actions/self.actions';
+import { CreatedFirstProfileAction, CreatedProfileAction, ProfileActionsDto } from '@actions/profile.actions';
+import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@actions/user.actions';
+import { SelfActionsDto, SwitchedProfileAction } from '@actions/self.actions';
 
 export type SelfProfileState = string;
 

@@ -1,13 +1,13 @@
 import { QuestionEntity } from '@shared/types/entities/question.interface';
-import { QuestionActionsDto, ReceiveQuestionsAction } from '../../../actions/question.actions';
+import { QuestionActionsDto, ReceiveQuestionsAction } from '@actions/question.actions';
 import {
 	IReceivePostsAction,
 	IReceiveProfilePostsAction,
 	ReceivePostsAction,
 	ReceiveProfilePostsAction,
-} from '../../../actions/post.actions';
-import { IReceiveTimelineAction, ReceiveTimelineAction } from '../../../actions/timeline.actions';
-import { IReceiveSearchAction, ReceiveSearchAction } from '../../../actions/search.actions';
+} from '@actions/post.actions';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@actions/timeline.actions';
+import { IReceiveSearchAction, ReceiveSearchAction } from '@actions/search.actions';
 
 export type QuestionsByIdState = {
 	[id: string]: QuestionEntity;

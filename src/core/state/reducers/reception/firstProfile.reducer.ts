@@ -3,7 +3,7 @@ import {
 	CreateFirstProfileAction,
 	FailedCreateFirstProfileAction,
 	ProfileActionsDto,
-} from '@core/state/actions/profile.actions';
+} from '@actions/profile.actions';
 
 export interface FirstProfileState {
 	error: boolean;
@@ -15,10 +15,7 @@ const initialState: FirstProfileState = {
 	isFetching: false,
 };
 
-export function firstProfileReducer(
-	state = initialState,
-	action: ProfileActionsDto,
-): FirstProfileState {
+export function firstProfileReducer(state = initialState, action: ProfileActionsDto): FirstProfileState {
 	switch (action.type) {
 		case CreateFirstProfileAction:
 			return { ...state, isFetching: true, error: false };

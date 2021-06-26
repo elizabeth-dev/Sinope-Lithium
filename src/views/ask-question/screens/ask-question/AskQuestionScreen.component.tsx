@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Switch, TextInput, View } from 'react-native';
 import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { QuestionActions } from '@core/state/actions/question.actions';
+import { QuestionActions } from '@actions/question.actions';
 import { useSelector } from 'react-redux';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { Divider } from '@shared/components/divider/Divider.component';
@@ -38,11 +38,13 @@ export const AskQuestionScreen: NavigationFunctionComponent<AskQuestionScreenPro
 					onPress={() => {
 						dispatcher(
 							QuestionActions.send({
-								tmpId: Date.now().toString(),
-								content,
-								from: currentProfile,
-								recipient,
-								anonymous,
+								newQuestion: {
+									tmpId: Date.now().toString(),
+									content,
+									from: currentProfile,
+									recipient,
+									anonymous,
+								},
 							}),
 						);
 						Navigation.pop(componentId);

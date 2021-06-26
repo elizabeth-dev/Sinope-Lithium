@@ -8,7 +8,7 @@ import { Navigation } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 import { IProfile } from '@shared/types/entities/profile.interface';
-import { SelfActions } from '@core/state/actions/self.actions';
+import { SelfActions } from '@actions/self.actions';
 import { Typography } from '@shared/components/typography/Typography.component';
 import { Icon } from '@shared/components/icon/Icon.component';
 import { Colors } from '@shared/utils/colors/Colors.util';
@@ -25,12 +25,10 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 	const currentProfile = useSelector(fromProfile.current);
 	const myProfiles = useSelector(fromProfile.mine)!.filter((el) => el.profile?.id !== currentProfile?.profile?.id);
 
-	const onCurrentClick = () => Navigation.push('centerStack',
-		profileScreenLayer(currentProfile?.profile?.id),
-	);
+	const onCurrentClick = () => Navigation.push('centerStack', profileScreenLayer(currentProfile?.profile?.id));
 
 	const onOtherClick = (profile: IProfile) => {
-		dispatcher(SelfActions.switchProfile(profile?.id));
+		dispatcher(SelfActions.switchProfile({ profileId: profile?.id }));
 		Navigation.mergeOptions('centerStack', {
 			topBar: {
 				title: { text: profile?.name },
@@ -42,15 +40,14 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 		});
 	};
 
-	return (<Pressable style={styles.root} onPress={onSwitch}>
+	return (
+		<Pressable style={styles.root} onPress={onSwitch}>
 			<View style={styles.avatarBox}>
-				<Avatar
-					size={72}
-					label={currentProfile?.profile?.name[0]?.toUpperCase()}
-					onPress={onCurrentClick}
-				/>
-				{myProfiles.length !== 0 && (<View style={styles.otherProfiles}>
-						{myProfiles.map((profile) => (<Avatar
+				<Avatar size={72} label={currentProfile?.profile?.name[0]?.toUpperCase()} onPress={onCurrentClick} />
+				{myProfiles.length !== 0 && (
+					<View style={styles.otherProfiles}>
+						{myProfiles.map((profile) => (
+							<Avatar
 								size={48}
 								label={profile.profile?.name[0]?.toUpperCase()}
 								style={styles.otherProfileAvatar}
@@ -66,10 +63,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 					<Typography.Headline>{currentProfile.profile.name}</Typography.Headline>
 					<Typography.Subtitle>{`@${currentProfile.profile.tag}`}</Typography.Subtitle>
 				</View>
-				<Icon
-					icon={profileTab ? 'chevron-up' : 'chevron-down'}
-					color={Colors.grey600}
-				/>
+				<Icon icon={profileTab ? 'chevron-up' : 'chevron-down'} color={Colors.grey600} />
 			</View>
 		</Pressable>
 	);

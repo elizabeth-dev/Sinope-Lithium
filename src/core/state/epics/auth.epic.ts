@@ -7,7 +7,7 @@ import {
 	LoginAction,
 	RegisterAction,
 	TokenExpiredAction,
-} from '@core/state/actions/auth.actions';
+} from '@actions/auth.actions';
 import { AppState } from '@core/state/app.store';
 import { AuthService } from '@core/api/service/auth.service';
 import { combineEpics, Epic } from 'redux-observable';
@@ -20,9 +20,9 @@ const loginEpic: Epic<AppActionsDto, ILoginSuccessAction | ILoginFailureAction> 
 	action$.pipe(
 		filter(isOfType(LoginAction)),
 		mergeMap((action) =>
-			AuthService.login(action.payload.username, action.payload.password).pipe(
+			AuthService.login(action.payload.email, action.payload.password).pipe(
 				map(({ accessToken, refreshToken, expiresAt }) =>
-					AuthActions.loginSuccess(accessToken, refreshToken, expiresAt),
+					AuthActions.loginSuccess({ accessToken, refreshToken, expiresAt }),
 				),
 				catchError((err: number) => {
 					if (err === 401) return of(AuthActions.loginFailure());
@@ -42,7 +42,7 @@ const registerEpic: Epic<AppActionsDto, IRegisterSuccessAction | IRegisterFailur
 				password: payload.password,
 			}).pipe(
 				map(({ accessToken, refreshToken, expiresAt }) =>
-					AuthActions.registerSuccess(accessToken, refreshToken, expiresAt),
+					AuthActions.registerSuccess({ accessToken, refreshToken, expiresAt }),
 				),
 				catchError((err: number) => {
 					if (err === 401) return of(AuthActions.registerFailure());
@@ -59,7 +59,7 @@ const accessTokenExpiredEpic: Epic<AppActionsDto, AppActionsDto, AppState> = (ac
 		mergeMap(() =>
 			AuthService.refresh(state$.value.auth.refreshToken!).pipe(
 				map(({ accessToken, refreshToken, expiresAt }) =>
-					AuthActions.refreshed(accessToken, refreshToken, expiresAt),
+					AuthActions.refreshed({ accessToken, refreshToken, expiresAt }),
 				),
 			),
 		),

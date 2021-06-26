@@ -3,7 +3,7 @@ import { QuestionList } from '@shared/components/question-list/QuestionList.comp
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { useSelector } from 'react-redux';
 import { fromQuestion } from '@core/state/selectors/question.selectors';
-import { QuestionActions } from '@core/state/actions/question.actions';
+import { QuestionActions } from '@actions/question.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 
 export interface QuestionsProps {
@@ -17,7 +17,7 @@ export const Questions: React.FC<QuestionsProps> = ({ stackId }) => {
 	const receivedQuestions = useSelector(fromQuestion.received);
 
 	const onRefresh = React.useCallback(() => {
-		dispatcher(QuestionActions.getByProfile(currentProfile));
+		dispatcher(QuestionActions.getByProfile({ profile: currentProfile }));
 	}, [currentProfile, dispatcher]);
 
 	return (

@@ -1,5 +1,3 @@
-import { PostActions } from '@core/state/actions/post.actions';
-import { ProfileActions } from '@core/state/actions/profile.actions';
 import { AppState } from '@core/state/app.store';
 import { fromPost } from '@core/state/selectors/post.selectors';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
@@ -16,6 +14,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { askQuestionScreenLayer } from '@shared/navigation/layers/ask-question-screen.layer';
 import { Fab } from '@shared/components/fab/Fab.component';
+import { ProfileActions } from '@actions/profile.actions';
+import { PostActions } from '@actions/post.actions';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -43,9 +43,9 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 	const profilePosts = useSelector((state: AppState) => selectPostsByProfile(state, profileId));
 
 	const refreshProfile = React.useCallback(
-		(_profileId, _currentProfile) => {
-			dispatcher(ProfileActions.request(_profileId, _currentProfile));
-			dispatcher(PostActions.requestFromProfile(_profileId));
+		(_profileId: string, _currentProfile: string) => {
+			dispatcher(ProfileActions.request({ profile: _profileId, fromProfile: _currentProfile }));
+			dispatcher(PostActions.requestFromProfile({ profile: _profileId }));
 		},
 		[dispatcher],
 	);
@@ -88,9 +88,9 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 		const listener: NavigationComponentListener = {
 			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
 				if (event.buttonId === 'FOLLOW_PROFILE') {
-					dispatcher(ProfileActions.follow(currentProfile, profileId));
+					dispatcher(ProfileActions.follow({ fromProfile: currentProfile, toProfile: profileId }));
 				} else if (event.buttonId === 'UNFOLLOW_PROFILE') {
-					dispatcher(ProfileActions.unfollow(currentProfile, profileId));
+					dispatcher(ProfileActions.unfollow({ fromProfile: currentProfile, toProfile: profileId }));
 				}
 			},
 		};
@@ -145,7 +145,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 			style={[
 				styles.tabBarContainer,
 				{
-					transform: [{ translateY: (tabBarY as unknown) as number }],
+					transform: [{ translateY: tabBarY as unknown as number }],
 				},
 			]}>
 			<TabBar {...sceneProps} style={styles.tabBar} labelStyle={styles.tabBarLabel} activeColor="#000000" />
@@ -173,7 +173,7 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					stackId={componentId}
 					profile={profile?.profile} // FIXME: Check undefined. & Fix followers logic
 					isFetching={(profile?.isFetching ?? true) || (profilePosts?.isFetching ?? true)}
-					headerY={(headerY as unknown) as number}
+					headerY={headerY as unknown as number}
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
 				/>
 			</View>

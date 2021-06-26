@@ -1,4 +1,4 @@
-import { AuthActionsDto, LoginSuccessAction, LogoutAction, RegisterSuccessAction } from '@core/state/actions/auth.actions';
+import { AuthActionsDto, LoginSuccessAction, LogoutAction, RegisterSuccessAction } from '@actions/auth.actions';
 
 export interface AuthState {
 	loggedIn: boolean;
@@ -14,10 +14,7 @@ const initialState: AuthState = {
 	expiresAt: undefined,
 };
 
-export function authReducer(
-	state = initialState,
-	action: AuthActionsDto,
-): AuthState {
+export function authReducer(state = initialState, action: AuthActionsDto): AuthState {
 	switch (action.type) {
 		case LoginSuccessAction:
 		case RegisterSuccessAction:

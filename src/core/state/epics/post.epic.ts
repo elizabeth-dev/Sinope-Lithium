@@ -9,7 +9,7 @@ import {
 	RequestProfilePostsAction,
 	SendPostAction,
 	UnlikePostAction,
-} from '@core/state/actions/post.actions';
+} from '@actions/post.actions';
 import { AppState } from '@core/state/app.store';
 import { PostService } from '@core/api/service/post.service';
 import { combineEpics, Epic } from 'redux-observable';
@@ -35,13 +35,13 @@ const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (actions$, 
 				state.auth.accessToken!,
 			).pipe(
 				map((post) =>
-					PostActions.sent(
-						postResToIPost(post),
-						postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
-						Date.now(),
-						payload.newPost.tmpId,
-						post.question ? postResToIQuestion(post as Require<PostRes, 'question'>) : undefined,
-					),
+					PostActions.sent({
+						post: postResToIPost(post),
+						profile: postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
+						receivedAt: Date.now(),
+						tmpId: payload.newPost.tmpId,
+						question: post.question ? postResToIQuestion(post as Require<PostRes, 'question'>) : undefined,
+					}),
 				),
 			),
 		),
@@ -54,9 +54,9 @@ const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (action
 		mergeMap(([{ payload }, state]) =>
 			PostService.like(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
 				map((post) =>
-					PostActions.receive(
-						[postResToIPost(post)],
-						post.profile
+					PostActions.receive({
+						posts: [postResToIPost(post)],
+						profiles: post.profile
 							? [
 									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
 									...(post.profile.following
@@ -71,9 +71,9 @@ const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (action
 										: []),
 							  ]
 							: [],
-						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
-						Date.now(),
-					),
+						questions: post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),
@@ -86,9 +86,9 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (acti
 		mergeMap(([{ payload }, state]) =>
 			PostService.unlike(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
 				map((post) =>
-					PostActions.receive(
-						[postResToIPost(post)],
-						post.profile
+					PostActions.receive({
+						posts: [postResToIPost(post)],
+						profiles: post.profile
 							? [
 									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
 									...(post.profile.following
@@ -103,9 +103,9 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (acti
 										: []),
 							  ]
 							: [],
-						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
-						Date.now(),
-					),
+						questions: post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),
@@ -118,17 +118,17 @@ const requestProfilePostsEpic: Epic<AppActionsDto, IReceiveProfilePostsAction, A
 		mergeMap(([{ payload }, state]) =>
 			PostService.getByProfile(payload.profile, state.auth.accessToken!).pipe(
 				map((posts) =>
-					PostActions.receiveFromProfile(
-						payload.profile,
-						posts.map(postResToIPost),
-						posts
+					PostActions.receiveFromProfile({
+						reqProfile: payload.profile,
+						posts: posts.map(postResToIPost),
+						profiles: posts
 							.filter((post): post is Require<PostRes, 'profile'> => !!post.profile)
 							.map((post) => postResToIProfile(post, Date.now())),
-						posts
+						questions: posts
 							.filter((post): post is Require<PostRes, 'question'> => !!post.question)
 							.map(postResToIQuestion),
-						Date.now(),
-					),
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),
@@ -141,9 +141,9 @@ const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (act
 		mergeMap(([{ payload }, state]) =>
 			PostService.getById(payload.post, state.auth.accessToken!).pipe(
 				map((post) =>
-					PostActions.receive(
-						[postResToIPost(post)],
-						post.profile
+					PostActions.receive({
+						posts: [postResToIPost(post)],
+						profiles: post.profile
 							? [
 									postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
 									...(post.profile.following
@@ -158,9 +158,9 @@ const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (act
 										: []),
 							  ]
 							: [],
-						post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
-						Date.now(),
-					),
+						questions: post.question ? [postResToIQuestion(post as Require<PostRes, 'question'>)] : [],
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),

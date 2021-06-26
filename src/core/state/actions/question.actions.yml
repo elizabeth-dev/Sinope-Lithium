@@ -1,0 +1,37 @@
+imports:
+    INewQuestion: '@shared/types/entities/question.interface'
+    IQuestion: '@shared/types/entities/question.interface'
+actionGroups:
+    question:
+        actions:
+            getQuestionsByProfile:
+                alias: getByProfile
+                payload:
+                    profile: string
+            receiveQuestions:
+                alias: receive
+                payload:
+                    questions: IQuestion[]
+                    receivedAt: number
+            sendQuestion:
+                alias: send
+                payload:
+                    newQuestion: INewQuestion
+            sentQuestion:
+                alias: sent
+                payload:
+                    question: IQuestion
+                    receivedAt: number
+                    tmpId: string
+            failedSentQuestion:
+                alias: failedSent
+                payload:
+                    tmpId: string
+            removeQuestion:
+                alias: remove
+                payload:
+                    question: string
+            removedQuestion:
+                alias: removed
+                payload:
+                    question: string

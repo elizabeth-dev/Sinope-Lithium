@@ -1,4 +1,4 @@
-import { AuthActionsDto, LoginAction, LoginFailureAction, LoginSuccessAction } from '@core/state/actions/auth.actions';
+import { AuthActionsDto, LoginAction, LoginFailureAction, LoginSuccessAction } from '@actions/auth.actions';
 
 export interface LoginState {
 	error: boolean;
@@ -10,10 +10,7 @@ const initialState: LoginState = {
 	isFetching: false,
 };
 
-export function loginReducer(
-	state = initialState,
-	action: AuthActionsDto,
-): LoginState {
+export function loginReducer(state = initialState, action: AuthActionsDto): LoginState {
 	switch (action.type) {
 		case LoginAction:
 			return { ...state, isFetching: true, error: false };

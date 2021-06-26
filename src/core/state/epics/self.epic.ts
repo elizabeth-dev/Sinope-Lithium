@@ -1,10 +1,5 @@
 import { AppActionsDto } from '../actions/app.actions';
-import {
-	ISwitchedProfileAction,
-	SelfActions,
-	SwitchedProfileAction,
-	SwitchProfileAction,
-} from '@core/state/actions/self.actions';
+import { ISwitchedProfileAction, SelfActions, SwitchedProfileAction, SwitchProfileAction } from '@actions/self.actions';
 import { AppState } from '@core/state/app.store';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { DataService } from '@core/services/data.service';
@@ -22,7 +17,7 @@ const switchProfileEpic: Epic<AppActionsDto, ISwitchedProfileAction, AppState> =
 		mergeMap(([{ payload }, state]) =>
 			DataService.saveProfileData(state.self.currentProfile, state.currentData).pipe(
 				mergeMap(() => DataService.getProfileData(payload.profileId)),
-				map((data) => SelfActions.switchedProfile(payload.profileId, data)),
+				map((data) => SelfActions.switchedProfile({ profileId: payload.profileId, currentData: data })),
 			),
 		),
 	);

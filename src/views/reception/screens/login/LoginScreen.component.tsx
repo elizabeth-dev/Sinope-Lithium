@@ -1,4 +1,3 @@
-import { AuthActions } from '@core/state/actions/auth.actions';
 import { AppState } from '@core/state/app.store';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { registerRoot } from '@shared/navigation/roots/register.root';
@@ -9,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
 import { Button } from '@shared/components/button/Button.component';
 import { TextInput } from '@shared/components/text-input/TextInput.component';
+import { AuthActions } from '@actions/auth.actions';
 
 export const LoginScreen: NavigationFunctionComponent = () => {
 	const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 
 	const onLogin = () => {
 		Keyboard.dismiss();
-		dispatch(AuthActions.login(email, password));
+		dispatch(AuthActions.login({ email, password }));
 	};
 
 	const onRegister = () => {
@@ -47,14 +47,10 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 				value={password}
 				onChangeText={setPassword}
 			/>
-			<Button
-				style={styles.loginButton}
-				onPress={onLogin}>
+			<Button style={styles.loginButton} onPress={onLogin}>
 				Log In
 			</Button>
-			<Button
-				style={styles.registerButton}
-				onPress={onRegister}>
+			<Button style={styles.registerButton} onPress={onRegister}>
 				Register
 			</Button>
 		</View>

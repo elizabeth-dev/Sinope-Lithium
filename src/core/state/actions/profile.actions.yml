@@ -1,0 +1,78 @@
+imports:
+    CreateProfileReq: '@core/api/model/api'
+    IProfile: '@shared/types/entities/profile.interface'
+actionGroups:
+    profile:
+        actions:
+            requestProfile:
+                alias: request
+                payload:
+                    profile: string
+                    fromProfile: string
+            receiveProfiles:
+                alias: receive
+                payload:
+                    profiles: IProfile[]
+                    receivedAt: number
+            createProfile:
+                alias: create
+                payload:
+                    newProfile: CreateProfileReq
+            createdProfile:
+                alias: created
+                payload:
+                    profile: IProfile
+                    receivedAt: number
+            failedCreateProfile:
+                alias: failedCreate
+            createFirstProfile:
+                alias: createFirst
+                payload:
+                    newProfile: CreateProfileReq
+            createdFirstProfile:
+                alias: createdFirst
+                payload:
+                    profile: IProfile
+                    receivedAt: number
+            failedCreateFirstProfile:
+                alias: failedCreateFirst
+            followProfile:
+                alias: follow
+                payload:
+                    fromProfile: string
+                    toProfile: string
+            unfollowProfile:
+                alias: unfollow
+                payload:
+                    fromProfile: string
+                    toProfile: string
+            followedProfile:
+                alias: followed
+                payload:
+                    fromProfile: string
+                    toProfile: string
+            unfollowedProfile:
+                alias: unfollowed
+                payload:
+                    fromProfile: string
+                    toProfile: string
+            requestProfileFollowing:
+                alias: reqFollowing
+                payload:
+                    profile: string
+            receiveProfileFollowing:
+                alias: recvFollowing
+                payload:
+                    profile: string
+                    following: IProfile[]
+                    receivedAt: number
+            requestProfileFollowers:
+                alias: reqFollowers
+                payload:
+                    profile: string
+            receiveProfileFollowers:
+                alias: recvFollowers
+                payload:
+                    profile: string
+                    followers: IProfile[]
+                    receivedAt: number

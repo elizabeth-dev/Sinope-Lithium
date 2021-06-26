@@ -1,0 +1,34 @@
+actionGroups:
+    auth:
+        actions:
+            login:
+                payload:
+                    email: string
+                    password: string
+            loginSuccess:
+                payload:
+                    accessToken: string
+                    refreshToken: string
+                    expiresAt: number
+            loginFailure: {}
+            logout:
+                payload:
+                    refreshToken: string
+            tokenExpired:
+                alias: expired
+            refreshedToken:
+                alias: refreshed
+                payload:
+                    accessToken: string
+                    refreshToken: string
+                    expiresAt: number
+            register:
+                payload:
+                    email: string
+                    password: string
+            registerSuccess:
+                payload:
+                    accessToken: string
+                    refreshToken: string
+                    expiresAt: number
+            registerFailure: {}

@@ -1,14 +1,11 @@
-import { ReceiveSelfUserAction, RequestSelfUserAction, UserActionsDto } from '@core/state/actions/user.actions';
+import { ReceiveSelfUserAction, RequestSelfUserAction, UserActionsDto } from '@actions/user.actions';
 import { UserEntity } from '@shared/types/entities/user.interface';
 
 export type SelfUserState = UserEntity | null;
 
 const initialState: SelfUserState = null;
 
-export function selfUserReducer(
-	state = initialState,
-	action: UserActionsDto,
-): SelfUserState {
+export function selfUserReducer(state = initialState, action: UserActionsDto): SelfUserState {
 	switch (action.type) {
 		case RequestSelfUserAction:
 			// @ts-ignore

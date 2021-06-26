@@ -1,6 +1,6 @@
 import { combineEpics, Epic } from 'redux-observable';
 import { AppActionsDto } from '../actions/app.actions';
-import { IReceiveSearchAction, SearchAction, SearchActions } from '../actions/search.actions';
+import { IReceiveSearchAction, SearchAction, SearchActions } from '@actions/search.actions';
 import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { isOfType } from 'typesafe-actions';
 import { SearchService } from '../../api/service/search.service';
@@ -18,20 +18,20 @@ const searchReqEpic: Epic<AppActionsDto, IReceiveSearchAction, AppState> = (acti
 		mergeMap(([{ payload }, state]) =>
 			SearchService.search(payload.searchTerm, state.auth.accessToken!).pipe(
 				map(({ posts, profiles }) =>
-					SearchActions.receiveSearch(
-						[
+					SearchActions.receiveSearch({
+						profiles: [
 							...profiles.map((profile) => profileResToIProfile(profile, Date.now())),
 							...posts
 								.filter((post): post is Require<PostRes, 'profile'> => !!post.profile)
 								.map((post) => postResToIProfile(post, Date.now())),
 						],
-						posts.map((post) => postResToIPost(post)),
-						posts
+						posts: posts.map((post) => postResToIPost(post)),
+						questions: posts
 							.filter((post): post is Require<PostRes, 'question'> => !!post.question)
 							.map(postResToIQuestion),
-						payload.searchTerm,
-						Date.now(),
-					),
+						searchTerm: payload.searchTerm,
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),

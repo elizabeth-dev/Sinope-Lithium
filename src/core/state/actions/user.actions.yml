@@ -1,0 +1,12 @@
+imports:
+    IUser: '@shared/types/entities/user.interface'
+actionGroups:
+    user:
+        actions:
+            requestSelfUser:
+                alias: requestSelf
+            receiveSelfUser:
+                alias: receiveSelf
+                payload:
+                    user: IUser
+                    receivedAt: number

@@ -1,4 +1,4 @@
-import { ReceiveTimelineAction, RequestTimelineAction, TimelineActionsDto } from '@core/state/actions/timeline.actions';
+import { ReceiveTimelineAction, RequestTimelineAction, TimelineActionsDto } from '@actions/timeline.actions';
 import { FetchEntity } from '@shared/types/fetchFields.interface';
 
 export interface TimelineState {

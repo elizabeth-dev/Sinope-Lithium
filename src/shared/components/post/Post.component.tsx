@@ -1,4 +1,4 @@
-import { PostActions } from '@core/state/actions/post.actions';
+import { PostActions } from '@actions/post.actions';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
@@ -30,7 +30,7 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 	};
 	const onAvatarClick = (profileId: string) => Navigation.push(stackId, profileScreenLayer(profileId));
 	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () => dispatcher(PostActions.like(post.id, currentProfile));
+	const onLikeClick = () => dispatcher(PostActions.like({ post: post.id, fromProfile: currentProfile }));
 
 	return (
 		<Animated.View style={[styles.root, { transform: [{ translateY: mainPostY }] }]} onLayout={onLayout}>

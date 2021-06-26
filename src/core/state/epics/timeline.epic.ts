@@ -1,5 +1,5 @@
 import { AppActionsDto } from '../actions/app.actions';
-import { IReceiveTimelineAction, RequestTimelineAction, TimelineActions } from '@core/state/actions/timeline.actions';
+import { IReceiveTimelineAction, RequestTimelineAction, TimelineActions } from '@actions/timeline.actions';
 import { AppState } from '@core/state/app.store';
 import { ProfileService } from '@core/api/service/profile.service';
 import { combineEpics, Epic } from 'redux-observable';
@@ -18,17 +18,17 @@ const loadTimelineEpic: Epic<AppActionsDto, IReceiveTimelineAction, AppState> = 
 		mergeMap(([action, state]) =>
 			ProfileService.timeline(action.payload.profile, state.auth.accessToken!).pipe(
 				map((posts) =>
-					TimelineActions.receive(
-						posts.map(postResToIPost),
-						posts
+					TimelineActions.receive({
+						posts: posts.map(postResToIPost),
+						profiles: posts
 							.filter((post): post is Require<PostRes, 'profile'> => !!post.profile)
 							.map((post) => postResToIProfile(post, Date.now())),
-						posts
+						questions: posts
 							.filter((post): post is Require<PostRes, 'question'> => !!post.question)
 							.map(postResToIQuestion),
-						action.payload.profile,
-						Date.now(),
-					),
+						fromProfile: action.payload.profile,
+						receivedAt: Date.now(),
+					}),
 				),
 			),
 		),

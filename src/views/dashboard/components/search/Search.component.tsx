@@ -4,7 +4,7 @@ import { FlatList, Pressable, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { fromSearch } from '@core/state/selectors/search.selectors';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { SearchActions } from '@core/state/actions/search.actions';
+import { SearchActions } from '@actions/search.actions';
 import { Navigation } from 'react-native-navigation';
 import { searchScreenLayer } from '@shared/navigation/layers/search-screen.layer';
 import { TextInput } from '@shared/components/text-input/TextInput.component';
@@ -23,12 +23,12 @@ export const Search: React.FC<SearchProps> = ({ stackId }) => {
 
 	const onSearch = (searchTerm: string) => {
 		setSearchText('');
-		dispatch(SearchActions.search(searchTerm));
+		dispatch(SearchActions.search({ searchTerm: searchTerm }));
 		Navigation.push(stackId, searchScreenLayer(searchTerm));
 	};
 
 	const onRemoveSearch = (searchTerm: string) => {
-		dispatch(SearchActions.remove(searchTerm));
+		dispatch(SearchActions.remove({ searchTerm: searchTerm }));
 	};
 
 	return (

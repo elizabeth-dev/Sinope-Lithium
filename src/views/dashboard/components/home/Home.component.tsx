@@ -1,4 +1,4 @@
-import { TimelineActions } from '@core/state/actions/timeline.actions';
+import { TimelineActions } from '@actions/timeline.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { fromTimeline } from '@core/state/selectors/timeline.selectors';
 import { PostList } from '@shared/components/post-list/PostList.component';
@@ -21,7 +21,7 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	const timeline = useSelector(fromTimeline.current);
 
 	const onRefresh = React.useCallback(() => {
-		dispatcher(TimelineActions.request(currentProfile));
+		dispatcher(TimelineActions.request({ profile: currentProfile }));
 	}, [currentProfile, dispatcher]);
 
 	React.useEffect(() => {
@@ -33,14 +33,16 @@ export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
 	const onCompose = () => Navigation.push(stackId, composeScreenLayer());
 
 	// TODO: [SLI-29] Check substitution with react-native-navigation FAB
-	return (<>
-		<PostList
-			currentProfile={currentProfile}
-			posts={timeline?.timeline || []}
-			onRefresh={onRefresh}
-			refreshing={timeline?.isFetching ?? true}
-			stackId={stackId}
-		/>
-		<Fab style={styles.fab} icon="message-reply" onPress={onCompose} />
-	</>);
+	return (
+		<>
+			<PostList
+				currentProfile={currentProfile}
+				posts={timeline?.timeline || []}
+				onRefresh={onRefresh}
+				refreshing={timeline?.isFetching ?? true}
+				stackId={stackId}
+			/>
+			<Fab style={styles.fab} icon="message-reply" onPress={onCompose} />
+		</>
+	);
 });

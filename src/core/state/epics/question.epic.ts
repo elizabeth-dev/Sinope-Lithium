@@ -11,7 +11,7 @@ import {
 	QuestionActions,
 	RemoveQuestionAction,
 	SendQuestionAction,
-} from '../actions/question.actions';
+} from '@actions/question.actions';
 import { QuestionService } from '../../api/service/question.service';
 import { questionResToIQuestion } from '@core/mapper/question.mapper';
 
@@ -21,10 +21,10 @@ const getQuestionsByProfileEpic: Epic<AppActionsDto, IReceiveQuestionsAction, Ap
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) => QuestionService.getByProfile(payload.profile, state.auth.accessToken!)),
 		map((questions) =>
-			QuestionActions.receive(
-				questions.map((question) => questionResToIQuestion(question)),
-				Date.now(),
-			),
+			QuestionActions.receive({
+				questions: questions.map((question) => questionResToIQuestion(question)),
+				receivedAt: Date.now(),
+			}),
 		),
 	);
 
@@ -43,7 +43,11 @@ const sendQuestionEpic: Epic<AppActionsDto, ISentQuestionAction, AppState> = (ac
 				state.auth.accessToken!,
 			).pipe(
 				map((question) =>
-					QuestionActions.sent(questionResToIQuestion(question), Date.now(), payload.newQuestion.tmpId),
+					QuestionActions.sent({
+						question: questionResToIQuestion(question),
+						receivedAt: Date.now(),
+						tmpId: payload.newQuestion.tmpId,
+					}),
 				),
 			),
 		),
@@ -55,7 +59,7 @@ const removeQuestionEpic: Epic<AppActionsDto, IRemovedQuestionAction, AppState> 
 		withLatestFrom(state$),
 		mergeMap(([{ payload }, state]) =>
 			QuestionService.remove(payload.question, state.auth.accessToken!).pipe(
-				map(() => QuestionActions.removed(payload.question)),
+				map(() => QuestionActions.removed({ question: payload.question })),
 			),
 		),
 	);

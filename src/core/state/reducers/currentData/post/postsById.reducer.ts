@@ -4,10 +4,10 @@ import {
 	ReceiveProfilePostsAction,
 	RequestPostAction,
 	SentPostAction,
-} from '@core/state/actions/post.actions';
-import { IReceiveTimelineAction, ReceiveTimelineAction } from '@core/state/actions/timeline.actions';
+} from '@actions/post.actions';
+import { IReceiveTimelineAction, ReceiveTimelineAction } from '@actions/timeline.actions';
 import { PostEntity } from '@shared/types/entities/post.interface';
-import { IReceiveSearchAction, ReceiveSearchAction } from '@core/state/actions/search.actions';
+import { IReceiveSearchAction, ReceiveSearchAction } from '@actions/search.actions';
 
 export type PostsByIdState = {
 	[id: string]: PostEntity;

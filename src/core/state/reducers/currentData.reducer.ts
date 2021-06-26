@@ -1,11 +1,10 @@
 import { AnyAction, combineReducers } from 'redux';
-import { ISwitchedProfileAction, SwitchedProfileAction } from '../actions/self.actions';
+import { ISwitchedProfileAction, SwitchedProfileAction } from '@actions/self.actions';
 import { postReducer } from './currentData/post.reducer';
 import { profileReducer } from './currentData/profile.reducer';
 import { timelineReducer } from './currentData/timeline.reducer';
 import { searchReducer } from './currentData/search.reducer';
 import { questionReducer } from './currentData/question.reducer';
-
 
 export const _currentDataReducer = combineReducers({
 	post: postReducer,
