@@ -1,9 +1,10 @@
+import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { Divider } from '@shared/components/divider/Divider.component';
+import { DrawerItem } from '@shared/components/drawer-item/DrawerItem.component';
 import React from 'react';
 import { FlatList } from 'react-native';
-import { DrawerProfilesStyles as styles } from './DrawerProfiles.styles';
 import { useSelector } from 'react-redux';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { DrawerItem } from '@shared/components/drawer-item/DrawerItem.component';
+import { DrawerProfilesStyles as styles } from './DrawerProfiles.styles';
 
 export const DrawerProfiles: React.FC = () => {
 	const currentProfile = useSelector(fromProfile.current);
@@ -18,6 +19,7 @@ export const DrawerProfiles: React.FC = () => {
 				showsVerticalScrollIndicator={false}
 				style={styles.root}
 			/>
+			<Divider />
 			<DrawerItem label="Add account" />
 		</>
 	);

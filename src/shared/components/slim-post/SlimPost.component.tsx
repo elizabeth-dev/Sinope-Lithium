@@ -1,18 +1,18 @@
 import { PostActions } from '@actions/post.actions';
-import { Avatar } from '../avatar/Avatar.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { postScreenLayer } from '@shared/navigation/layers/post-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { FullPost } from '@shared/types/entities/post.interface';
+import { dateFormatter } from '@shared/utils/dates.utils';
 import React from 'react';
 import { ToastAndroid, TouchableHighlight, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { SlimPostStyles as styles } from './SlimPost.styles';
+import { colors } from '../../../theme/colors';
+import { Avatar } from '../avatar/Avatar.component';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
-import { Colors } from '../../utils/colors/Colors.util';
-import { dateFormatter } from '@shared/utils/dates.utils';
+import { SlimPostStyles as styles } from './SlimPost.styles';
 
 export interface SlimPostProps {
 	// TODO: [SLI-45] Check if SlimPost should get full post or id only
@@ -36,7 +36,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackI
 	const onLikeClick = () => dispatcher(PostActions.like({ post: post.id, fromProfile: currentProfile }));
 
 	return (
-		<TouchableHighlight underlayColor={Colors.grey200} onPress={onPostClick}>
+		<TouchableHighlight underlayColor={colors.grey200} onPress={onPostClick}>
 			<View style={styles.root}>
 				{post.question && (
 					<View style={styles.questionHeader}>
@@ -55,7 +55,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({ post, currentProfile, stackI
 							<IconButton icon="dots-vertical" size={24} onPress={onClick} style={styles.menuButton} />
 						</View>
 						<View>
-							<Typography.Body>{post.content}</Typography.Body>
+							<Typography.Body style={styles.content}>{post.content}</Typography.Body>
 							<Typography.Caption>{dateFormatter(post.date)}</Typography.Caption>
 						</View>
 						<View style={styles.actions}>

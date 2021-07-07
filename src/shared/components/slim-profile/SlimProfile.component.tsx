@@ -6,7 +6,7 @@ import { Navigation } from 'react-native-navigation';
 import { SlimProfileStyles as styles } from './SlimProfile.styles';
 import { IProfile } from '../../types/entities/profile.interface';
 import { Typography } from '../typography/Typography.component';
-import { Colors } from '../../utils/colors/Colors.util';
+import { colors } from '../../../theme/colors';
 
 export interface SlimProfileProps {
 	// TODO: [SLI-45] Check if SlimProfile should get full profile or id only
@@ -14,33 +14,25 @@ export interface SlimProfileProps {
 	stackId: string;
 }
 
-export const SlimProfile: React.FC<SlimProfileProps> = ({
-	profile,
-	stackId,
-}) => {
-
+export const SlimProfile: React.FC<SlimProfileProps> = ({ profile, stackId }) => {
 	const onProfileClick = () => Navigation.push(stackId, profileScreenLayer(profile.id));
 
-	return (<TouchableHighlight
-		underlayColor={Colors.grey200}
-		onPress={onProfileClick}
-	>
-		<View style={styles.root}>
-			<Avatar
-				style={styles.avatar}
-				label={profile.name[0].toUpperCase()}
-			/>
-			<View style={styles.body}>
-				<View style={styles.header}>
-					<View style={styles.userData}>
-						<Typography.Headline>{profile.name}</Typography.Headline>
-						<Typography.Subtitle>@{profile.tag}</Typography.Subtitle>
+	return (
+		<TouchableHighlight underlayColor={colors.grey200} onPress={onProfileClick}>
+			<View style={styles.root}>
+				<Avatar style={styles.avatar} label={profile.name[0].toUpperCase()} />
+				<View style={styles.body}>
+					<View style={styles.header}>
+						<View style={styles.userData}>
+							<Typography.Headline>{profile.name}</Typography.Headline>
+							<Typography.Subtitle>@{profile.tag}</Typography.Subtitle>
+						</View>
+					</View>
+					<View style={styles.content}>
+						<Typography.Body>{profile.description}</Typography.Body>
 					</View>
 				</View>
-				<View style={styles.content}>
-					<Typography.Body>{profile.description}</Typography.Body>
-				</View>
 			</View>
-		</View>
-	</TouchableHighlight>);
+		</TouchableHighlight>
+	);
 };

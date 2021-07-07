@@ -1,7 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
 import { UserRes } from '../model/api';
 
 const getSelf = (token: string): Observable<UserRes> => {

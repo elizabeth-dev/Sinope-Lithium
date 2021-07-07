@@ -1,7 +1,6 @@
-import { Observable, throwError } from 'rxjs';
-import { ajax, AjaxError } from 'rxjs/ajax';
+import { map, Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 import { developmentEnv } from '../../environments/development.env';
-import { catchError, map } from 'rxjs/operators';
 import { SearchRes } from '../model/api';
 
 const search = (searchTerm: string, token: string): Observable<SearchRes> => {
@@ -12,14 +11,7 @@ const search = (searchTerm: string, token: string): Observable<SearchRes> => {
 				Authorization: `Bearer ${token}`,
 			},
 		)
-		.pipe(
-			map((res) => res.response as SearchRes),
-			catchError((err: AjaxError) => {
-				console.error(JSON.stringify(err));
-
-				return throwError(err.status);
-			}),
-		);
+		.pipe(map((res) => res.response as SearchRes));
 };
 
 export const SearchService = { search };

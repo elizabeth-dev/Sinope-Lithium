@@ -1,13 +1,13 @@
-import React from 'react';
-import { AskQuestionScreenStyles as styles } from './AskQuestionScreen.styles';
-import { KeyboardAvoidingView, Switch, TextInput, View } from 'react-native';
-import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
-import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { QuestionActions } from '@actions/question.actions';
-import { useSelector } from 'react-redux';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { Divider } from '@shared/components/divider/Divider.component';
+import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
+import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import React from 'react';
+import { KeyboardAvoidingView, Switch, TextInput, View } from 'react-native';
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
+import { useSelector } from 'react-redux';
+import { AskQuestionScreenStyles as styles } from './AskQuestionScreen.styles';
 
 export interface AskQuestionScreenProps {
 	recipient: string;
@@ -35,6 +35,7 @@ export const AskQuestionScreen: NavigationFunctionComponent<AskQuestionScreenPro
 				<Switch onValueChange={setAnonymous} value={anonymous} />
 				<FlatButton
 					style={styles.sendButton}
+					textStyle={styles.sendButtonText}
 					onPress={() => {
 						dispatcher(
 							QuestionActions.send({

@@ -1,4 +1,10 @@
-import { AuthActionsDto, LoginSuccessAction, LogoutAction, RegisterSuccessAction } from '@actions/auth.actions';
+import {
+	AuthActionsDto,
+	LoginSuccessAction,
+	LogoutAction,
+	RefreshedTokenAction,
+	RegisterSuccessAction,
+} from '@actions/auth.actions';
 
 export interface AuthState {
 	loggedIn: boolean;
@@ -18,6 +24,7 @@ export function authReducer(state = initialState, action: AuthActionsDto): AuthS
 	switch (action.type) {
 		case LoginSuccessAction:
 		case RegisterSuccessAction:
+		case RefreshedTokenAction:
 			return {
 				...state,
 				loggedIn: true,

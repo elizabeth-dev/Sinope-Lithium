@@ -1,3 +1,4 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const AskQuestionScreenStyles = StyleSheet.create({
@@ -6,19 +7,28 @@ export const AskQuestionScreenStyles = StyleSheet.create({
 		flex: 1,
 	},
 	input: {
-		backgroundColor: '#ffffff',
+		backgroundColor: theme.colors.background,
 		flexGrow: 1,
 		textAlignVertical: 'top',
+		paddingHorizontal: 12,
 	},
 	actionBar: {
 		flexDirection: 'row',
-		backgroundColor: '#ffffff',
+		backgroundColor: theme.colors.background,
 		paddingHorizontal: 12,
 		paddingVertical: 4,
-		borderTopColor: '#0000001f',
-		borderTopWidth: 1,
+		borderTopColor: theme.colors.lighterForeground,
+		borderTopWidth: StyleSheet.hairlineWidth * 2,
 	},
 	sendButton: {
 		marginLeft: 'auto',
+	},
+	sendButtonText: {
+		fontFamily: theme.font.flatButton.family,
+		fontWeight: theme.font.flatButton.weight,
+		fontSize: theme.font.flatButton.size,
+		letterSpacing: theme.font.flatButton.letterSpacing,
+		opacity: theme.font.flatButton.opacity,
+		color: theme.font.flatButton.color,
 	},
 });

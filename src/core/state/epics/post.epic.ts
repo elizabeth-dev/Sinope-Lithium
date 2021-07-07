@@ -1,4 +1,3 @@
-import { AppActionsDto } from '../actions/app.actions';
 import {
 	IReceivePostsAction,
 	IReceiveProfilePostsAction,
@@ -10,27 +9,30 @@ import {
 	SendPostAction,
 	UnlikePostAction,
 } from '@actions/post.actions';
-import { AppState } from '@core/state/app.store';
+import { PostRes } from '@core/api/model/api';
 import { PostService } from '@core/api/service/post.service';
-import { combineEpics, Epic } from 'redux-observable';
-import { filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
-import { isOfType } from 'typesafe-actions';
 import { postResToIPost } from '@core/mapper/post.mapper';
 import { postResToIProfile, profileResToIProfile } from '@core/mapper/profile.mapper';
-import { Require } from '@shared/types/require.type';
-import { PostRes } from '@core/api/model/api';
 import { postResToIQuestion } from '@core/mapper/question.mapper';
+import { AppState } from '@core/state/app.store';
+import { Expirable } from '@shared/types/epic.type';
+import { Require } from '@shared/types/require.type';
+import { errorHandler } from '@shared/utils/epic.utils';
+import { combineEpics, Epic } from 'redux-observable';
+import { filter, map, mergeMap, withLatestFrom } from 'rxjs';
+import { isOfType } from 'typesafe-actions';
+import { AppActionsDto } from '../actions/app.actions';
 
-const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (actions$, state$) =>
+const sendPostEpic: Epic<AppActionsDto, Expirable<ISentPostAction>, AppState> = (actions$, state$) =>
 	actions$.pipe(
 		filter(isOfType(SendPostAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
+		mergeMap(([action, state]) =>
 			PostService.create(
 				{
-					content: payload.newPost.content,
-					question: payload.newPost.question,
-					profile: payload.newPost.profile,
+					content: action.payload.newPost.content,
+					question: action.payload.newPost.question,
+					profile: action.payload.newPost.profile,
 				},
 				state.auth.accessToken!,
 			).pipe(
@@ -39,20 +41,21 @@ const sendPostEpic: Epic<AppActionsDto, ISentPostAction, AppState> = (actions$, 
 						post: postResToIPost(post),
 						profile: postResToIProfile(post as Require<PostRes, 'profile'>, Date.now()),
 						receivedAt: Date.now(),
-						tmpId: payload.newPost.tmpId,
+						tmpId: action.payload.newPost.tmpId,
 						question: post.question ? postResToIQuestion(post as Require<PostRes, 'question'>) : undefined,
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (actions$, state$) =>
+const likePostEpic: Epic<AppActionsDto, Expirable<IReceivePostsAction>, AppState> = (actions$, state$) =>
 	actions$.pipe(
 		filter(isOfType(LikePostAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			PostService.like(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			PostService.like(action.payload.post, action.payload.fromProfile, state.auth.accessToken!).pipe(
 				map((post) =>
 					PostActions.receive({
 						posts: [postResToIPost(post)],
@@ -75,16 +78,17 @@ const likePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (action
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (actions$, state$) =>
+const unlikePostEpic: Epic<AppActionsDto, Expirable<IReceivePostsAction>, AppState> = (actions$, state$) =>
 	actions$.pipe(
 		filter(isOfType(UnlikePostAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			PostService.unlike(payload.post, payload.fromProfile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			PostService.unlike(action.payload.post, action.payload.fromProfile, state.auth.accessToken!).pipe(
 				map((post) =>
 					PostActions.receive({
 						posts: [postResToIPost(post)],
@@ -107,19 +111,23 @@ const unlikePostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (acti
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const requestProfilePostsEpic: Epic<AppActionsDto, IReceiveProfilePostsAction, AppState> = (actions$, state$) =>
+const requestProfilePostsEpic: Epic<AppActionsDto, Expirable<IReceiveProfilePostsAction>, AppState> = (
+	actions$,
+	state$,
+) =>
 	actions$.pipe(
 		filter(isOfType(RequestProfilePostsAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			PostService.getByProfile(payload.profile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			PostService.getByProfile(action.payload.profile, state.auth.accessToken!).pipe(
 				map((posts) =>
 					PostActions.receiveFromProfile({
-						reqProfile: payload.profile,
+						reqProfile: action.payload.profile,
 						posts: posts.map(postResToIPost),
 						profiles: posts
 							.filter((post): post is Require<PostRes, 'profile'> => !!post.profile)
@@ -130,16 +138,17 @@ const requestProfilePostsEpic: Epic<AppActionsDto, IReceiveProfilePostsAction, A
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (actions$, state$) =>
+const requestPostEpic: Epic<AppActionsDto, Expirable<IReceivePostsAction>, AppState> = (actions$, state$) =>
 	actions$.pipe(
 		filter(isOfType(RequestPostAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			PostService.getById(payload.post, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			PostService.getById(action.payload.post, state.auth.accessToken!).pipe(
 				map((post) =>
 					PostActions.receive({
 						posts: [postResToIPost(post)],
@@ -162,6 +171,7 @@ const requestPostEpic: Epic<AppActionsDto, IReceivePostsAction, AppState> = (act
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);

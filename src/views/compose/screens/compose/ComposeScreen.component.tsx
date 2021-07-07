@@ -1,14 +1,14 @@
 import { PostActions } from '@actions/post.actions';
+import { QuestionActions } from '@actions/question.actions';
+import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { Divider } from '@shared/components/divider/Divider.component';
+import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
 import { KeyboardAvoidingView, TextInput, View } from 'react-native';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 import { ComposeScreenStyles as styles } from './ComposeScreen.styles';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { FlatButton } from '@shared/components/flat-button/FlatButton.component';
-import { QuestionActions } from '@actions/question.actions';
-import { Divider } from '@shared/components/divider/Divider.component';
 
 export interface ComposeScreenProps {
 	replyTo?: string;
@@ -44,6 +44,7 @@ export const ComposeScreen: NavigationFunctionComponent<ComposeScreenProps> = ({
 			<View style={styles.actionBar}>
 				<FlatButton
 					style={styles.sendButton}
+					textStyle={styles.sendButtonText}
 					onPress={() => {
 						dispatcher(
 							PostActions.send({

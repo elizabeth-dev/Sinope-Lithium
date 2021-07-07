@@ -1,7 +1,9 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const DrawerProfilesStyles = StyleSheet.create({
 	root: {
-		backgroundColor: '#ffffff', flex: 1,
+		backgroundColor: theme.colors.background,
+		flex: 1,
 	},
 });

@@ -1,3 +1,4 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const AvatarStyles = StyleSheet.create({
@@ -8,10 +9,10 @@ export const AvatarStyles = StyleSheet.create({
 		padding: 4,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'purple',
+		backgroundColor: theme.colors.secondary,
 		flex: 1,
 	},
 	text: {
-		color: 'white',
+		color: theme.colors.foreground,
 	},
 });

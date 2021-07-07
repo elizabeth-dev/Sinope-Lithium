@@ -8,7 +8,7 @@ import { IconButton } from '../icon-button/IconButton.component';
 import { Navigation } from 'react-native-navigation';
 import { profileScreenLayer } from '../../navigation/layers/profile-screen.layer';
 import { composeScreenLayer } from '../../navigation/layers/compose-screen.layer';
-import { Colors } from '../../utils/colors/Colors.util';
+import { colors } from '../../../theme/colors';
 
 const onClick = () => {
 	ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
@@ -25,33 +25,23 @@ export const SlimQuestion: React.FC<SlimQuestionProps> = ({ question, stackId })
 	const onQuestionClick = () => Navigation.push(stackId, composeScreenLayer(undefined, question.id));
 	const onAvatarClick = () => question.from && Navigation.push(stackId, profileScreenLayer(question.from.id));
 
-	return (<TouchableHighlight
-		underlayColor={Colors.grey200}
-		onPress={onQuestionClick}
-	>
-		<View style={styles.root}>
-			<Avatar
-				style={styles.avatar}
-				label={name[0].toUpperCase()}
-				onPress={onAvatarClick}
-			/>
-			<View style={styles.body}>
-				<View style={styles.header}>
-					<View style={styles.userData}>
-						<Typography.Headline>{name}</Typography.Headline>
+	return (
+		<TouchableHighlight underlayColor={colors.grey200} onPress={onQuestionClick}>
+			<View style={styles.root}>
+				<Avatar style={styles.avatar} label={name[0].toUpperCase()} onPress={onAvatarClick} />
+				<View style={styles.body}>
+					<View style={styles.header}>
+						<View style={styles.userData}>
+							<Typography.Headline>{name}</Typography.Headline>
+						</View>
+						<IconButton icon="dots-vertical" size={24} onPress={onClick} style={styles.menuButton} />
 					</View>
-					<IconButton
-						icon="dots-vertical"
-						size={24}
-						onPress={onClick}
-						style={styles.menuButton}
-					/>
-				</View>
-				<View>
-					<Typography.Body>{question.content}</Typography.Body>
-					<Typography.Caption>{question.date.toLocaleString()}</Typography.Caption>
+					<View>
+						<Typography.Body>{question.content}</Typography.Body>
+						<Typography.Caption>{question.date.toLocaleString()}</Typography.Caption>
+					</View>
 				</View>
 			</View>
-		</View>
-	</TouchableHighlight>);
+		</TouchableHighlight>
+	);
 };

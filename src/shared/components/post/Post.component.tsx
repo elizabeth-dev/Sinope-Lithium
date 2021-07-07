@@ -3,16 +3,16 @@ import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatc
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { FullPost } from '@shared/types/entities/post.interface';
+import { dateFormatter } from '@shared/utils/dates.utils';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Avatar } from '../avatar/Avatar.component';
-import { PostStyles as styles } from './Post.styles';
+import { Divider } from '../divider/Divider.component';
 import { FlatButton } from '../flat-button/FlatButton.component';
 import { IconButton } from '../icon-button/IconButton.component';
 import { Typography } from '../typography/Typography.component';
-import { Divider } from '../divider/Divider.component';
-import { dateFormatter } from '@shared/utils/dates.utils';
+import { PostStyles as styles } from './Post.styles';
 
 export interface PostProps {
 	post: FullPost;
@@ -56,9 +56,9 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 					</View>
 					<IconButton icon="dots-vertical" onPress={onClick} />
 				</View>
-				<View style={styles.content}>
-					<Typography.Body>{post.content}</Typography.Body>
-					<Typography.Caption>{dateFormatter(post.date)}</Typography.Caption>
+				<View>
+					<Typography.Body style={styles.content}>{post.content}</Typography.Body>
+					<Typography.Caption style={styles.date}>{dateFormatter(post.date)}</Typography.Caption>
 				</View>
 				<Divider />
 				<View style={styles.actions}>

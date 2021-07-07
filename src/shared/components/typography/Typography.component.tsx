@@ -1,10 +1,9 @@
 import React, { ReactNode } from 'react';
-import { ColorValue, StyleProp, Text, TextStyle } from 'react-native';
+import { StyleProp, Text, TextStyle } from 'react-native';
 import { TypographyStyles as styles } from './Typography.styles';
 
 export interface TypographyProps {
 	children?: ReactNode;
-	color?: ColorValue;
 	style?: StyleProp<TextStyle>;
 	lines?: number;
 	selectable?: boolean;
@@ -14,12 +13,11 @@ const _Typography: React.FC<TypographyProps & { _style: StyleProp<TextStyle> }> 
 	children,
 	_style,
 	style,
-	color = '#000000',
 	lines,
 	selectable,
 }) => {
 	return (
-		<Text style={[_style, { color }, style]} numberOfLines={lines} selectable={selectable}>
+		<Text style={[_style, style]} numberOfLines={lines} selectable={selectable}>
 			{children}
 		</Text>
 	);

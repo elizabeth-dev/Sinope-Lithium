@@ -1,10 +1,10 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
-import { Colors } from '@shared/utils/colors/Colors.util';
 
 export const ProfileHeaderStyles = StyleSheet.create({
 	root: {
 		width: '100%',
-		backgroundColor: '#ffffff',
+		backgroundColor: theme.colors.background,
 		position: 'absolute',
 	},
 	progress: {
@@ -13,7 +13,7 @@ export const ProfileHeaderStyles = StyleSheet.create({
 	},
 	cover: {
 		paddingBottom: 160,
-		backgroundColor: Colors.yellow200,
+		backgroundColor: theme.colors.accent,
 	},
 	content: {
 		alignItems: 'center',
@@ -40,12 +40,12 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		marginHorizontal: 8,
 	},
 	followCount: {
-		color: '#000000',
+		color: theme.colors.foreground,
 		fontWeight: '700',
 		opacity: 0.87,
 	},
 	followTag: {
-		color: '#000000',
-		opacity: 0.60,
+		color: theme.colors.mediumForeground,
+		opacity: 0.6,
 	},
 });

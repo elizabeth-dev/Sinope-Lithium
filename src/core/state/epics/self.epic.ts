@@ -1,14 +1,14 @@
-import { AppActionsDto } from '../actions/app.actions';
 import { ISwitchedProfileAction, SelfActions, SwitchedProfileAction, SwitchProfileAction } from '@actions/self.actions';
+import { DataService } from '@core/services/data.service';
 import { AppState } from '@core/state/app.store';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { DataService } from '@core/services/data.service';
 import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { combineEpics, Epic } from 'redux-observable';
-import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs';
 import { isOfType } from 'typesafe-actions';
+import { AppActionsDto } from '../actions/app.actions';
 
 const switchProfileEpic: Epic<AppActionsDto, ISwitchedProfileAction, AppState> = (action$, state$) =>
 	action$.pipe(

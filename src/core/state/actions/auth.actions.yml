@@ -1,3 +1,5 @@
+imports:
+    AppActionsDto: '@core/state/actions/app.actions'
 actionGroups:
     auth:
         actions:
@@ -16,9 +18,12 @@ actionGroups:
                     refreshToken: string
             tokenExpired:
                 alias: expired
+                payload:
+                    action: AppActionsDto
             refreshedToken:
                 alias: refreshed
                 payload:
+                    action: AppActionsDto
                     accessToken: string
                     refreshToken: string
                     expiresAt: number

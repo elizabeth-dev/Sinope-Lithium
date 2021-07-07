@@ -1,30 +1,33 @@
-import { AppActionsDto } from '../actions/app.actions';
 import {
 	IReceiveSelfUserAction,
 	ReceiveSelfUserAction,
 	RequestSelfUserAction,
 	UserActions,
 } from '@actions/user.actions';
-import { AppState } from '@core/state/app.store';
 import { UserService } from '@core/api/service/user.service';
+import { userResToIUser } from '@core/mapper/user.mapper';
+import { AppState } from '@core/state/app.store';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { dashboardRoot } from '@shared/navigation/roots/dashboard.root';
+import { Expirable } from '@shared/types/epic.type';
+import { errorHandler } from '@shared/utils/epic.utils';
 import { Navigation } from 'react-native-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { combineEpics, Epic } from 'redux-observable';
-import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, ignoreElements, map, mergeMap, tap, withLatestFrom } from 'rxjs';
 import { isOfType } from 'typesafe-actions';
-import { userResToIUser } from '@core/mapper/user.mapper';
+import { AppActionsDto } from '../actions/app.actions';
 
-const loadSelfUserEpic: Epic<AppActionsDto, IReceiveSelfUserAction, AppState> = (action$, state$) =>
+const loadSelfUserEpic: Epic<AppActionsDto, Expirable<IReceiveSelfUserAction>, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(RequestSelfUserAction)),
 		withLatestFrom(state$),
-		mergeMap(([, state]) =>
+		mergeMap(([action, state]) =>
 			UserService.getSelf(state.auth.accessToken!).pipe(
 				map((self) =>
 					UserActions.receiveSelf({ user: userResToIUser(self, Date.now()), receivedAt: Date.now() }),
 				),
+				errorHandler(action),
 			),
 		),
 	);

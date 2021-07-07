@@ -1,7 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
 import { CreatePostReq, PostRes, ProfileRes } from '../model/api';
 
 const getById = (id: string, token: string): Observable<PostRes> => {

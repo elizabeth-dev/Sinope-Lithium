@@ -1,5 +1,6 @@
-import { Layout } from 'react-native-navigation';
 import { AppScreens } from '@core/app.screens';
+import { theme } from '@theme/main.theme';
+import { Layout } from 'react-native-navigation';
 
 export const postScreenLayer = (postId: string): Layout<{ postId: string }> => ({
 	component: {
@@ -8,9 +9,15 @@ export const postScreenLayer = (postId: string): Layout<{ postId: string }> => (
 			topBar: {
 				title: {
 					text: 'Post',
+					color: theme.font.headline.color,
+					fontSize: theme.font.headline.size,
+					fontWeight: theme.font.headline.weight,
 				},
 				subtitle: {
 					text: '',
+				},
+				backButton: {
+					color: theme.colors.foreground,
 				},
 				elevation: 2, // Default
 			},

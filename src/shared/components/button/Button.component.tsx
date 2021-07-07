@@ -3,7 +3,7 @@ import { ButtonStyles as styles } from './Button.styles';
 import { ColorValue, GestureResponderEvent, Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
 import { Typography } from '../typography/Typography.component';
-import { Colors } from '../../utils/colors/Colors.util';
+import { colors } from '../../../theme/colors';
 
 export interface ButtonProps {
 	icon?: string;
@@ -25,21 +25,25 @@ export const Button: React.FC<ButtonProps> = ({
 	style,
 	ripple = true,
 	children,
-	backgroundColor = Colors.purple600,
-	color = '#ffffff',
+	backgroundColor = colors.purple600,
 }) => {
-	return (<View style={[styles.root, { backgroundColor }, style]}>
-		<Pressable
-			onPress={onPress}
-			onLongPress={onLongPress}
-			style={styles.pressable}
-			android_ripple={ripple ? {
-				color: 'grey',
-				borderless: true,
-			} : null}
-		>
-			{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
-			<Typography.Button color={color}>{children}</Typography.Button>
-		</Pressable>
-	</View>);
+	return (
+		<View style={[styles.root, { backgroundColor }, style]}>
+			<Pressable
+				onPress={onPress}
+				onLongPress={onLongPress}
+				style={styles.pressable}
+				android_ripple={
+					ripple
+						? {
+								color: 'grey',
+								borderless: true,
+						  }
+						: null
+				}>
+				{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
+				<Typography.Button>{children}</Typography.Button>
+			</Pressable>
+		</View>
+	);
 };

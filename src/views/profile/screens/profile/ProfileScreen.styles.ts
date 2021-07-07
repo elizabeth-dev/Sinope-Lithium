@@ -1,3 +1,4 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const ProfileScreenStyles = StyleSheet.create({
@@ -8,10 +9,12 @@ export const ProfileScreenStyles = StyleSheet.create({
 		zIndex: 10,
 	},
 	tabBar: {
-		backgroundColor: '#ffffff',
+		borderTopColor: theme.colors.lighterForeground,
+		borderTopWidth: StyleSheet.hairlineWidth * 2,
+		backgroundColor: theme.colors.background,
 	},
-	tabBarLabel: {
-		opacity: 0.87,
+	tabBarIndicator: {
+		backgroundColor: theme.colors.foreground,
 	},
 	fab: {
 		position: 'absolute',

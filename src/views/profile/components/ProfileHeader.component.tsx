@@ -1,12 +1,12 @@
+import { Avatar } from '@shared/components/avatar/Avatar.component';
+import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
+import { Typography } from '@shared/components/typography/Typography.component';
+import { profileListScreenLayer } from '@shared/navigation/layers/profile-list-screen.layer';
+import { IProfile } from '@shared/types/entities/profile.interface';
 import React from 'react';
 import { Animated, LayoutChangeEvent, Pressable, Text, View } from 'react-native';
-import { ProfileHeaderStyles as styles } from './ProfileHeader.styles';
-import { ProgressBar } from '@shared/components/progress-bar/ProgressBar.component';
-import { Avatar } from '@shared/components/avatar/Avatar.component';
-import { Typography } from '@shared/components/typography/Typography.component';
-import { IProfile } from '@shared/types/entities/profile.interface';
-import { profileListScreenLayer } from '@shared/navigation/layers/profile-list-screen.layer';
 import { Navigation } from 'react-native-navigation';
+import { ProfileHeaderStyles as styles } from './ProfileHeader.styles';
 
 export interface ProfileHeaderProps {
 	stackId: string;

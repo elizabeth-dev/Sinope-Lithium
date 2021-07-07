@@ -1,7 +1,7 @@
 import React from 'react';
-import { FabStyles as styles } from './Fab.styles';
 import { GestureResponderEvent, Pressable, View, ViewStyle } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
+import { FabStyles as styles } from './Fab.styles';
 
 export interface FabProps {
 	icon: string;
@@ -20,7 +20,7 @@ export const Fab: React.FC<FabProps> = ({ icon, iconNamespace, onPress, style })
 					color: 'grey',
 					borderless: true,
 				}}>
-				<Icon icon={icon} namespace={iconNamespace} size={24} color="#ffffff" />
+				<Icon icon={icon} namespace={iconNamespace} size={24} style={styles.icon} />
 			</Pressable>
 		</View>
 	);

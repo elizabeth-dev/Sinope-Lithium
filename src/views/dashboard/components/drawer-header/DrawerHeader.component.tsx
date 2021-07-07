@@ -1,17 +1,17 @@
+import { SelfActions } from '@actions/self.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { Avatar } from '@shared/components/avatar/Avatar.component';
+import { Icon } from '@shared/components/icon/Icon.component';
+import { Typography } from '@shared/components/typography/Typography.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
+import { IProfile } from '@shared/types/entities/profile.interface';
+import { theme } from '@theme/main.theme';
 import React from 'react';
 import { GestureResponderEvent, Pressable, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
-import { IProfile } from '@shared/types/entities/profile.interface';
-import { SelfActions } from '@actions/self.actions';
-import { Typography } from '@shared/components/typography/Typography.component';
-import { Icon } from '@shared/components/icon/Icon.component';
-import { Colors } from '@shared/utils/colors/Colors.util';
 
 export interface DrawerHeaderProps {
 	componentId: string;
@@ -63,7 +63,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({ componentId, onSwitc
 					<Typography.Headline>{currentProfile.profile.name}</Typography.Headline>
 					<Typography.Subtitle>{`@${currentProfile.profile.tag}`}</Typography.Subtitle>
 				</View>
-				<Icon icon={profileTab ? 'chevron-up' : 'chevron-down'} color={Colors.grey600} />
+				<Icon icon={profileTab ? 'chevron-up' : 'chevron-down'} color={theme.colors.lightForeground} />
 			</View>
 		</Pressable>
 	);

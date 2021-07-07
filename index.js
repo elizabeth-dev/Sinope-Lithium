@@ -1,4 +1,4 @@
-import { screenHOC } from '@shared/hoc/screenHOC/screenHOC';
+import { screenHOC } from '@shared/utils/hoc/screenHOC/screenHOC';
 import { Navigation } from 'react-native-navigation';
 import { AppScreens } from '@core/app.screens';
 import { appStore } from '@core/state/app.store';

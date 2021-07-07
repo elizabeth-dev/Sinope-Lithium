@@ -1,7 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { Observable, throwError } from 'rxjs';
-import { ajax, AjaxError } from 'rxjs/ajax';
-import { catchError, map } from 'rxjs/operators';
+import { map, Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 import { CreateProfileReq, PostRes, ProfileRes, UpdateProfileReq } from '../model/api';
 
 const getById = (id: string, fromProfile: string, token: string): Observable<ProfileRes> => {
@@ -18,14 +17,7 @@ const create = (newProfile: CreateProfileReq, token: string): Observable<Profile
 		.post(`${developmentEnv.apiUrl}/profiles?expand=following&expand=followers`, newProfile, {
 			Authorization: `Bearer ${token}`,
 		})
-		.pipe(
-			map((res) => res.response as ProfileRes),
-			catchError((err: AjaxError) => {
-				console.error(JSON.stringify(err));
-
-				return throwError(err.status);
-			}),
-		);
+		.pipe(map((res) => res.response as ProfileRes));
 };
 
 const remove = (id: string, token: string): Observable<void> => {

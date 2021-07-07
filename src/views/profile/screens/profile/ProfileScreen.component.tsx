@@ -1,21 +1,22 @@
+import { PostActions } from '@actions/post.actions';
+import { ProfileActions } from '@actions/profile.actions';
 import { AppState } from '@core/state/app.store';
 import { fromPost } from '@core/state/selectors/post.selectors';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
+import { Fab } from '@shared/components/fab/Fab.component';
 import { PostList } from '@shared/components/post-list/PostList.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { askQuestionScreenLayer } from '@shared/navigation/layers/ask-question-screen.layer';
+import { theme } from '@theme/main.theme';
 import React from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 import { Navigation, NavigationButtonPressedEvent, NavigationFunctionComponent } from 'react-native-navigation';
+import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
 import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 import { ProfileHeader } from '../../components/ProfileHeader.component';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { NavigationComponentListener } from 'react-native-navigation/lib/dist/interfaces/NavigationComponentListener';
-import { askQuestionScreenLayer } from '@shared/navigation/layers/ask-question-screen.layer';
-import { Fab } from '@shared/components/fab/Fab.component';
-import { ProfileActions } from '@actions/profile.actions';
-import { PostActions } from '@actions/post.actions';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -34,6 +35,14 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 		{
 			key: 'posts',
 			title: 'Posts',
+		},
+		{
+			key: 'media',
+			title: 'Media',
+		},
+		{
+			key: 'likes',
+			title: 'Likes',
 		},
 	]);
 	const [headerHeight, setHeaderHeight] = React.useState(0);
@@ -148,7 +157,13 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					transform: [{ translateY: tabBarY as unknown as number }],
 				},
 			]}>
-			<TabBar {...sceneProps} style={styles.tabBar} labelStyle={styles.tabBarLabel} activeColor="#000000" />
+			<TabBar
+				{...sceneProps}
+				style={styles.tabBar}
+				activeColor={theme.colors.foreground}
+				inactiveColor={theme.colors.lightForeground}
+				indicatorStyle={styles.tabBarIndicator}
+			/>
 		</Animated.View>
 	);
 

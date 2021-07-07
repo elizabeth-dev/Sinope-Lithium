@@ -1,9 +1,10 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const PostStyles = StyleSheet.create({
 	root: {
 		position: 'absolute',
-		backgroundColor: '#ffffff',
+		backgroundColor: theme.colors.background,
 		width: '100%',
 	},
 	card: {
@@ -30,7 +31,10 @@ export const PostStyles = StyleSheet.create({
 		marginHorizontal: 12,
 	},
 	content: {
-		paddingVertical: 4,
+		marginVertical: 4,
+	},
+	date: {
+		marginBottom: 8,
 	},
 	actions: {
 		flexDirection: 'row',

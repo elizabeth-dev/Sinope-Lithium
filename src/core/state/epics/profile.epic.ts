@@ -1,4 +1,3 @@
-import { AppActionsDto } from '../actions/app.actions';
 import {
 	CreateFirstProfileAction,
 	CreateProfileAction,
@@ -18,20 +17,22 @@ import {
 	RequestProfileFollowingAction,
 	UnfollowProfileAction,
 } from '@actions/profile.actions';
-import { AppState } from '@core/state/app.store';
 import { ProfileService } from '@core/api/service/profile.service';
-import { combineEpics, Epic } from 'redux-observable';
-import { catchError, filter, map, mapTo, mergeMap, withLatestFrom } from 'rxjs/operators';
-import { isOfType } from 'typesafe-actions';
-import { of, throwError } from 'rxjs';
 import { profileResToIProfile } from '@core/mapper/profile.mapper';
+import { AppState } from '@core/state/app.store';
+import { Expirable } from '@shared/types/epic.type';
+import { errorHandler } from '@shared/utils/epic.utils';
+import { combineEpics, Epic } from 'redux-observable';
+import { catchError, filter, map, mapTo, mergeMap, of, throwError, withLatestFrom } from 'rxjs';
+import { isOfType } from 'typesafe-actions';
+import { AppActionsDto } from '../actions/app.actions';
 
-const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> = (action$, state$) =>
+const requestProfileEpic: Epic<AppActionsDto, Expirable<IReceiveProfilesAction>, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(RequestProfileAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			ProfileService.getById(payload.profile, payload.fromProfile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			ProfileService.getById(action.payload.profile, action.payload.fromProfile, state.auth.accessToken!).pipe(
 				map((profile) =>
 					ProfileActions.receive({
 						profiles: [
@@ -46,14 +47,16 @@ const requestProfileEpic: Epic<AppActionsDto, IReceiveProfilesAction, AppState> 
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const createProfileEpic: Epic<AppActionsDto, ICreatedProfileAction | IFailedCreateProfileAction, AppState> = (
-	action$,
-	state$,
-) =>
+const createProfileEpic: Epic<
+	AppActionsDto,
+	Expirable<ICreatedProfileAction | IFailedCreateProfileAction>,
+	AppState
+> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(CreateProfileAction)),
 		withLatestFrom(state$),
@@ -65,6 +68,7 @@ const createProfileEpic: Epic<AppActionsDto, ICreatedProfileAction | IFailedCrea
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
@@ -89,64 +93,84 @@ const createFirstProfileEpic: Epic<
 					console.error(err);
 					if (err === 401) return of(ProfileActions.failedCreateFirst());
 
-					return throwError(err);
+					return throwError(() => err);
 				}),
 			),
 		),
 	);
 
-const followProfileEpic: Epic<AppActionsDto, IFollowedProfileAction, AppState> = (action$, state$) =>
+const followProfileEpic: Epic<AppActionsDto, Expirable<IFollowedProfileAction>, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(FollowProfileAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			ProfileService.follow(payload.toProfile, payload.fromProfile, state.auth.accessToken!).pipe(
-				mapTo(ProfileActions.followed({ fromProfile: payload.fromProfile, toProfile: payload.toProfile })),
+		mergeMap(([action, state]) =>
+			ProfileService.follow(action.payload.toProfile, action.payload.fromProfile, state.auth.accessToken!).pipe(
+				mapTo(
+					ProfileActions.followed({
+						fromProfile: action.payload.fromProfile,
+						toProfile: action.payload.toProfile,
+					}),
+				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const unfollowProfileEpic: Epic<AppActionsDto, IUnfollowedProfileAction, AppState> = (action$, state$) =>
+const unfollowProfileEpic: Epic<AppActionsDto, Expirable<IUnfollowedProfileAction>, AppState> = (action$, state$) =>
 	action$.pipe(
 		filter(isOfType(UnfollowProfileAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			ProfileService.unfollow(payload.toProfile, payload.fromProfile, state.auth.accessToken!).pipe(
-				mapTo(ProfileActions.unfollowed({ fromProfile: payload.fromProfile, toProfile: payload.toProfile })),
+		mergeMap(([action, state]) =>
+			ProfileService.unfollow(action.payload.toProfile, action.payload.fromProfile, state.auth.accessToken!).pipe(
+				mapTo(
+					ProfileActions.unfollowed({
+						fromProfile: action.payload.fromProfile,
+						toProfile: action.payload.toProfile,
+					}),
+				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const getProfileFollowingEpic: Epic<AppActionsDto, IReceiveProfileFollowingAction, AppState> = (action$, state$) =>
+const getProfileFollowingEpic: Epic<AppActionsDto, Expirable<IReceiveProfileFollowingAction>, AppState> = (
+	action$,
+	state$,
+) =>
 	action$.pipe(
 		filter(isOfType(RequestProfileFollowingAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			ProfileService.getFollowing(payload.profile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			ProfileService.getFollowing(action.payload.profile, state.auth.accessToken!).pipe(
 				map((profiles) =>
 					ProfileActions.recvFollowing({
-						profile: payload.profile,
+						profile: action.payload.profile,
 						following: profiles.map((profile) => profileResToIProfile(profile, Date.now())),
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);
 
-const getProfileFollowersEpic: Epic<AppActionsDto, IReceiveProfileFollowersAction, AppState> = (action$, state$) =>
+const getProfileFollowersEpic: Epic<AppActionsDto, Expirable<IReceiveProfileFollowersAction>, AppState> = (
+	action$,
+	state$,
+) =>
 	action$.pipe(
 		filter(isOfType(RequestProfileFollowersAction)),
 		withLatestFrom(state$),
-		mergeMap(([{ payload }, state]) =>
-			ProfileService.getFollowers(payload.profile, state.auth.accessToken!).pipe(
+		mergeMap(([action, state]) =>
+			ProfileService.getFollowers(action.payload.profile, state.auth.accessToken!).pipe(
 				map((profiles) =>
 					ProfileActions.recvFollowers({
-						profile: payload.profile,
+						profile: action.payload.profile,
 						followers: profiles.map((profile) => profileResToIProfile(profile, Date.now())),
 						receivedAt: Date.now(),
 					}),
 				),
+				errorHandler(action),
 			),
 		),
 	);

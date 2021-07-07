@@ -1,7 +1,6 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { Observable, throwError } from 'rxjs';
-import { ajax, AjaxError } from 'rxjs/ajax';
-import { catchError, map } from 'rxjs/operators';
+import { map, Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 import { CreateUserReq, TokenPairRes } from '../model/api';
 
 const login = (email: string, password: string): Observable<TokenPairRes> => {
@@ -14,25 +13,13 @@ const login = (email: string, password: string): Observable<TokenPairRes> => {
 			},
 			{ 'Content-Type': 'application/json' },
 		)
-		.pipe(
-			map((res) => res.response as TokenPairRes),
-			catchError((err: AjaxError) => {
-				console.error(JSON.stringify(err));
-
-				return throwError(err.status);
-			}),
-		);
+		.pipe(map((res) => res.response as TokenPairRes));
 };
 
 const register = (newUser: CreateUserReq): Observable<TokenPairRes> => {
-	return ajax.post(`${developmentEnv.apiUrl}/auth/register`, newUser).pipe(
-		map((res) => res.response as TokenPairRes),
-		catchError((err: AjaxError) => {
-			console.error(JSON.stringify(err));
-
-			return throwError(err.status);
-		}),
-	);
+	return ajax
+		.post(`${developmentEnv.apiUrl}/auth/register`, newUser)
+		.pipe(map((res) => res.response as TokenPairRes));
 };
 
 const refresh = (refreshToken: string): Observable<TokenPairRes> => {

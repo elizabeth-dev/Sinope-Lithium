@@ -1,3 +1,4 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const FlatButtonStyles = StyleSheet.create({
@@ -13,8 +14,11 @@ export const FlatButtonStyles = StyleSheet.create({
 	},
 	icon: {
 		paddingRight: 8,
+		color: theme.colors.lightForeground,
 	},
 	text: {
+		// FIXME: Font
 		fontSize: 16,
+		color: theme.colors.lightForeground,
 	},
 });

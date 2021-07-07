@@ -9,6 +9,7 @@ module.exports = {
 				alias: {
 					'@shared': ['./src/shared'],
 					'@core': ['./src/core'],
+					'@theme': ['./src/theme'],
 					'@assets': ['./assets'],
 					'@actions': ['./generated/actions'],
 				},

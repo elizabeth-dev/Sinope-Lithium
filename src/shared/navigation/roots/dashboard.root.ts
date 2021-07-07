@@ -1,12 +1,9 @@
 import { AppScreens } from '@core/app.screens';
+import { theme } from '@theme/main.theme';
 import { LayoutRoot } from 'react-native-navigation';
 import { ImageSource } from 'react-native-vector-icons/Icon';
 
-export const dashboardRoot = (
-	menuIcon: ImageSource,
-	profileName: string,
-	profileTag: string,
-): LayoutRoot => ({
+export const dashboardRoot = (menuIcon: ImageSource, profileName: string, profileTag: string): LayoutRoot => ({
 	root: {
 		sideMenu: {
 			left: {
@@ -28,6 +25,7 @@ export const dashboardRoot = (
 												id: 'DASHBOARD_MENU',
 												icon: menuIcon,
 												text: 'Menu',
+												color: theme.colors.foreground, // TODO: not applying opacity
 											},
 										],
 									},
@@ -38,8 +36,21 @@ export const dashboardRoot = (
 					options: {
 						topBar: {
 							elevation: 0,
-							title: { text: profileName },
-							subtitle: { text: `@${profileTag}` },
+							title: {
+								text: profileName,
+								color: theme.font.headline.color,
+								fontSize: theme.font.headline.size,
+								fontWeight: theme.font.headline.weight,
+							},
+							subtitle: {
+								text: `@${profileTag}`,
+								color: theme.font.subtitle.color,
+								fontSize: theme.font.subtitle.size,
+								fontWeight: theme.font.subtitle.weight,
+							},
+							background: {
+								color: theme.colors.primary,
+							},
 						},
 					},
 				},

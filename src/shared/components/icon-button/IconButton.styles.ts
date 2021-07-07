@@ -1,3 +1,4 @@
+import { theme } from '@theme/main.theme';
 import { StyleSheet } from 'react-native';
 
 export const IconButtonStyles = StyleSheet.create({
@@ -8,5 +9,7 @@ export const IconButtonStyles = StyleSheet.create({
 	pressable: {
 		padding: 4,
 	},
-	icon: {},
+	icon: {
+		color: theme.colors.lightForeground,
+	},
 });

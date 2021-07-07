@@ -1,4 +1,5 @@
 import { AuthActionsDto } from '@actions/auth.actions';
+import { MetaActionsDto } from '@actions/meta.actions';
 import { PostActionsDto } from '@actions/post.actions';
 import { ProfileActionsDto } from '@actions/profile.actions';
 import { QuestionActionsDto } from '@actions/question.actions';
@@ -15,4 +16,5 @@ export type AppActionsDto =
 	| TimelineActionsDto
 	| SelfActionsDto
 	| SearchActionsDto
-	| QuestionActionsDto;
+	| QuestionActionsDto
+	| MetaActionsDto;
