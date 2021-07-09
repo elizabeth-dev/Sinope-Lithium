@@ -9,7 +9,7 @@ export const postScreenLayer = (postId: string): Layout<{ postId: string }> => (
 			topBar: {
 				title: {
 					text: 'Post',
-					color: theme.font.headline.color,
+					color: theme.colors.primaryForeground,
 					fontSize: theme.font.headline.size,
 					fontWeight: theme.font.headline.weight,
 				},
@@ -17,7 +17,7 @@ export const postScreenLayer = (postId: string): Layout<{ postId: string }> => (
 					text: '',
 				},
 				backButton: {
-					color: theme.colors.foreground,
+					color: theme.colors.primaryForeground,
 				},
 				elevation: 2, // Default
 			},

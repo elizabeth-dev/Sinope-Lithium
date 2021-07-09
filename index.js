@@ -1,19 +1,19 @@
-import { screenHOC } from '@shared/utils/hoc/screenHOC/screenHOC';
-import { Navigation } from 'react-native-navigation';
 import { AppScreens } from '@core/app.screens';
 import { appStore } from '@core/state/app.store';
-import { ComposeScreen } from './src/views/compose/screens/compose/ComposeScreen.component';
-import { DashboardScreen } from './src/views/dashboard/screens/dashboard/DashboardScreen.component';
-import { DrawerScreen } from './src/views/dashboard/screens/drawer/DrawerScreen.component';
-import { PostScreen } from './src/views/post/screens/post/PostScreen.component';
-import { ProfileScreen } from './src/views/profile/screens/profile/ProfileScreen.component';
-import { FirstProfileScreen } from './src/views/reception/screens/first-profile/FirstProfileScreen.component';
-import { LoginScreen } from './src/views/reception/screens/login/LoginScreen.component';
-import { RegisterScreen } from './src/views/reception/screens/register/RegisterScreen.component';
+import { screenHOC } from '@shared/utils/hoc/screenHOC/screenHOC';
+import { Navigation } from 'react-native-navigation';
+import { AskQuestionScreen } from './src/components/screens/ask-question/AskQuestionScreen.component';
+import { ComposeScreen } from './src/components/screens/compose/ComposeScreen.component';
+import { DashboardScreen } from './src/components/screens/dashboard/DashboardScreen.component';
+import { DrawerScreen } from './src/components/screens/drawer/DrawerScreen.component';
+import { FirstProfileScreen } from './src/components/screens/first-profile/FirstProfileScreen.component';
+import { LoginScreen } from './src/components/screens/login/LoginScreen.component';
+import { PostScreen } from './src/components/screens/post/PostScreen.component';
+import { ProfileListScreen } from './src/components/screens/profile-list/ProfileListScreen.component';
+import { ProfileScreen } from './src/components/screens/profile/ProfileScreen.component';
+import { RegisterScreen } from './src/components/screens/register/RegisterScreen.component';
+import { SearchScreen } from './src/components/screens/search/SearchScreen.component';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
-import { SearchScreen } from './src/views/search/screens/search/SearchScreen.component';
-import { AskQuestionScreen } from './src/views/ask-question/screens/ask-question/AskQuestionScreen.component';
-import { ProfileListScreen } from './src/views/profile-list/screens/ProfileListScreen.component';
 
 Navigation.registerComponent(
 	AppScreens.SplashScreen,

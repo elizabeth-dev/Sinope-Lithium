@@ -1,137 +1,5 @@
 export const theme1 = {
-	// https://colorhunt.co/palette/1a1a2e16213e0f3460e94560
-	colors: {
-		primary: '#0f3460',
-		secondary: '#e94560',
-		accent: '#000000',
-		warn: '#000000',
-		background: '#2e2e2e',
-		action: '#000000',
-		disabledAction: '#000000',
-		foreground: '#ffffff',
-		mediumForeground: '#ffffffde',
-		lightForeground: '#ffffff99',
-		mediumBlack: '#000000de',
-		lightBlack: '#00000099',
-		lighterBlack: '#0000001f',
-	},
-	opacity: {
-		1: 0.87,
-		2: 0.6,
-		3: 0.12,
-	},
-	font: {
-		headline: {
-			family: 'Roboto',
-			weight: '500',
-			size: 20,
-			letterSpacing: 0.15 / 20,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-		subtitle: {
-			family: 'Roboto',
-			weight: '400',
-			size: 16,
-			letterSpacing: 0.15 / 16,
-			opacity: 0.6,
-			color: '#ffffff',
-		},
-		body: {
-			family: 'Roboto',
-			weight: '400',
-			size: 16,
-			letterSpacing: 0.5 / 16,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-		caption: {
-			family: 'Roboto',
-			weight: '400',
-			size: 12,
-			letterSpacing: 0.4 / 12,
-			opacity: 0.6,
-			color: '#ffffff',
-		},
-		flatButton: {},
-		button: {
-			family: 'Roboto',
-			weight: '500',
-			size: 14,
-			letterSpacing: 1.25 / 14,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-	},
-} as const;
-
-export const theme2 = {
-	colors: {
-		primary: '#3949ab',
-		secondary: '#bb4d00',
-		accent: '#000000',
-		warn: '#000000',
-		background: '#2e2e2e',
-		action: '#000000',
-		disabledAction: '#000000',
-		foreground: '#ffffff',
-		mediumForeground: '#ffffffde',
-		lightForeground: '#ffffff99',
-		mediumBlack: '#000000de',
-		lightBlack: '#00000099',
-		lighterBlack: '#0000001f',
-	},
-	opacity: {
-		1: 0.87,
-		2: 0.6,
-		3: 0.12,
-	},
-	font: {
-		headline: {
-			family: 'Roboto',
-			weight: '500',
-			size: 20,
-			letterSpacing: 0.15 / 20,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-		subtitle: {
-			family: 'Roboto',
-			weight: '400',
-			size: 16,
-			letterSpacing: 0.15 / 16,
-			opacity: 0.6,
-			color: '#ffffff',
-		},
-		body: {
-			family: 'Roboto',
-			weight: '400',
-			size: 16,
-			letterSpacing: 0.5 / 16,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-		caption: {
-			family: 'Roboto',
-			weight: '400',
-			size: 12,
-			letterSpacing: 0.4 / 12,
-			opacity: 0.6,
-			color: '#ffffff',
-		},
-		flatButton: {},
-		button: {
-			family: 'Roboto',
-			weight: '500',
-			size: 14,
-			letterSpacing: 1.25 / 14,
-			opacity: 0.87,
-			color: '#ffffff',
-		},
-	},
-} as const;
-
-export const theme3 = {
+	// Blue + teal
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
 		primary: '#1b3c59',
@@ -145,6 +13,16 @@ export const theme3 = {
 		mediumForeground: '#f2f2f0de',
 		lightForeground: '#f2f2f099',
 		lighterForeground: '#f2f2f01f',
+		// *primaryForeground used when using primary as background
+		primaryForeground: '#f2f2f0',
+		mediumPrimaryForeground: '#f2f2f0de',
+		lightPrimaryForeground: '#f2f2f099',
+		lighterPrimaryForeground: '#f2f2f01f',
+		// *secondaryForeground used when using secondary as background
+		secondaryForeground: '#f2f2f0',
+		mediumSecondaryForeground: '#f2f2f0de',
+		lightSecondaryForeground: '#f2f2f099',
+		lighterSecondaryForeground: '#f2f2f01f',
 		mediumBlack: '#000000de',
 		lightBlack: '#00000099',
 		lighterBlack: '#0000001f',
@@ -160,7 +38,7 @@ export const theme3 = {
 			weight: '500',
 			size: 18,
 			letterSpacing: 0.15 / 19,
-			//opacity: 0.87,
+			opacity: 1.0,
 			color: '#f2f2f0',
 		},
 		subtitle: {
@@ -176,7 +54,7 @@ export const theme3 = {
 			weight: '400',
 			size: 16,
 			letterSpacing: 0.5 / 16,
-			//opacity: 0.87,
+			opacity: 1.0,
 			color: '#f2f2f0',
 		},
 		caption: {
@@ -206,7 +84,8 @@ export const theme3 = {
 	},
 } as const;
 
-export const theme4 = {
+export const theme2 = {
+	// Blue + red
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
 		primary: '#1b3c59',
@@ -220,6 +99,16 @@ export const theme4 = {
 		mediumForeground: '#f2f2f0de',
 		lightForeground: '#f2f2f099',
 		lighterForeground: '#f2f2f01f',
+		// *primaryForeground used when using primary as background
+		primaryForeground: '#f2f2f0',
+		mediumPrimaryForeground: '#f2f2f0de',
+		lightPrimaryForeground: '#f2f2f099',
+		lighterPrimaryForeground: '#f2f2f01f',
+		// *secondaryForeground used when using secondary as background
+		secondaryForeground: '#f2f2f0',
+		mediumSecondaryForeground: '#f2f2f0de',
+		lightSecondaryForeground: '#f2f2f099',
+		lighterSecondaryForeground: '#f2f2f01f',
 		mediumBlack: '#000000de',
 		lightBlack: '#00000099',
 		lighterBlack: '#0000001f',
@@ -235,7 +124,7 @@ export const theme4 = {
 			weight: '500',
 			size: 18,
 			letterSpacing: 0.15 / 19,
-			//opacity: 0.87,
+			opacity: 1.0,
 			color: '#f2f2f0',
 		},
 		subtitle: {
@@ -251,7 +140,7 @@ export const theme4 = {
 			weight: '400',
 			size: 16,
 			letterSpacing: 0.5 / 16,
-			//opacity: 0.87,
+			opacity: 1.0,
 			color: '#f2f2f0',
 		},
 		caption: {
@@ -281,4 +170,176 @@ export const theme4 = {
 	},
 } as const;
 
-export const theme = theme4;
+export const lightTheme1 = {
+	// Blue + teal
+	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
+	colors: {
+		primary: '#1b3c59',
+		secondary: '#11bfae',
+		accent: '#456173',
+		warn: '#000000',
+		background: '#ffffff',
+		action: '#000000',
+		disabledAction: '#000000',
+		foreground: '#000000',
+		mediumForeground: '#000000de',
+		lightForeground: '#00000099',
+		lighterForeground: '#0000001f',
+		// *primaryForeground used when using primary as background
+		primaryForeground: '#f2f2f0',
+		mediumPrimaryForeground: '#f2f2f0de',
+		lightPrimaryForeground: '#f2f2f099',
+		lighterPrimaryForeground: '#f2f2f01f',
+		// *secondaryForeground used when using secondary as background
+		secondaryForeground: '#f2f2f0',
+		mediumSecondaryForeground: '#f2f2f0de',
+		lightSecondaryForeground: '#f2f2f099',
+		lighterSecondaryForeground: '#f2f2f01f',
+		mediumBlack: '#000000de',
+		lightBlack: '#00000099',
+		lighterBlack: '#0000001f',
+	},
+	opacity: {
+		1: 0.87,
+		2: 0.6,
+		3: 0.12,
+	},
+	font: {
+		headline: {
+			family: 'Roboto',
+			weight: '500',
+			size: 18,
+			letterSpacing: 0.15 / 19,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		subtitle: {
+			family: 'Roboto',
+			weight: '400',
+			size: 15,
+			letterSpacing: 0.15 / 15,
+			opacity: 0.6,
+			color: '#000000',
+		},
+		body: {
+			family: 'Roboto',
+			weight: '400',
+			size: 16,
+			letterSpacing: 0.5 / 16,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		caption: {
+			family: 'Roboto',
+			weight: '400',
+			size: 14,
+			letterSpacing: 0.4 / 14,
+			opacity: 0.6,
+			color: '#000000',
+		},
+		flatButton: {
+			family: 'Roboto',
+			weight: '500',
+			size: 16,
+			letterSpacing: 1.25 / 14,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		button: {
+			family: 'Roboto',
+			weight: '500',
+			size: 14,
+			letterSpacing: 1.25 / 14,
+			opacity: 0.87,
+			color: '#000000',
+		},
+	},
+} as const;
+
+export const lightTheme2 = {
+	// Blue + teal
+	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
+	colors: {
+		primary: '#1b3c59',
+		secondary: '#d63a55',
+		accent: '#456173',
+		warn: '#000000',
+		background: '#ffffff',
+		action: '#000000',
+		disabledAction: '#000000',
+		foreground: '#000000',
+		mediumForeground: '#000000de',
+		lightForeground: '#00000099',
+		lighterForeground: '#0000001f',
+		// *primaryForeground used when using primary as background
+		primaryForeground: '#f2f2f0',
+		mediumPrimaryForeground: '#f2f2f0de',
+		lightPrimaryForeground: '#f2f2f099',
+		lighterPrimaryForeground: '#f2f2f01f',
+		// *secondaryForeground used when using secondary as background
+		secondaryForeground: '#f2f2f0',
+		mediumSecondaryForeground: '#f2f2f0de',
+		lightSecondaryForeground: '#f2f2f099',
+		lighterSecondaryForeground: '#f2f2f01f',
+		mediumBlack: '#000000de',
+		lightBlack: '#00000099',
+		lighterBlack: '#0000001f',
+	},
+	opacity: {
+		1: 0.87,
+		2: 0.6,
+		3: 0.12,
+	},
+	font: {
+		headline: {
+			family: 'Roboto',
+			weight: '500',
+			size: 18,
+			letterSpacing: 0.15 / 19,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		subtitle: {
+			family: 'Roboto',
+			weight: '400',
+			size: 15,
+			letterSpacing: 0.15 / 15,
+			opacity: 0.6,
+			color: '#000000',
+		},
+		body: {
+			family: 'Roboto',
+			weight: '400',
+			size: 16,
+			letterSpacing: 0.5 / 16,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		caption: {
+			family: 'Roboto',
+			weight: '400',
+			size: 14,
+			letterSpacing: 0.4 / 14,
+			opacity: 0.6,
+			color: '#000000',
+		},
+		flatButton: {
+			family: 'Roboto',
+			weight: '500',
+			size: 16,
+			letterSpacing: 1.25 / 14,
+			opacity: 0.87,
+			color: '#000000',
+		},
+		button: {
+			family: 'Roboto',
+			weight: '500',
+			size: 14,
+			letterSpacing: 1.25 / 14,
+			opacity: 0.87,
+			color: '#000000',
+		},
+	},
+} as const;
+
+export const theme = theme2;

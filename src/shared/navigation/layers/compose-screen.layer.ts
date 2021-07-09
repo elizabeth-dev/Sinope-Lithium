@@ -9,13 +9,13 @@ export const composeScreenLayer = (replyTo?: string, questionId?: string): Layou
 			topBar: {
 				title: {
 					text: 'Compose',
-					color: theme.font.headline.color,
+					color: theme.colors.primaryForeground,
 					fontSize: theme.font.headline.size,
 					fontWeight: theme.font.headline.weight,
 				},
 				subtitle: { text: '' },
 				backButton: {
-					color: theme.colors.foreground,
+					color: theme.colors.primaryForeground,
 				},
 			},
 			sideMenu: {

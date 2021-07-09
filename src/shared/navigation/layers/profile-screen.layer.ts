@@ -11,7 +11,7 @@ export const profileScreenLayer = (profileId: string): Layout<{ profileId: strin
 		options: {
 			topBar: {
 				backButton: {
-					color: theme.colors.foreground,
+					color: theme.colors.primaryForeground,
 				},
 			},
 			sideMenu: {

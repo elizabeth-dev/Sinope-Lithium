@@ -25,7 +25,7 @@ export const dashboardRoot = (menuIcon: ImageSource, profileName: string, profil
 												id: 'DASHBOARD_MENU',
 												icon: menuIcon,
 												text: 'Menu',
-												color: theme.colors.foreground, // TODO: not applying opacity
+												color: theme.colors.primaryForeground, // TODO: not applying opacity
 											},
 										],
 									},
@@ -38,13 +38,13 @@ export const dashboardRoot = (menuIcon: ImageSource, profileName: string, profil
 							elevation: 0,
 							title: {
 								text: profileName,
-								color: theme.font.headline.color,
+								color: theme.colors.primaryForeground,
 								fontSize: theme.font.headline.size,
 								fontWeight: theme.font.headline.weight,
 							},
 							subtitle: {
 								text: `@${profileTag}`,
-								color: theme.font.subtitle.color,
+								color: theme.colors.primaryForeground,
 								fontSize: theme.font.subtitle.size,
 								fontWeight: theme.font.subtitle.weight,
 							},

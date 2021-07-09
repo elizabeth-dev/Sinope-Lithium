@@ -16,6 +16,9 @@
 			"@shared/*": ["src/shared/*"],
 			"@core/*": ["src/core/*"],
 			"@theme/*": ["src/theme/*"],
+			"@atoms/*": ["src/components/atoms/*"],
+			"@molecules/*": ["src/components/molecules/*"],
+			"@screens/*": ["src/components/screens/*"],
 			"@assets/*": ["assets/*"],
 			"@actions/*": ["generated/actions/*"]
 		}
