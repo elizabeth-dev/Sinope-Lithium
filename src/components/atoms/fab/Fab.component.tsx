@@ -10,18 +10,16 @@ export interface FabProps {
 	style?: ViewStyle;
 }
 
-export const Fab: React.FC<FabProps> = ({ icon, iconNamespace, onPress, style }) => {
-	return (
-		<View style={[style, styles.root]}>
-			<Pressable
-				style={styles.wrapper}
-				onPress={onPress}
-				android_ripple={{
-					color: 'grey',
-					borderless: true,
-				}}>
-				<Icon icon={icon} namespace={iconNamespace} size={24} style={styles.icon} />
-			</Pressable>
-		</View>
-	);
-};
+export const Fab: React.FC<FabProps> = ({ icon, iconNamespace, onPress, style }) => (
+	<View style={[style, styles.root]}>
+		<Pressable
+			style={styles.wrapper}
+			onPress={onPress}
+			android_ripple={{
+				color: 'grey',
+				borderless: true,
+			}}>
+			<Icon icon={icon} namespace={iconNamespace} size={24} style={styles.icon} />
+		</Pressable>
+	</View>
+);

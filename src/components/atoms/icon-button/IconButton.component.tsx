@@ -21,23 +21,21 @@ export const IconButton: React.FC<IconButtonProps> = ({
 	style,
 	size,
 	ripple = true,
-}) => {
-	return (
-		<View style={[style, styles.root]}>
-			<Pressable
-				onPress={onPress}
-				onLongPress={onLongPress}
-				style={[{ borderRadius: size ?? undefined }, styles.pressable]}
-				android_ripple={
-					ripple
-						? {
-								color: 'darkgrey',
-								borderless: true,
-						  }
-						: null
-				}>
-				<Icon icon={icon} namespace={iconNamespace} style={styles.icon} size={size} />
-			</Pressable>
-		</View>
-	);
-};
+}) => (
+	<View style={[style, styles.root]}>
+		<Pressable
+			onPress={onPress}
+			onLongPress={onLongPress}
+			style={[{ borderRadius: size ?? undefined }, styles.pressable]}
+			android_ripple={
+				ripple
+					? {
+							color: 'darkgrey',
+							borderless: true,
+					  }
+					: null
+			}>
+			<Icon icon={icon} namespace={iconNamespace} style={styles.icon} size={size} />
+		</Pressable>
+	</View>
+);

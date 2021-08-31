@@ -1,34 +1,22 @@
-import { SearchActions } from '@actions/search.actions';
 import { Divider } from '@atoms/divider/Divider.component';
 import { TextInput } from '@atoms/text-input/TextInput.component';
 import { Typography } from '@atoms/typography/Typography.component';
-import { fromSearch } from '@core/state/selectors/search.selectors';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { searchScreenLayer } from '@shared/navigation/layers/search-screen.layer';
 import React from 'react';
 import { FlatList, Pressable, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
 import { SearchStyles as styles } from './Search.styles';
 
 export interface SearchProps {
-	stackId: string;
+	onSearch: (searchTerm: string) => void;
+	onRemoveSearch: (searchTerm: string) => void;
+	searchHistory: string[];
 }
 
-export const Search: React.FC<SearchProps> = ({ stackId }) => {
-	const dispatch = useAppDispatch();
-
-	const searchHistory = useSelector(fromSearch.history);
+export const Search: React.FC<SearchProps> = ({ onSearch: _onSearch, onRemoveSearch, searchHistory }) => {
 	const [searchText, setSearchText] = React.useState('');
 
 	const onSearch = (searchTerm: string) => {
 		setSearchText('');
-		dispatch(SearchActions.search({ searchTerm: searchTerm }));
-		Navigation.push(stackId, searchScreenLayer(searchTerm));
-	};
-
-	const onRemoveSearch = (searchTerm: string) => {
-		dispatch(SearchActions.remove({ searchTerm: searchTerm }));
+		_onSearch(searchTerm);
 	};
 
 	return (

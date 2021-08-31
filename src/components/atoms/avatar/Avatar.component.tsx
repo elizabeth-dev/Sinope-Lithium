@@ -10,14 +10,8 @@ export interface AvatarProps {
 	onLongPress?: (event: GestureResponderEvent) => void;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
-	size = 48,
-	label,
-	style,
-	onPress,
-	onLongPress,
-}) => {
-	return (<View style={[{ borderRadius: size, height: size, width: size }, style, styles.root]}>
+export const Avatar: React.FC<AvatarProps> = ({ size = 48, label, style, onPress, onLongPress }) => (
+	<View style={[{ borderRadius: size, height: size, width: size }, style, styles.root]}>
 		<Pressable
 			onPress={onPress}
 			onLongPress={onLongPress}
@@ -25,9 +19,8 @@ export const Avatar: React.FC<AvatarProps> = ({
 			android_ripple={{
 				color: 'grey',
 				borderless: true,
-			}}
-		>
+			}}>
 			<Text style={[{ fontSize: size / 2 }, styles.text]}>{label.toUpperCase()}</Text>
 		</Pressable>
-	</View>);
-};
+	</View>
+);

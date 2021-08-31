@@ -14,14 +14,12 @@ export const TextInput: React.FC<TextInputProps> = ({
 	style,
 	error = false,
 	...textInputProps
-}) => {
-	return (
-		<View style={[style, styles.root]}>
-			<_TextInput
-				{...textInputProps}
-				underlineColorAndroid={error ? theme.colors.warn : color}
-				style={styles.textInput}
-			/>
-		</View>
-	);
-};
+}) => (
+	<View style={[style, styles.root]}>
+		<_TextInput
+			{...textInputProps}
+			underlineColorAndroid={error ? theme.colors.warn : color}
+			style={styles.textInput}
+		/>
+	</View>
+);

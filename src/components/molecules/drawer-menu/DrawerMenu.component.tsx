@@ -3,22 +3,16 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { DrawerMenuStyles as styles } from './DrawerMenu.styles';
 
-export const DrawerMenu: React.FC = () => {
-	const items = [
-		{
-			key: 'settings',
-			label: 'Settings',
-			icon: 'cog',
-		},
-	];
+export interface DrawerMenuProps {
+	items: { key: string; label: string; icon: string }[];
+}
 
-	return (
-		<FlatList
-			data={items}
-			renderItem={({ item }) => <DrawerItem icon={item.icon} label={item.label} />}
-			keyExtractor={(item) => item.key}
-			showsVerticalScrollIndicator={false}
-			style={styles.root}
-		/>
-	);
-};
+export const DrawerMenu: React.FC<DrawerMenuProps> = ({ items }) => (
+	<FlatList
+		data={items}
+		renderItem={({ item }) => <DrawerItem icon={item.icon} label={item.label} />}
+		keyExtractor={(item) => item.key}
+		showsVerticalScrollIndicator={false}
+		style={styles.root}
+	/>
+);

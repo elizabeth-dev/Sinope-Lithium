@@ -26,24 +26,22 @@ export const Button: React.FC<ButtonProps> = ({
 	ripple = true,
 	children,
 	backgroundColor = colors.purple600,
-}) => {
-	return (
-		<View style={[styles.root, { backgroundColor }, style]}>
-			<Pressable
-				onPress={onPress}
-				onLongPress={onLongPress}
-				style={styles.pressable}
-				android_ripple={
-					ripple
-						? {
-								color: 'grey',
-								borderless: true,
-						  }
-						: null
-				}>
-				{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
-				<Typography.Button>{children}</Typography.Button>
-			</Pressable>
-		</View>
-	);
-};
+}) => (
+	<View style={[styles.root, { backgroundColor }, style]}>
+		<Pressable
+			onPress={onPress}
+			onLongPress={onLongPress}
+			style={styles.pressable}
+			android_ripple={
+				ripple
+					? {
+							color: 'grey',
+							borderless: true,
+					  }
+					: null
+			}>
+			{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
+			<Typography.Button>{children}</Typography.Button>
+		</Pressable>
+	</View>
+);

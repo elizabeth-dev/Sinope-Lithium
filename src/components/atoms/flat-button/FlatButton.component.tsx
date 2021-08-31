@@ -23,24 +23,22 @@ export const FlatButton: React.FC<FlatButtonProps> = ({
 	textStyle,
 	ripple = true,
 	children,
-}) => {
-	return (
-		<View style={[styles.root, style]}>
-			<Pressable
-				onPress={onPress}
-				onLongPress={onLongPress}
-				style={styles.pressable}
-				android_ripple={
-					ripple
-						? {
-								color: 'grey',
-								borderless: true,
-						  }
-						: null
-				}>
-				{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
-				<Text style={[styles.text, textStyle]}>{children.toUpperCase()}</Text>
-			</Pressable>
-		</View>
-	);
-};
+}) => (
+	<View style={[styles.root, style]}>
+		<Pressable
+			onPress={onPress}
+			onLongPress={onLongPress}
+			style={styles.pressable}
+			android_ripple={
+				ripple
+					? {
+							color: 'grey',
+							borderless: true,
+					  }
+					: null
+			}>
+			{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
+			<Text style={[styles.text, textStyle]}>{children.toUpperCase()}</Text>
+		</Pressable>
+	</View>
+);

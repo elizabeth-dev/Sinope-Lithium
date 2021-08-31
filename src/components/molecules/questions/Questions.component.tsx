@@ -1,31 +1,32 @@
-import { QuestionActions } from '@actions/question.actions';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { fromQuestion } from '@core/state/selectors/question.selectors';
 import { QuestionList } from '@molecules/question-list/QuestionList.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { FullQuestion } from '@shared/types/entities/question.interface';
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 export interface QuestionsProps {
-	stackId: string;
+	questions: FullQuestion[];
+	fetchingQuestions: boolean;
+	currentProfileId: string;
+	componentId: string;
+	onQuestionsRefresh: (profileId: string) => void;
+	onQuestionAnswer: (questionId: string) => void;
+	onProfileNav: (profileId: string, componentId: string) => void;
 }
 
-export const Questions: React.FC<QuestionsProps> = ({ stackId }) => {
-	const dispatcher = useAppDispatch();
-
-	const currentProfile = useSelector(fromProfile.currentId);
-	const receivedQuestions = useSelector(fromQuestion.received);
-
-	const onRefresh = React.useCallback(() => {
-		dispatcher(QuestionActions.getByProfile({ profile: currentProfile }));
-	}, [currentProfile, dispatcher]);
-
-	return (
-		<QuestionList
-			questions={receivedQuestions.questions.map((el) => el.question)}
-			stackId={stackId}
-			refreshing={receivedQuestions.isFetching}
-			onRefresh={onRefresh}
-		/>
-	);
-};
+export const Questions: React.FC<QuestionsProps> = ({
+	questions,
+	fetchingQuestions,
+	currentProfileId,
+	componentId,
+	onQuestionsRefresh,
+	onQuestionAnswer,
+	onProfileNav,
+}) => (
+	<QuestionList
+		questions={questions}
+		refreshing={fetchingQuestions}
+		componentId={componentId}
+		onRefresh={() => onQuestionsRefresh(currentProfileId)}
+		onProfileNav={onProfileNav}
+		onQuestionAnswer={onQuestionAnswer}
+	/>
+);

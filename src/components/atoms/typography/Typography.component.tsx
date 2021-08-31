@@ -15,13 +15,11 @@ const _Typography: React.FC<TypographyProps & { _style: StyleProp<TextStyle> }> 
 	style,
 	lines,
 	selectable,
-}) => {
-	return (
-		<Text style={[_style, style]} numberOfLines={lines} selectable={selectable}>
-			{children}
-		</Text>
-	);
-};
+}) => (
+	<Text style={[_style, style]} numberOfLines={lines} selectable={selectable}>
+		{children}
+	</Text>
+);
 
 export const Typography: { [type: string]: React.FC<TypographyProps> } = {
 	Headline: (props) => <_Typography _style={styles.headline} {...props} />,

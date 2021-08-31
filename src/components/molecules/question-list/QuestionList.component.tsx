@@ -8,14 +8,22 @@ export interface QuestionListProps {
 	questions: FullQuestion[];
 	onRefresh?: () => void;
 	refreshing?: boolean;
-	stackId: string;
+	componentId: string;
+	onQuestionAnswer: (questionId: string) => void;
+	onProfileNav: (profileId: string, componentId: string) => void;
 }
 
 export const QuestionList: React.FC<QuestionListProps> = React.memo((props) => (
 	<FlatList
 		data={props.questions}
-		extraData={props.stackId}
-		renderItem={(el) => <SlimQuestion stackId={props.stackId} question={el.item} />}
+		renderItem={(el) => (
+			<SlimQuestion
+				question={el.item}
+				componentId={props.componentId}
+				onQuestionAnswer={props.onQuestionAnswer}
+				onProfileNav={props.onProfileNav}
+			/>
+		)}
 		keyExtractor={(item) => item.id}
 		showsVerticalScrollIndicator={false}
 		ItemSeparatorComponent={Divider}

@@ -1,48 +1,52 @@
-import { TimelineActions } from '@actions/timeline.actions';
 import { Fab } from '@atoms/fab/Fab.component';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { fromTimeline } from '@core/state/selectors/timeline.selectors';
 import { PostList } from '@molecules/post-list/PostList.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
+import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
-import { Navigation } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
 import { HomeStyles as styles } from './Home.styles';
 
 export interface HomeProps {
-	stackId: string;
+	currentProfileId: string;
+	timeline: FullPost[];
+	timelineFetching: boolean;
+	componentId: string;
+	onTimelineRefresh: (profileId: string) => void;
+	onComposeNav: (componentId: string) => void;
+	onPostNav: (postId: string, componentId: string) => void;
+	onProfileNav: (profileId: string, componentId: string) => void;
+	onReplyNav: (postId: string, componentId: string) => void;
+	onLike: (postId: string, profileId: string) => void;
+	onUnlike: (postId: string, profileId: string) => void;
 }
 
-export const Home: React.FC<HomeProps> = React.memo(({ stackId }) => {
-	const dispatcher = useAppDispatch();
-
-	const currentProfile = useSelector(fromProfile.currentId);
-	const timeline = useSelector(fromTimeline.current);
-
-	const onRefresh = React.useCallback(() => {
-		dispatcher(TimelineActions.request({ profile: currentProfile }));
-	}, [currentProfile, dispatcher]);
-
-	React.useEffect(() => {
-		if (!timeline) {
-			onRefresh();
-		}
-	}, [onRefresh, timeline]);
-
-	const onCompose = () => Navigation.push(stackId, composeScreenLayer());
-
-	// TODO: [SLI-29] Check substitution with react-native-navigation FAB
-	return (
+export const Home: React.FC<HomeProps> = React.memo(
+	({
+		currentProfileId,
+		timeline,
+		timelineFetching,
+		componentId,
+		onTimelineRefresh,
+		onComposeNav,
+		onPostNav,
+		onProfileNav,
+		onReplyNav,
+		onLike,
+		onUnlike,
+		// TODO: [SLI-29] Check substitution with react-native-navigation FAB
+	}) => (
 		<>
 			<PostList
-				currentProfile={currentProfile}
-				posts={timeline?.timeline || []}
-				onRefresh={onRefresh}
-				refreshing={timeline?.isFetching ?? true}
-				stackId={stackId}
+				currentProfile={currentProfileId}
+				posts={timeline}
+				onRefresh={() => onTimelineRefresh(currentProfileId)}
+				refreshing={timelineFetching}
+				componentId={componentId}
+				onPostNav={onPostNav}
+				onProfileNav={onProfileNav}
+				onReplyNav={onReplyNav}
+				onLike={onLike}
+				onUnlike={onUnlike}
 			/>
-			<Fab style={styles.fab} icon="message-reply" onPress={onCompose} />
+			<Fab style={styles.fab} icon="message-reply" onPress={() => onComposeNav(componentId)} />
 		</>
-	);
-});
+	),
+);
