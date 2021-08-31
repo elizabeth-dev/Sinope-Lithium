@@ -1,25 +1,17 @@
-import { ProfileActions } from '@actions/profile.actions';
 import { Button } from '@atoms/button/Button.component';
 import { TextInput } from '@atoms/text-input/TextInput.component';
-import { AppState } from '@core/state/app.store';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
-import { Keyboard, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View } from 'react-native';
 import { FirstProfileScreenStyles as styles } from './FirstProfileScreen.styles';
 
-export const FirstProfileScreen: React.FC = () => {
-	const dispatcher = useAppDispatch();
+export interface FirstProfileScreenProps {
+	error: boolean;
+	onCreate: (name: string, tag: string) => void;
+}
 
+export const FirstProfileScreen: React.FC<FirstProfileScreenProps> = ({ error, onCreate }) => {
 	const [name, setName] = React.useState('');
 	const [tag, setTag] = React.useState('');
-
-	const error = useSelector((state: AppState) => state.reception.firstProfile.error);
-
-	const onCreate = () => {
-		Keyboard.dismiss();
-		dispatcher(ProfileActions.createFirst({ newProfile: { name, tag } }));
-	};
 
 	return (
 		<View style={styles.root}>
@@ -41,7 +33,7 @@ export const FirstProfileScreen: React.FC = () => {
 				value={tag}
 				onChangeText={setTag}
 			/>
-			<Button style={styles.createButton} onPress={onCreate}>
+			<Button style={styles.createButton} onPress={() => onCreate(name, tag)}>
 				Create
 			</Button>
 		</View>

@@ -1,31 +1,18 @@
-import { AuthActions } from '@actions/auth.actions';
 import { Button } from '@atoms/button/Button.component';
 import { TextInput } from '@atoms/text-input/TextInput.component';
-import { AppState } from '@core/state/app.store';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { registerRoot } from '@shared/navigation/roots/register.root';
 import React from 'react';
-import { Keyboard, View } from 'react-native';
-import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
+import { View } from 'react-native';
 import { LoginScreenStyles as styles } from './LoginScreen.styles';
 
-export const LoginScreen: NavigationFunctionComponent = () => {
-	const dispatch = useAppDispatch();
+export interface LoginScreenProps {
+	error: boolean;
+	onLogin: (email: string, password: string) => void;
+	onRegister: (email?: string) => void;
+}
 
+export const LoginScreen: React.FC<LoginScreenProps> = ({ error, onLogin, onRegister }) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
-	const error = useSelector((state: AppState) => state.reception.login.error);
-
-	const onLogin = () => {
-		Keyboard.dismiss();
-		dispatch(AuthActions.login({ email, password }));
-	};
-
-	const onRegister = () => {
-		Keyboard.dismiss();
-		Navigation.setRoot(registerRoot(email));
-	};
 
 	return (
 		<View style={styles.root}>
@@ -47,16 +34,12 @@ export const LoginScreen: NavigationFunctionComponent = () => {
 				value={password}
 				onChangeText={setPassword}
 			/>
-			<Button style={styles.loginButton} onPress={onLogin}>
+			<Button style={styles.loginButton} onPress={() => onLogin(email, password)}>
 				Log In
 			</Button>
-			<Button style={styles.registerButton} onPress={onRegister}>
+			<Button style={styles.registerButton} onPress={() => onRegister(email)}>
 				Register
 			</Button>
 		</View>
 	);
-};
-
-LoginScreen.options = {
-	blurOnUnmount: true,
 };

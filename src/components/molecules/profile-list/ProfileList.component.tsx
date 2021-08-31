@@ -6,16 +6,15 @@ import { FlatList } from 'react-native';
 
 interface ProfileListProps {
 	profiles: IProfile[];
+	onProfileNav: (profileId: string) => void;
 	onRefresh?: () => void;
 	refreshing?: boolean;
-	stackId: string;
 }
 
 export const ProfileList: React.FC<ProfileListProps> = React.memo((props) => (
 	<FlatList
 		data={props.profiles}
-		extraData={props.stackId}
-		renderItem={(el) => <SlimProfile stackId={props.stackId} profile={el.item} />}
+		renderItem={(el) => <SlimProfile profile={el.item} onProfileNav={props.onProfileNav} />}
 		keyExtractor={(item) => item.id}
 		showsVerticalScrollIndicator={false}
 		ItemSeparatorComponent={Divider}

@@ -28,19 +28,13 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 	const receivedQuestions = useSelector(fromQuestion.received);
 	const searchHistory = useSelector(fromSearch.history);
 
-	const onTimelineRefresh = React.useCallback(
-		(profile) => {
-			dispatcher(TimelineActions.request({ profile }));
-		},
-		[dispatcher],
-	);
+	const onTimelineRefresh = React.useCallback(() => {
+		dispatcher(TimelineActions.request({ profile: currentProfileId }));
+	}, [dispatcher, currentProfileId]);
 
-	const onQuestionsRefresh = React.useCallback(
-		(profile) => {
-			dispatcher(QuestionActions.getByProfile({ profile }));
-		},
-		[dispatcher],
-	);
+	const onQuestionsRefresh = React.useCallback(() => {
+		dispatcher(QuestionActions.getByProfile({ profile: currentProfileId }));
+	}, [dispatcher, currentProfileId]);
 
 	const onSearch = (searchTerm: string) => {
 		dispatcher(SearchActions.search({ searchTerm }));
@@ -51,25 +45,24 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 		dispatcher(SearchActions.remove({ searchTerm }));
 	};
 
-	const onProfileNav = nav.toProfile;
-	const onPostNav = nav.toPost;
-	const onReplyNav = nav.toReply;
-	const onComposeNav = nav.toCompose;
+	const onProfileNav = (profileId: string) => nav.toProfile(profileId, componentId);
+	const onPostNav = (postId: string) => nav.toPost(postId, componentId);
+	const onReplyNav = (postId: string) => nav.toReply(postId, componentId);
+	const onComposeNav = () => nav.toCompose(componentId);
 
-	const onLike = (postId: string, profileId: string) =>
-		dispatcher(PostActions.like({ post: postId, fromProfile: profileId }));
+	const onLike = (postId: string) => dispatcher(PostActions.like({ post: postId, fromProfile: currentProfileId }));
 
-	const onUnlike = (postId: string, profileId: string) =>
-		dispatcher(PostActions.unlike({ post: postId, fromProfile: profileId }));
+	const onUnlike = (postId: string) =>
+		dispatcher(PostActions.unlike({ post: postId, fromProfile: currentProfileId }));
 
 	const onQuestionAnswer = (questionId: string) =>
 		Navigation.push(componentId, composeScreenLayer(undefined, questionId));
 
 	React.useEffect(() => {
 		if (!timelineEntity.timeline) {
-			onTimelineRefresh(currentProfileId);
+			onTimelineRefresh();
 		}
-	}, [currentProfileId, onTimelineRefresh, timelineEntity.timeline]);
+	}, [onTimelineRefresh, timelineEntity.timeline]);
 
 	React.useEffect(() => {
 		// TODO: Check if this can be moved to a hook
@@ -91,7 +84,6 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 
 	return (
 		<DashboardScreen
-			componentId={componentId}
 			currentProfileId={currentProfileId}
 			timeline={timelineEntity.timeline}
 			timelineFetching={timelineEntity.isFetching}

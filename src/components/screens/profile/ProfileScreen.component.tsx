@@ -1,39 +1,48 @@
-import { PostActions } from '@actions/post.actions';
-import { ProfileActions } from '@actions/profile.actions';
 import { Fab } from '@atoms/fab/Fab.component';
-import { AppState } from '@core/state/app.store';
-import { fromPost } from '@core/state/selectors/post.selectors';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { PostList } from '@molecules/post-list/PostList.component';
 import { ProfileHeader } from '@molecules/profile-header/ProfileHeader.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { askQuestionScreenLayer } from '@shared/navigation/layers/ask-question-screen.layer';
+import { FullPost } from '@shared/types/entities/post.interface';
+import { IProfile } from '@shared/types/entities/profile.interface';
 import { theme } from '@theme/main.theme';
 import React from 'react';
 import { Animated, Dimensions, View } from 'react-native';
-import {
-	Navigation,
-	NavigationButtonPressedEvent,
-	NavigationComponentListener,
-	NavigationFunctionComponent,
-} from 'react-native-navigation';
 import { NavigationState, Route, SceneRendererProps, TabBar, TabView } from 'react-native-tab-view';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useSelector } from 'react-redux';
 import { ProfileScreenStyles as styles } from './ProfileScreen.styles';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
 export interface ProfileScreenProps {
-	profileId: string;
+	currentProfileId: string;
+	profile: IProfile;
+	isFetching: boolean;
+	posts: FullPost[];
+	onRefresh: () => void;
+	onAskQuestionNav: () => void;
+	onPostNav: (postId: string) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void;
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
+	onFollowingNav: () => void;
+	onFollowersNav: () => void;
 }
 
 // TODO: [SLI-54] Refactor component
-export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({ profileId, componentId }) => {
-	const dispatcher = useAppDispatch();
-
-	const selectPostsByProfile = React.useMemo(() => fromPost.make.byProfile(), []);
-
+export const ProfileScreen: React.FC<ProfileScreenProps> = ({
+	currentProfileId,
+	profile,
+	isFetching,
+	posts,
+	onRefresh,
+	onAskQuestionNav,
+	onPostNav,
+	onProfileNav,
+	onReplyNav,
+	onLike,
+	onUnlike,
+	onFollowersNav,
+	onFollowingNav,
+}) => {
 	const [index, setIndex] = React.useState(0);
 	const [routes] = React.useState<Route[]>([
 		{
@@ -50,71 +59,6 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 		},
 	]);
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-
-	const profile = useSelector((state: AppState) => fromProfile.byId(state, profileId));
-	const currentProfile = useSelector(fromProfile.currentId);
-	const profilePosts = useSelector((state: AppState) => selectPostsByProfile(state, profileId));
-
-	const refreshProfile = React.useCallback(
-		(_profileId: string, _currentProfile: string) => {
-			dispatcher(ProfileActions.request({ profile: _profileId, fromProfile: _currentProfile }));
-			dispatcher(PostActions.requestFromProfile({ profile: _profileId }));
-		},
-		[dispatcher],
-	);
-
-	React.useEffect(() => {
-		if (profileId !== currentProfile) {
-			if (!profile.profile.followingThem) {
-				MaterialIcons.getImageSource('person-add', 25).then((followIcon) =>
-					Navigation.mergeOptions(componentId, {
-						topBar: {
-							rightButtons: [
-								{
-									id: 'FOLLOW_PROFILE',
-									icon: followIcon,
-									text: 'Follow',
-								},
-							],
-						},
-					}),
-				);
-			} else {
-				MaterialIcons.getImageSource('person-remove', 25).then((followIcon) =>
-					Navigation.mergeOptions(componentId, {
-						topBar: {
-							rightButtons: [
-								{
-									id: 'UNFOLLOW_PROFILE',
-									icon: followIcon,
-									text: 'Unfollow',
-								},
-							],
-						},
-					}),
-				);
-			}
-		}
-	}, [profile.profile.followingThem, currentProfile, profileId, componentId]);
-
-	React.useEffect(() => {
-		const listener: NavigationComponentListener = {
-			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
-				if (event.buttonId === 'FOLLOW_PROFILE') {
-					dispatcher(ProfileActions.follow({ fromProfile: currentProfile, toProfile: profileId }));
-				} else if (event.buttonId === 'UNFOLLOW_PROFILE') {
-					dispatcher(ProfileActions.unfollow({ fromProfile: currentProfile, toProfile: profileId }));
-				}
-			},
-		};
-
-		const subscription = Navigation.events().registerComponentListener(listener, componentId);
-		return () => {
-			subscription.remove();
-		};
-	}, [componentId, currentProfile, dispatcher, profileId]);
-
-	React.useEffect(() => refreshProfile(profileId, currentProfile), [refreshProfile, profileId, currentProfile]);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const headerY = scroll.interpolate({
@@ -134,14 +78,20 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 			case 'posts':
 				return (
 					<PostList
-						currentProfile={currentProfile}
-						posts={profilePosts?.posts?.map((postEntity) => postEntity.post) ?? []}
-						stackId={componentId}
 						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scroll } } }], {
 							useNativeDriver: true,
 						})}
 						containerPaddingTop={headerHeight + 48}
 						progressViewOffset={headerHeight + 48}
+						currentProfile={currentProfileId}
+						posts={posts}
+						onRefresh={onRefresh}
+						refreshing={isFetching}
+						onPostNav={onPostNav}
+						onProfileNav={onProfileNav}
+						onReplyNav={onReplyNav}
+						onLike={onLike}
+						onUnlike={onUnlike}
 					/>
 				);
 			default:
@@ -171,8 +121,6 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 		</Animated.View>
 	);
 
-	const onCompose = () => Navigation.push(componentId, askQuestionScreenLayer(profileId));
-
 	return (
 		<>
 			<View style={styles.root}>
@@ -189,14 +137,15 @@ export const ProfileScreen: NavigationFunctionComponent<ProfileScreenProps> = ({
 					/>
 				)}
 				<ProfileHeader
-					stackId={componentId}
-					profile={profile?.profile} // FIXME: Check undefined. & Fix followers logic
-					isFetching={(profile?.isFetching ?? true) || (profilePosts?.isFetching ?? true)}
+					profile={profile} // FIXME: Check undefined. & Fix followers logic
+					isFetching={isFetching}
 					headerY={headerY as unknown as number}
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
+					onFollowersNav={onFollowersNav}
+					onFollowingNav={onFollowingNav}
 				/>
 			</View>
-			<Fab style={styles.fab} icon="comment-question" onPress={onCompose} />
+			<Fab style={styles.fab} icon="comment-question" onPress={() => onAskQuestionNav()} />
 		</>
 	);
 };

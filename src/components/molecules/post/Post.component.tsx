@@ -1,41 +1,40 @@
-import { PostActions } from '@actions/post.actions';
 import { Avatar } from '@atoms/avatar/Avatar.component';
 import { Divider } from '@atoms/divider/Divider.component';
 import { FlatButton } from '@atoms/flat-button/FlatButton.component';
 import { IconButton } from '@atoms/icon-button/IconButton.component';
 import { Typography } from '@atoms/typography/Typography.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
-import { profileScreenLayer } from '@shared/navigation/layers/profile-screen.layer';
 import { FullPost } from '@shared/types/entities/post.interface';
 import { dateFormatter } from '@shared/utils/dates.utils';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import { PostStyles as styles } from './Post.styles';
 
 export interface PostProps {
 	post: FullPost;
-	currentProfile: string;
-	stackId: string;
+	currentProfileId: string;
 	mainPostY: number;
 	onLayout: (ev: LayoutChangeEvent) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void; // Should we ask for postId here or handle in PostScreen?
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
 }
 
-export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onLayout, stackId }) => {
-	const dispatcher = useAppDispatch();
+export const Post: React.FC<PostProps> = ({
+	post,
+	currentProfileId,
+	mainPostY,
+	onLayout,
+	onReplyNav,
+	onProfileNav,
+	onLike,
+	onUnlike,
+}) => {
+	const liked = post.likes.indexOf(currentProfileId) === -1; // TODO: Shouldn't run all the array on each post
 
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
 	};
-	const onAvatarClick = (profileId: string) => Navigation.push(stackId, profileScreenLayer(profileId));
-	const onReplyClick = () => Navigation.push(stackId, composeScreenLayer(post.id));
-	const onLikeClick = () =>
-		dispatcher(
-			post.likes.indexOf(currentProfile) === -1
-				? PostActions.like({ post: post.id, fromProfile: currentProfile })
-				: PostActions.unlike({ post: post.id, fromProfile: currentProfile }),
-		);
 
 	return (
 		<Animated.View style={[styles.root, { transform: [{ translateY: mainPostY }] }]} onLayout={onLayout}>
@@ -45,7 +44,7 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 						<Avatar
 							label={(post.question.from?.name ?? 'A')[0].toUpperCase()}
 							size={36}
-							onPress={() => post.question!.from && onAvatarClick(post.question!.from.id)}
+							onPress={() => post.question!.from && onProfileNav(post.question!.from.id)}
 						/>
 						<View style={styles.questionData}>
 							<Typography.Body>{post.question.content}</Typography.Body>
@@ -54,7 +53,7 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 					</View>
 				)}
 				<View style={styles.header}>
-					<Avatar label={post.profile.name[0].toUpperCase()} onPress={() => onAvatarClick(post.profile.id)} />
+					<Avatar label={post.profile.name[0].toUpperCase()} onPress={() => onProfileNav(post.profile.id)} />
 					<View style={styles.userData}>
 						<Typography.Headline>{post.profile.name}</Typography.Headline>
 						<Typography.Subtitle>@{post.profile.tag}</Typography.Subtitle>
@@ -67,10 +66,13 @@ export const Post: React.FC<PostProps> = ({ post, currentProfile, mainPostY, onL
 				</View>
 				<Divider />
 				<View style={styles.actions}>
-					<FlatButton icon="message-reply-text" onPress={onReplyClick} style={styles.replyButton}>
+					<FlatButton
+						icon="message-reply-text"
+						onPress={() => onReplyNav(post.id)}
+						style={styles.replyButton}>
 						0
 					</FlatButton>
-					<FlatButton icon="star-circle" onPress={onLikeClick}>
+					<FlatButton icon="star-circle" onPress={() => (liked ? onLike(post.id) : onUnlike(post.id))}>
 						{post.likes.length.toString()}
 					</FlatButton>
 					<FlatButton icon="share" onPress={onClick}>

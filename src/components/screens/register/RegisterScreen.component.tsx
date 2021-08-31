@@ -1,30 +1,18 @@
-import { AuthActions } from '@actions/auth.actions';
 import { Button } from '@atoms/button/Button.component';
 import { TextInput } from '@atoms/text-input/TextInput.component';
-import { AppState } from '@core/state/app.store';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import React from 'react';
-import { Keyboard, View } from 'react-native';
-import { NavigationFunctionComponent } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
+import { View } from 'react-native';
 import { RegisterScreenStyles as styles } from './RegisterScreen.styles';
 
 export interface RegisterScreenProps {
 	passEmail?: string;
+	error: boolean;
+	onRegister: (email: string, password: string) => void;
 }
 
-export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = ({ passEmail }) => {
-	const dispatch = useAppDispatch();
-
+export const RegisterScreen: React.FC<RegisterScreenProps> = ({ passEmail, error, onRegister }) => {
 	const [email, setEmail] = React.useState(passEmail ?? '');
 	const [password, setPassword] = React.useState('');
-
-	const error = useSelector((state: AppState) => state.reception.register.error);
-
-	const onRegister = () => {
-		Keyboard.dismiss();
-		dispatch(AuthActions.register({ email, password }));
-	};
 
 	return (
 		<View style={styles.root}>
@@ -46,7 +34,7 @@ export const RegisterScreen: NavigationFunctionComponent<RegisterScreenProps> = 
 				value={password}
 				onChangeText={setPassword}
 			/>
-			<Button style={styles.registerButton} onPress={onRegister}>
+			<Button style={styles.registerButton} onPress={() => onRegister(email, password)}>
 				Register
 			</Button>
 		</View>

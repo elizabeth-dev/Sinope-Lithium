@@ -8,9 +8,8 @@ export interface QuestionListProps {
 	questions: FullQuestion[];
 	onRefresh?: () => void;
 	refreshing?: boolean;
-	componentId: string;
 	onQuestionAnswer: (questionId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
+	onProfileNav: (profileId: string) => void;
 }
 
 export const QuestionList: React.FC<QuestionListProps> = React.memo((props) => (
@@ -19,7 +18,6 @@ export const QuestionList: React.FC<QuestionListProps> = React.memo((props) => (
 		renderItem={(el) => (
 			<SlimQuestion
 				question={el.item}
-				componentId={props.componentId}
 				onQuestionAnswer={props.onQuestionAnswer}
 				onProfileNav={props.onProfileNav}
 			/>

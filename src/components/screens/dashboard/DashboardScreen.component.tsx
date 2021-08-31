@@ -30,16 +30,15 @@ export interface DashboardScreenProps {
 	questions: FullQuestion[];
 	fetchingQuestions: boolean;
 	searchHistory: string[];
-	componentId: string;
-	onQuestionsRefresh: (profileId: string) => void;
+	onQuestionsRefresh: () => void;
 	onQuestionAnswer: (questionId: string) => void;
-	onTimelineRefresh: (profileId: string) => void;
-	onComposeNav: (componentId: string) => void;
-	onPostNav: (postId: string, componentId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
-	onReplyNav: (postId: string, componentId: string) => void;
-	onLike: (postId: string, profileId: string) => void;
-	onUnlike: (postId: string, profileId: string) => void;
+	onTimelineRefresh: () => void;
+	onComposeNav: () => void;
+	onPostNav: (postId: string) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void;
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
 	onSearch: (searchTerm: string) => void;
 	onRemoveSearch: (searchTerm: string) => void;
 }
@@ -51,7 +50,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 	questions,
 	fetchingQuestions,
 	searchHistory,
-	componentId,
 	onTimelineRefresh,
 	onComposeNav,
 	onPostNav,
@@ -94,7 +92,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 							timeline={timeline}
 							onTimelineRefresh={onTimelineRefresh}
 							timelineFetching={timelineFetching}
-							componentId={componentId}
 							onPostNav={onPostNav}
 							onProfileNav={onProfileNav}
 							onReplyNav={onReplyNav}
@@ -113,8 +110,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 							onQuestionsRefresh={onQuestionsRefresh}
 							onProfileNav={onProfileNav}
 							onQuestionAnswer={onQuestionAnswer}
-							currentProfileId={currentProfileId}
-							componentId={componentId}
 						/>
 					);
 				default:
@@ -128,7 +123,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 			questions,
 			fetchingQuestions,
 			searchHistory,
-			componentId,
 			onTimelineRefresh,
 			onPostNav,
 			onProfileNav,

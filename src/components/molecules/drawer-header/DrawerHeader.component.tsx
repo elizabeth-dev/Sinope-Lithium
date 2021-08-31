@@ -11,9 +11,8 @@ export interface DrawerHeaderProps {
 	profilesTab: boolean;
 	currentProfile: IProfile;
 	otherProfiles: IProfile[];
-	componentId: string;
 	onProfileSwitch: (profileId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
+	onProfileNav: (profileId: string) => void;
 	onTabSwitch: (profileTab: boolean) => void;
 }
 
@@ -21,7 +20,6 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({
 	profilesTab,
 	currentProfile,
 	otherProfiles,
-	componentId,
 	onProfileSwitch,
 	onProfileNav,
 	onTabSwitch,
@@ -31,7 +29,7 @@ export const DrawerHeader: React.FC<DrawerHeaderProps> = ({
 			<Avatar
 				size={72}
 				label={currentProfile.name[0].toUpperCase()}
-				onPress={() => onProfileNav(currentProfile.id, componentId)}
+				onPress={() => onProfileNav(currentProfile.id)}
 			/>
 			{otherProfiles.length !== 0 && (
 				<View style={styles.otherProfiles}>

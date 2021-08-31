@@ -5,18 +5,14 @@ import React from 'react';
 export interface QuestionsProps {
 	questions: FullQuestion[];
 	fetchingQuestions: boolean;
-	currentProfileId: string;
-	componentId: string;
-	onQuestionsRefresh: (profileId: string) => void;
+	onQuestionsRefresh: () => void;
 	onQuestionAnswer: (questionId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
+	onProfileNav: (profileId: string) => void;
 }
 
 export const Questions: React.FC<QuestionsProps> = ({
 	questions,
 	fetchingQuestions,
-	currentProfileId,
-	componentId,
 	onQuestionsRefresh,
 	onQuestionAnswer,
 	onProfileNav,
@@ -24,8 +20,7 @@ export const Questions: React.FC<QuestionsProps> = ({
 	<QuestionList
 		questions={questions}
 		refreshing={fetchingQuestions}
-		componentId={componentId}
-		onRefresh={() => onQuestionsRefresh(currentProfileId)}
+		onRefresh={() => onQuestionsRefresh()}
 		onProfileNav={onProfileNav}
 		onQuestionAnswer={onQuestionAnswer}
 	/>

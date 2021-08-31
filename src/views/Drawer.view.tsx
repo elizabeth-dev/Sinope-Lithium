@@ -16,7 +16,7 @@ export const DrawerView: NavigationFunctionComponent = ({ componentId }) => {
 		.filter((el) => el.profile?.id !== currentProfile?.profile?.id)
 		.map((el) => el.profile);
 
-	const onProfileNav = nav.toProfile;
+	const onProfileNav = (profileId: string) => nav.toProfile(profileId, componentId);
 
 	const onProfileSwitch = (profileId: string) => {
 		dispatcher(SelfActions.switchProfile({ profileId }));
@@ -38,7 +38,6 @@ export const DrawerView: NavigationFunctionComponent = ({ componentId }) => {
 		<DrawerScreen
 			currentProfile={currentProfile.profile}
 			otherProfiles={otherProfiles}
-			componentId={componentId}
 			onProfileNav={onProfileNav}
 			onProfileSwitch={onProfileSwitch}
 		/>

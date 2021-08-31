@@ -1,32 +1,33 @@
-import { PostActions } from '@actions/post.actions';
 import { ProgressBar } from '@atoms/progress-bar/ProgressBar.component';
-import { AppState } from '@core/state/app.store';
-import { fromPost } from '@core/state/selectors/post.selectors';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { PostList } from '@molecules/post-list/PostList.component';
 import { Post } from '@molecules/post/Post.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
 import { Animated, View } from 'react-native';
-import { NavigationFunctionComponent } from 'react-native-navigation';
-import { useSelector } from 'react-redux';
 import { PostScreenStyles as styles } from './PostScreen.styles';
 
 export interface PostScreenProps {
-	postId: string;
+	isFetching: boolean;
+	currentProfileId: string;
+	post: FullPost;
+	onPostNav: (postId: string) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void;
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
 }
 
-export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({ postId, componentId }) => {
-	const dispatcher = useAppDispatch();
-	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
-
+export const PostScreen: React.FC<PostScreenProps> = ({
+	isFetching,
+	currentProfileId,
+	post,
+	onLike,
+	onPostNav,
+	onProfileNav,
+	onReplyNav,
+	onUnlike,
+}) => {
 	const [headerHeight, setHeaderHeight] = React.useState(0);
-	const post = useSelector((state: AppState) => selectPostById(state, postId));
-	const currentProfile = useSelector(fromProfile.currentId);
-
-	React.useEffect(() => {
-		dispatcher(PostActions.request({ post: postId }));
-	}, [postId, dispatcher]);
 
 	const scroll = React.useRef(new Animated.Value(0)).current;
 	const mainPostY = scroll.interpolate({
@@ -37,27 +38,34 @@ export const PostScreen: NavigationFunctionComponent<PostScreenProps> = ({ postI
 
 	return (
 		<>
-			{post.isFetching && <ProgressBar backgroundColor="#4a0072" style={styles.progress} />}
+			{isFetching && <ProgressBar backgroundColor="#4a0072" style={styles.progress} />}
 			<View style={styles.root}>
 				{headerHeight !== 0 && (
 					<PostList
-						currentProfile={currentProfile}
+						currentProfile={currentProfileId}
 						posts={[]}
-						stackId={componentId}
 						onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scroll } } }], {
 							useNativeDriver: true,
 						})}
 						containerPaddingTop={headerHeight}
 						progressViewOffset={headerHeight}
-						refreshing={post.isFetching}
+						refreshing={isFetching}
+						onPostNav={onPostNav}
+						onProfileNav={onProfileNav}
+						onReplyNav={onReplyNav}
+						onLike={onLike}
+						onUnlike={onUnlike}
 					/>
 				)}
 				<Post
-					post={post.post}
-					currentProfile={currentProfile}
+					post={post}
+					currentProfileId={currentProfileId}
 					mainPostY={mainPostY as unknown as number}
 					onLayout={({ nativeEvent }) => setHeaderHeight(nativeEvent.layout.height)}
-					stackId={componentId}
+					onProfileNav={onProfileNav}
+					onReplyNav={onReplyNav}
+					onLike={onLike}
+					onUnlike={onUnlike}
 				/>
 			</View>
 		</>

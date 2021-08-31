@@ -1,24 +1,33 @@
+import { PostList } from '@molecules/post-list/PostList.component';
+import { FullPost } from '@shared/types/entities/post.interface';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { fromPost } from '@core/state/selectors/post.selectors';
-import { AppState } from '@core/state/app.store';
-import { fromProfile } from '@core/state/selectors/profile.selectors';
-import { PostList } from '@shared/components/post-list/PostList.component';
 
 export interface SearchPostsProps {
-	stackId: string;
-	postIds: string[];
+	currentProfileId: string;
+	posts: FullPost[];
+	onPostNav: (postId: string) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void;
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
 }
 
 export const SearchPosts: React.FC<SearchPostsProps> = ({
-	stackId,
-	postIds,
-}) => {
-	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
-	const posts = useSelector((state: AppState) => postIds.map(id => selectPostById(state,
-		id,
-	).post));
-	const currentProfile = useSelector(fromProfile.currentId);
-
-	return (<PostList currentProfile={currentProfile} posts={posts} stackId={stackId} />);
-};
+	posts,
+	currentProfileId,
+	onLike,
+	onPostNav,
+	onProfileNav,
+	onReplyNav,
+	onUnlike,
+}) => (
+	<PostList
+		currentProfile={currentProfileId}
+		posts={posts}
+		onPostNav={onPostNav}
+		onProfileNav={onProfileNav}
+		onReplyNav={onReplyNav}
+		onLike={onLike}
+		onUnlike={onUnlike}
+	/>
+);

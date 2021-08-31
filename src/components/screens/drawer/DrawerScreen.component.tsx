@@ -9,15 +9,13 @@ import { DrawerScreenStyles as styles } from './DrawerScreen.styles';
 export interface DrawerScreenProps {
 	currentProfile: IProfile;
 	otherProfiles: IProfile[];
-	componentId: string;
 	onProfileSwitch: (profileId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
+	onProfileNav: (profileId: string) => void;
 }
 
 export const DrawerScreen: React.FC<DrawerScreenProps> = ({
 	currentProfile,
 	otherProfiles,
-	componentId,
 	onProfileNav,
 	onProfileSwitch,
 }) => {
@@ -38,7 +36,6 @@ export const DrawerScreen: React.FC<DrawerScreenProps> = ({
 				profilesTab={profilesTab}
 				currentProfile={currentProfile}
 				otherProfiles={otherProfiles}
-				componentId={componentId}
 				onProfileSwitch={onProfileSwitch}
 				onProfileNav={onProfileNav}
 			/>

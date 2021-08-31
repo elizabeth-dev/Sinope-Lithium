@@ -11,16 +11,10 @@ import { SlimQuestionStyles as styles } from './SlimQuestion.styles';
 export interface SlimQuestionProps {
 	question: FullQuestion;
 	onQuestionAnswer: (questionId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
-	componentId: string;
+	onProfileNav: (profileId: string) => void;
 }
 
-export const SlimQuestion: React.FC<SlimQuestionProps> = ({
-	question,
-	onQuestionAnswer,
-	onProfileNav,
-	componentId,
-}) => {
+export const SlimQuestion: React.FC<SlimQuestionProps> = ({ question, onQuestionAnswer, onProfileNav }) => {
 	const name = question.from?.name ?? 'Anonymous';
 
 	return (
@@ -29,7 +23,7 @@ export const SlimQuestion: React.FC<SlimQuestionProps> = ({
 				<Avatar
 					style={styles.avatar}
 					label={name[0].toUpperCase()}
-					onPress={() => (question.from ? onProfileNav(question.from.id, componentId) : undefined)}
+					onPress={() => (question.from ? onProfileNav(question.from.id) : undefined)}
 				/>
 				<View style={styles.body}>
 					<View style={styles.header}>

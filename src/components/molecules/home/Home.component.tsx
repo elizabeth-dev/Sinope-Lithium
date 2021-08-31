@@ -8,14 +8,13 @@ export interface HomeProps {
 	currentProfileId: string;
 	timeline: FullPost[];
 	timelineFetching: boolean;
-	componentId: string;
-	onTimelineRefresh: (profileId: string) => void;
-	onComposeNav: (componentId: string) => void;
-	onPostNav: (postId: string, componentId: string) => void;
-	onProfileNav: (profileId: string, componentId: string) => void;
-	onReplyNav: (postId: string, componentId: string) => void;
-	onLike: (postId: string, profileId: string) => void;
-	onUnlike: (postId: string, profileId: string) => void;
+	onTimelineRefresh: () => void;
+	onComposeNav: () => void;
+	onPostNav: (postId: string) => void;
+	onProfileNav: (profileId: string) => void;
+	onReplyNav: (postId: string) => void;
+	onLike: (postId: string) => void;
+	onUnlike: (postId: string) => void;
 }
 
 export const Home: React.FC<HomeProps> = React.memo(
@@ -23,7 +22,6 @@ export const Home: React.FC<HomeProps> = React.memo(
 		currentProfileId,
 		timeline,
 		timelineFetching,
-		componentId,
 		onTimelineRefresh,
 		onComposeNav,
 		onPostNav,
@@ -37,16 +35,15 @@ export const Home: React.FC<HomeProps> = React.memo(
 			<PostList
 				currentProfile={currentProfileId}
 				posts={timeline}
-				onRefresh={() => onTimelineRefresh(currentProfileId)}
+				onRefresh={() => onTimelineRefresh()}
 				refreshing={timelineFetching}
-				componentId={componentId}
 				onPostNav={onPostNav}
 				onProfileNav={onProfileNav}
 				onReplyNav={onReplyNav}
 				onLike={onLike}
 				onUnlike={onUnlike}
 			/>
-			<Fab style={styles.fab} icon="message-reply" onPress={() => onComposeNav(componentId)} />
+			<Fab style={styles.fab} icon="message-reply" onPress={() => onComposeNav()} />
 		</>
 	),
 );
