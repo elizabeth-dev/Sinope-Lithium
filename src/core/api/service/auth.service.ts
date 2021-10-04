@@ -1,42 +1,20 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { map, Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
+import { fetchAPI } from '@shared/utils/fetch.utils';
 import { CreateUserReq, TokenPairRes } from '../model/api';
 
-const login = (email: string, password: string): Observable<TokenPairRes> => {
-	return ajax
-		.post(
-			`${developmentEnv.apiUrl}/auth/login`,
-			{
-				email,
-				password,
-			},
-			{ 'Content-Type': 'application/json' },
-		)
-		.pipe(map((res) => res.response as TokenPairRes));
-};
+const login = (email: string, password: string): Promise<TokenPairRes> =>
+	fetchAPI(`${developmentEnv.apiUrl}/auth/login`, undefined, { email, password });
 
-const register = (newUser: CreateUserReq): Observable<TokenPairRes> => {
-	return ajax
-		.post(`${developmentEnv.apiUrl}/auth/register`, newUser)
-		.pipe(map((res) => res.response as TokenPairRes));
-};
+const register = (newUser: CreateUserReq): Promise<TokenPairRes> =>
+	fetchAPI(`${developmentEnv.apiUrl}/auth/register`, undefined, newUser);
 
-const refresh = (refreshToken: string): Observable<TokenPairRes> => {
-	return ajax
-		.post(`${developmentEnv.apiUrl}/auth/refreshToken`, { refreshToken })
-		.pipe(map((res) => res.response as TokenPairRes));
-};
+const refresh = (refreshToken: string): Promise<TokenPairRes> =>
+	fetchAPI(`${developmentEnv.apiUrl}/auth/refreshToken`, undefined, { refreshToken });
 
-const logout = (refreshToken: string): Observable<void> => {
-	return ajax.post(`${developmentEnv.apiUrl}/auth/logout`, { refreshToken }).pipe(
-		map(() => {
-			return;
-		}),
-	);
-};
+const logout = (refreshToken: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/auth/logout`, undefined, { refreshToken }).then(() => {});
 
-export const AuthService = {
+export const AuthSrv = {
 	login,
 	register,
 	refresh,

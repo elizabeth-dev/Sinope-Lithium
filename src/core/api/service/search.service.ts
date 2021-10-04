@@ -1,17 +1,19 @@
-import { map, Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
+import { expandUri, fetchAPI } from '@shared/utils/fetch.utils';
 import { developmentEnv } from '../../environments/development.env';
 import { SearchRes } from '../model/api';
 
-const search = (searchTerm: string, token: string): Observable<SearchRes> => {
-	return ajax
-		.get(
-			`${developmentEnv.apiUrl}/search/${searchTerm}?expand=profile&expand=question&expand=following&expand=followers&expand=profile.following&expand=profile.followers&expand=question.from`,
-			{
-				Authorization: `Bearer ${token}`,
-			},
-		)
-		.pipe(map((res) => res.response as SearchRes));
-};
+const search = (searchTerm: string, token: string): Promise<SearchRes> =>
+	fetchAPI(
+		`${developmentEnv.apiUrl}/search/${searchTerm}?${expandUri(
+			'profile',
+			'profile.following',
+			'profile.followers',
+			'question',
+			'question.from',
+			'following',
+			'followers',
+		)}`,
+		token,
+	);
 
 export const SearchService = { search };

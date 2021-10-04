@@ -1,17 +1,8 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import { all } from '@redux-saga/core/effects';
 import { configureStore } from '@reduxjs/toolkit';
+import { fetchingTransform } from '@shared/utils/redux.utils';
 import { combineReducers } from 'redux';
-import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { authEpic } from './epics/auth.epic';
-import { postEpic } from './epics/post.epic';
-import { profileEpic } from './epics/profile.epic';
-import { selfEpic } from './epics/self.epic';
-import { timelineEpic } from './epics/timeline.epic';
-import { userEpic } from './epics/user.epic';
-import { authReducer } from './reducers/auth.reducer';
-import { receptionReducer } from './reducers/reception.reducer';
-import { receptionEpic } from './epics/reception.epic';
-import { selfReducer } from './reducers/self.reducer';
-import { currentDataReducer } from './reducers/currentData.reducer';
 import {
 	FLUSH,
 	PAUSE,
@@ -23,10 +14,20 @@ import {
 	REGISTER,
 	REHYDRATE,
 } from 'redux-persist';
-import AsyncStorage from '@react-native-community/async-storage';
-import { searchEpic } from './epics/search.epic';
-import { questionEpic } from './epics/question.epic';
-import { fetchingTransform } from '@shared/utils/redux.utils';
+import createSagaMiddleware from 'redux-saga';
+import { authReducer } from './reducers/auth.reducer';
+import { currentDataReducer } from './reducers/currentData.reducer';
+import { receptionReducer } from './reducers/reception.reducer';
+import { selfReducer } from './reducers/self.reducer';
+import { authSaga } from './sagas/auth.saga';
+import { postSaga } from './sagas/post.saga';
+import { profileSaga } from './sagas/profile.saga';
+import { questionSaga } from './sagas/question.saga';
+import { receptionSaga } from './sagas/reception.saga';
+import { searchSaga } from './sagas/search.saga';
+import { selfSaga } from './sagas/self.saga';
+import { timelineSaga } from './sagas/timeline.saga';
+import { userSaga } from './sagas/user.saga';
 
 export type AppState = ReturnType<typeof appReducer>;
 
@@ -47,19 +48,21 @@ const persistedAppReducer = persistReducer(
 	appReducer,
 );
 
-const appEpic = combineEpics(
-	authEpic,
-	postEpic,
-	userEpic,
-	timelineEpic,
-	profileEpic,
-	receptionEpic,
-	selfEpic,
-	searchEpic,
-	questionEpic,
-);
+function* appSaga() {
+	yield all([
+		authSaga(),
+		postSaga(),
+		profileSaga(),
+		questionSaga(),
+		receptionSaga(),
+		searchSaga(),
+		selfSaga(),
+		timelineSaga(),
+		userSaga(),
+	]);
+}
 
-const epicMiddleware = createEpicMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
 const configStore = () => {
 	const store = configureStore({
@@ -70,11 +73,11 @@ const configStore = () => {
 				serializableCheck: {
 					ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 				},
-			}).concat(epicMiddleware),
+			}).concat(sagaMiddleware),
 		devTools: __DEV__,
 	});
 
-	epicMiddleware.run(appEpic);
+	sagaMiddleware.run(appSaga);
 
 	return store;
 };

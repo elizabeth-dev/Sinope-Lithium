@@ -1,43 +1,42 @@
 import { AppState } from '@core/state/app.store';
 import { CurrentDataState } from '@core/state/reducers/currentData.reducer';
 import AsyncStorage from '@react-native-community/async-storage';
-import { from, map, Observable, of } from 'rxjs';
 
-const saveProfileData = (profileId: string, currentData: CurrentDataState): Observable<void> => {
+const saveProfileData = (profileId: string, currentData: CurrentDataState): Promise<void> => {
 	try {
-		return from(AsyncStorage.setItem(`@profileData/${profileId}`, JSON.stringify(currentData)));
+		return AsyncStorage.setItem(`@profileData/${profileId}`, JSON.stringify(currentData));
 	} catch (e) {
 		console.error(e);
-		return of();
+		return Promise.resolve();
 	}
 };
 
-const getProfileData = (profileId: string): Observable<CurrentDataState | undefined> => {
+const getProfileData = (profileId: string): Promise<CurrentDataState | undefined> => {
 	try {
-		return from(AsyncStorage.getItem(`@profileData/${profileId}`)).pipe(
-			map((data) => (data !== null ? JSON.parse(data) : undefined)),
+		return AsyncStorage.getItem(`@profileData/${profileId}`).then((data) =>
+			data !== null ? JSON.parse(data) : undefined,
 		);
 	} catch (e) {
 		console.error(e);
-		return of(undefined);
+		return Promise.resolve(undefined);
 	}
 };
 
-const saveAppData = (data: Omit<AppState, 'currentData'>): Observable<void> => {
+const saveAppData = (data: Omit<AppState, 'currentData'>): Promise<void> => {
 	try {
-		return from(AsyncStorage.setItem('appData', JSON.stringify(data)));
+		return AsyncStorage.setItem('appData', JSON.stringify(data));
 	} catch (e) {
 		console.error(e);
-		return of();
+		return Promise.resolve();
 	}
 };
 
-const getAppData = (): Observable<Omit<AppState, 'currentData'> | undefined> => {
+const getAppData = (): Promise<Omit<AppState, 'currentData'> | undefined> => {
 	try {
-		return from(AsyncStorage.getItem('data')).pipe(map((data) => (data !== null ? JSON.parse(data) : undefined)));
+		return AsyncStorage.getItem('data').then((data) => (data !== null ? JSON.parse(data) : undefined));
 	} catch (e) {
 		console.error(e);
-		return of(undefined);
+		return Promise.resolve(undefined);
 	}
 };
 

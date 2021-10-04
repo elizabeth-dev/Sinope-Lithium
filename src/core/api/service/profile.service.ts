@@ -1,93 +1,51 @@
 import { developmentEnv } from '@core/environments/development.env';
-import { map, Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
+import { expandUri, fetchAPI } from '@shared/utils/fetch.utils';
 import { CreateProfileReq, PostRes, ProfileRes, UpdateProfileReq } from '../model/api';
 
-const getById = (id: string, fromProfile: string, token: string): Observable<ProfileRes> => {
-	return ajax.getJSON(
-		`${developmentEnv.apiUrl}/profiles/${id}?profile=${fromProfile}?expand=followers&expand=following`,
-		{
-			Authorization: `Bearer ${token}`,
-		},
+const getById = (id: string, fromProfile: string, token: string): Promise<ProfileRes> =>
+	fetchAPI(
+		`${developmentEnv.apiUrl}/profiles/${id}?profile=${fromProfile}&${expandUri('following', 'followers')}`,
+		token,
 	);
-};
 
-const create = (newProfile: CreateProfileReq, token: string): Observable<ProfileRes> => {
-	return ajax
-		.post(`${developmentEnv.apiUrl}/profiles?expand=following&expand=followers`, newProfile, {
-			Authorization: `Bearer ${token}`,
-		})
-		.pipe(map((res) => res.response as ProfileRes));
-};
+const create = (newProfile: CreateProfileReq, token: string): Promise<ProfileRes> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles?${expandUri('following', 'followers')}`, token, newProfile);
 
-const remove = (id: string, token: string): Observable<void> => {
-	return ajax
-		.delete(`${developmentEnv.apiUrl}/profiles/${id}`, {
-			Authorization: `Bearer ${token}`,
-		})
-		.pipe(map(() => {}));
-};
+const remove = (id: string, token: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}`, token, undefined, 'DELETE');
 
-const update = (id: string, updateBody: UpdateProfileReq, token: string): Observable<ProfileRes> => {
-	return ajax
-		.patch(`${developmentEnv.apiUrl}/profiles/${id}?expand=following&expand=followers`, updateBody, {
-			Authorization: `Bearer ${token}`,
-		})
-		.pipe(map((res) => res.response as ProfileRes));
-};
+const update = (id: string, body: UpdateProfileReq, token: string): Promise<ProfileRes> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}?${expandUri('following', 'followers')}`, token, body, 'PATCH');
 
-const addManager = (id: string, newManager: string, token: string): Observable<void> => {
-	return ajax
-		.put(`${developmentEnv.apiUrl}/profiles/${id}/managers/${newManager}`, undefined, {
-			Authorization: `Bearer, ${token}`,
-		})
-		.pipe(map(() => {}));
-};
+const addManager = (id: string, newManager: string, token: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/managers/${newManager}`, token, undefined, 'PUT');
 
-const removeManager = (id: string, manager: string, token: string): Observable<void> => {
-	return ajax
-		.delete(`${developmentEnv.apiUrl}/profiles/${id}/managers/${manager}`, {
-			Authorization: `Bearer, ${token}`,
-		})
-		.pipe(map(() => {}));
-};
+const removeManager = (id: string, manager: string, token: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/managers/${manager}`, token, undefined, 'DELETE');
 
-const getFollowers = (id: string, token: string): Observable<ProfileRes[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/followers?expand=following&expand=followers`, {
-		Authorization: `Bearer ${token}`,
-	});
-};
+const getFollowers = (id: string, token: string): Promise<ProfileRes[]> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/followers?${expandUri('following', 'followers')}`, token);
 
-const getFollowing = (id: string, token: string): Observable<ProfileRes[]> => {
-	return ajax.getJSON(`${developmentEnv.apiUrl}/profiles/${id}/following?expand=following&expand=followers`, {
-		Authorization: `Bearer ${token}`,
-	});
-};
+const getFollowing = (id: string, token: string): Promise<ProfileRes[]> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/following?${expandUri('following', 'followers')}`, token);
 
-const follow = (id: string, fromProfile: string, token: string): Observable<void> => {
-	return ajax
-		.put(`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`, undefined, {
-			Authorization: `Bearer ${token}`,
-		})
-		.pipe(map(() => {}));
-};
+const follow = (id: string, fromProfile: string, token: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`, token, undefined, 'PUT');
 
-const unfollow = (id: string, fromProfile: string, token: string): Observable<void> => {
-	return ajax
-		.delete(`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`, {
-			Authorization: `Bearer ${token}`,
-		})
-		.pipe(map(() => {}));
-};
+const unfollow = (id: string, fromProfile: string, token: string): Promise<void> =>
+	fetchAPI(`${developmentEnv.apiUrl}/profiles/${id}/followers/${fromProfile}`, token, undefined, 'DELETE');
 
-const timeline = (profile: string, token: string): Observable<PostRes[]> => {
-	return ajax.getJSON(
-		`${developmentEnv.apiUrl}/profiles/${profile}/timeline?expand=profile&expand=question&expand=profile.following&expand=profile.followers&expand=question.from`,
-		{
-			Authorization: `Bearer ${token}`,
-		},
+const timeline = (profile: string, token: string): Promise<PostRes[]> =>
+	fetchAPI(
+		`${developmentEnv.apiUrl}/profiles/${profile}/timeline?${expandUri(
+			'profile',
+			'profile.following',
+			'profile.followers',
+			'question',
+			'question.from',
+		)}`,
+		token,
 	);
-};
 
 export const ProfileService = {
 	getById,

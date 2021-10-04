@@ -1,8 +1,8 @@
 import { AppState } from '@core/state/app.store';
 import { createSelector } from '@reduxjs/toolkit';
+import { populatePostEntity } from '@shared/helper/post.helper';
 import { FullPostEntity } from '@shared/types/entities/post.interface';
 import { FetchEntity } from '@shared/types/fetchFields.interface';
-import { populatePostEntity } from '@shared/helper/post.helper';
 import { fromProfile } from './profile.selectors';
 import { fromQuestion } from './question.selectors';
 
