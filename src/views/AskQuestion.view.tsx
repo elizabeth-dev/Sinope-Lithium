@@ -2,7 +2,6 @@ import { QuestionActions } from '@actions/question.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { AskQuestionScreen } from '@screens/ask-question/AskQuestionScreen.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 

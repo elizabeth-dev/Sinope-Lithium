@@ -23,7 +23,6 @@ import { authSaga } from './sagas/auth.saga';
 import { postSaga } from './sagas/post.saga';
 import { profileSaga } from './sagas/profile.saga';
 import { questionSaga } from './sagas/question.saga';
-import { receptionSaga } from './sagas/reception.saga';
 import { searchSaga } from './sagas/search.saga';
 import { selfSaga } from './sagas/self.saga';
 import { timelineSaga } from './sagas/timeline.saga';
@@ -54,7 +53,6 @@ function* appSaga() {
 		postSaga(),
 		profileSaga(),
 		questionSaga(),
-		receptionSaga(),
 		searchSaga(),
 		selfSaga(),
 		timelineSaga(),

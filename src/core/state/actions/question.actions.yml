@@ -11,6 +11,7 @@ actionGroups:
             receiveQuestions:
                 alias: receive
                 payload:
+                    profile: string
                     questions: IQuestion[]
                     receivedAt: number
             sendQuestion:

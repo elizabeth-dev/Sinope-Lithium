@@ -1,6 +1,6 @@
 module.exports = {
 	root: true,
-	extends: ['@react-native-community', 'prettier'],
+	extends: ['@react-native-community', 'prettier', 'plugin:react/jsx-runtime'],
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
 	rules: {
@@ -10,7 +10,6 @@ module.exports = {
 		'comma-dangle': ['error', 'always-multiline'],
 		'jsx-quotes': ['error', 'prefer-double'],
 		quotes: ['error', 'single'],
-		'no-unused-vars': ['error'],
 		'no-mixed-spaces-and-tabs': 0,
 		curly: ['error', 'multi-line'],
 		'no-console': ['warn', { allow: ['error'] }],

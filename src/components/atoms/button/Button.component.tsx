@@ -1,4 +1,4 @@
-import { colors } from '@theme/colors';
+import { theme } from '@theme/main.theme';
 import React from 'react';
 import { ColorValue, GestureResponderEvent, Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
@@ -25,7 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
 	style,
 	ripple = true,
 	children,
-	backgroundColor = colors.purple600,
+	backgroundColor = theme.colors.secondary,
 }) => (
 	<View style={[styles.root, { backgroundColor }, style]}>
 		<Pressable

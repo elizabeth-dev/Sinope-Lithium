@@ -18,7 +18,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ error, onLogin, onRegi
 		<View style={styles.root}>
 			<TextInput
 				placeholder="Email"
-				autoCompleteType="email"
+				autoComplete="email"
 				autoCapitalize="none"
 				keyboardType="email-address"
 				error={error}
@@ -27,7 +27,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ error, onLogin, onRegi
 			/>
 			<TextInput
 				placeholder="Password"
-				autoCompleteType="password"
+				autoComplete="password"
 				autoCapitalize="none"
 				secureTextEntry={true}
 				error={error}

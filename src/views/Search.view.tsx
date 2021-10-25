@@ -6,7 +6,7 @@ import { fromSearch } from '@core/state/selectors/search.selectors';
 import { SearchScreen } from '@screens/search/SearchScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
+import { useMemo } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
@@ -17,7 +17,7 @@ export interface SearchViewProps {
 export const SearchView: NavigationFunctionComponent<SearchViewProps> = ({ searchTerm, componentId }) => {
 	const dispatcher = useAppDispatch();
 
-	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
+	const selectPostById = useMemo(() => fromPost.make.byId(), []);
 
 	const currentProfileId = useSelector(fromProfile.currentId);
 	const { search } = useSelector((state: AppState) => fromSearch.result(state, searchTerm));

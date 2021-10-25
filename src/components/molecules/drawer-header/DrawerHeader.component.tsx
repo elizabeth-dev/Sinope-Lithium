@@ -3,7 +3,7 @@ import { Icon } from '@atoms/icon/Icon.component';
 import { Typography } from '@atoms/typography/Typography.component';
 import { IProfile } from '@shared/types/entities/profile.interface';
 import { theme } from '@theme/main.theme';
-import React from 'react';
+import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { DrawerHeaderStyles as styles } from './DrawerHeader.styles';
 
@@ -16,7 +16,7 @@ export interface DrawerHeaderProps {
 	onTabSwitch: (profileTab: boolean) => void;
 }
 
-export const DrawerHeader: React.FC<DrawerHeaderProps> = ({
+export const DrawerHeader: FC<DrawerHeaderProps> = ({
 	profilesTab,
 	currentProfile,
 	otherProfiles,

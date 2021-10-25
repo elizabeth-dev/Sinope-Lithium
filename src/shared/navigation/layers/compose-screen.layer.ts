@@ -1,10 +1,10 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { theme } from '@theme/main.theme';
 import { Layout } from 'react-native-navigation';
 
 export const composeScreenLayer = (replyTo?: string, questionId?: string): Layout => ({
 	component: {
-		name: AppScreens.ComposeScreen,
+		name: AppViews.ComposeView,
 		options: {
 			topBar: {
 				title: {

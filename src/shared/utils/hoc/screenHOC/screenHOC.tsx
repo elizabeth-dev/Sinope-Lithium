@@ -1,11 +1,11 @@
 import { Disclaimer } from '@atoms/disclaimer/Disclaimer.component';
-import React from 'react';
+import { ComponentType, FC } from 'react';
 import { Action, AnyAction, Store } from 'redux';
 import { reduxProviderHOC } from '../redux-provider/reduxProviderHOC';
 import { screenHOCStyles as styles } from './screenHOC.styles';
 
 const _screenHOC =
-	<P extends {}>(WrappedComponent: React.FC<P>, disclaimer: boolean): React.FC<P> =>
+	<P extends {}>(WrappedComponent: FC<P>, disclaimer: boolean): FC<P> =>
 	(props) =>
 		(
 			<>
@@ -17,8 +17,8 @@ const _screenHOC =
 		);
 
 export const screenHOC = <P extends {}, A extends Action = AnyAction>(
-	component: React.FC<P>,
+	component: FC<P>,
 	store: Store<any, A>,
 	disclaimer = true,
 	persistGate = false,
-): React.ComponentType<P> => reduxProviderHOC(_screenHOC(component, disclaimer), store, persistGate);
+): ComponentType<P> => reduxProviderHOC(_screenHOC(component, disclaimer), store, persistGate);

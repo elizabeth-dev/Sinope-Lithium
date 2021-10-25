@@ -1,10 +1,10 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { LayoutRoot } from 'react-native-navigation';
 
 export const loginRoot = (): LayoutRoot => ({
 	root: {
 		component: {
-			name: AppScreens.LoginScreen,
+			name: AppViews.LoginView,
 		},
 	},
 });

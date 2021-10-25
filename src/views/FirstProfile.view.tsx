@@ -2,7 +2,6 @@ import { ProfileActions } from '@actions/profile.actions';
 import { AppState } from '@core/state/app.store';
 import { FirstProfileScreen } from '@screens/first-profile/FirstProfileScreen.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
 import { Keyboard } from 'react-native';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';

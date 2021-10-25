@@ -3,10 +3,10 @@ imports:
 actionGroups:
     user:
         actions:
-            requestSelfUser:
-                alias: requestSelf
-            receiveSelfUser:
-                alias: receiveSelf
+            initializeData:
+                alias: initData
+            initializeDataSuccess:
+                alias: initSuccess
                 payload:
                     user: IUser
                     receivedAt: number

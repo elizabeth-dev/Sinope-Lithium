@@ -15,15 +15,10 @@ export const SplashScreen: React.FC = () => {
 	if (!loggedIn) {
 		Navigation.setRoot(loginRoot());
 	} else {
-		Promise.all([
-			MaterialCommunityIcons.getImageSource('menu', 25),
-			persistorPromise,
-		]).then(([menuIcon]) => {
-			Navigation.setRoot(dashboardRoot(
-				menuIcon,
-				currentProfile?.profile?.name,
-				currentProfile?.profile?.tag,
-			));
+		Promise.all([MaterialCommunityIcons.getImageSource('menu', 25), persistorPromise]).then(([menuIcon]) => {
+			Navigation.setRoot(
+				dashboardRoot(menuIcon, currentProfile?.profile?.name ?? '', currentProfile?.profile?.tag ?? ''),
+			);
 		});
 	}
 

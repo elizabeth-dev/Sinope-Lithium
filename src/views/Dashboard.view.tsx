@@ -11,13 +11,8 @@ import { nav } from '@shared/helper/navigation.helper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { searchScreenLayer } from '@shared/navigation/layers/search-screen.layer';
-import React from 'react';
-import {
-	Navigation,
-	NavigationButtonPressedEvent,
-	NavigationComponentListener,
-	NavigationFunctionComponent,
-} from 'react-native-navigation';
+import { useCallback, useEffect } from 'react';
+import { Navigation, NavigationComponentListener, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
 export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
@@ -28,11 +23,11 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 	const receivedQuestions = useSelector(fromQuestion.received);
 	const searchHistory = useSelector(fromSearch.history);
 
-	const onTimelineRefresh = React.useCallback(() => {
+	const onTimelineRefresh = useCallback(() => {
 		dispatcher(TimelineActions.request({ profile: currentProfileId }));
 	}, [dispatcher, currentProfileId]);
 
-	const onQuestionsRefresh = React.useCallback(() => {
+	const onQuestionsRefresh = useCallback(() => {
 		dispatcher(QuestionActions.getByProfile({ profile: currentProfileId }));
 	}, [dispatcher, currentProfileId]);
 
@@ -58,16 +53,16 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 	const onQuestionAnswer = (questionId: string) =>
 		Navigation.push(componentId, composeScreenLayer(undefined, questionId));
 
-	React.useEffect(() => {
-		if (!timelineEntity.timeline) {
+	useEffect(() => {
+		if (!timelineEntity || timelineEntity.timeline.length === 0) {
 			onTimelineRefresh();
 		}
-	}, [onTimelineRefresh, timelineEntity.timeline]);
+	}, [onTimelineRefresh, timelineEntity?.timeline?.length]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		// TODO: Check if this can be moved to a hook
 		const listener: NavigationComponentListener = {
-			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
+			navigationButtonPressed: (event) => {
 				if (event.buttonId === 'DASHBOARD_MENU') {
 					Navigation.mergeOptions(componentId, {
 						sideMenu: { left: { visible: true } },
@@ -85,11 +80,11 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 	return (
 		<DashboardScreen
 			currentProfileId={currentProfileId}
-			timeline={timelineEntity.timeline}
-			timelineFetching={timelineEntity.isFetching}
+			timeline={timelineEntity?.timeline ?? []}
+			timelineFetching={timelineEntity?.isFetching ?? true}
 			onTimelineRefresh={onTimelineRefresh}
-			questions={receivedQuestions.questions.map((question) => question.question)}
-			fetchingQuestions={receivedQuestions.isFetching}
+			questions={receivedQuestions?.questions?.map((question) => question.question) ?? []}
+			fetchingQuestions={receivedQuestions?.isFetching ?? true}
 			onQuestionsRefresh={onQuestionsRefresh}
 			searchHistory={searchHistory}
 			onSearch={onSearch}

@@ -21,10 +21,10 @@ const _Typography: React.FC<TypographyProps & { _style: StyleProp<TextStyle> }> 
 	</Text>
 );
 
-export const Typography: { [type: string]: React.FC<TypographyProps> } = {
-	Headline: (props) => <_Typography _style={styles.headline} {...props} />,
-	Body: (props) => <_Typography _style={styles.body} {...props} />,
-	Subtitle: (props) => <_Typography _style={styles.subtitle} {...props} />,
-	Caption: (props) => <_Typography _style={styles.caption} {...props} />,
-	Button: (props) => <_Typography _style={styles.button} {...props} />,
+export const Typography = {
+	Headline: (props: TypographyProps) => <_Typography _style={styles.headline} {...props} />,
+	Body: (props: TypographyProps) => <_Typography _style={styles.body} {...props} />,
+	Subtitle: (props: TypographyProps) => <_Typography _style={styles.subtitle} {...props} />,
+	Caption: (props: TypographyProps) => <_Typography _style={styles.caption} {...props} />,
+	Button: (props: TypographyProps) => <_Typography _style={styles.button} {...props} />,
 };

@@ -1,10 +1,10 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { theme } from '@theme/main.theme';
 import { Layout } from 'react-native-navigation';
 
 export const askQuestionScreenLayer = (recipient: string): Layout => ({
 	component: {
-		name: AppScreens.AskQuestionScreen,
+		name: AppViews.AskQuestionView,
 		options: {
 			topBar: {
 				title: {

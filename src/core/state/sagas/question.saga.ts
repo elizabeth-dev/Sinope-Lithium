@@ -26,6 +26,7 @@ function* getQuestionsByProfileWorker(action: IGetQuestionsByProfileAction) {
 
 		yield put(
 			QuestionActions.receive({
+				profile: action.payload.profile,
 				questions: questions.map((question) => questionResToIQuestion(question)),
 				receivedAt: Date.now(),
 			}),

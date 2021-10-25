@@ -6,7 +6,7 @@ import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { ProfileScreen } from '@screens/profile/ProfileScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import {
 	Navigation,
 	NavigationButtonPressedEvent,
@@ -23,7 +23,7 @@ export interface ProfileViewProps {
 export const ProfileView: NavigationFunctionComponent<ProfileViewProps> = ({ componentId, profileId }) => {
 	const dispatcher = useAppDispatch();
 
-	const selectPostsByProfile = React.useMemo(() => fromPost.make.byProfile(), []);
+	const selectPostsByProfile = useMemo(() => fromPost.make.byProfile(), []);
 
 	const currentProfileId = useSelector(fromProfile.currentId);
 	const profileEntity = useSelector((state: AppState) => fromProfile.byId(state, profileId));
@@ -44,14 +44,14 @@ export const ProfileView: NavigationFunctionComponent<ProfileViewProps> = ({ com
 	const onUnlike = (postId: string) =>
 		dispatcher(PostActions.unlike({ post: postId, fromProfile: currentProfileId }));
 
-	const onRefresh = React.useCallback(() => {
+	const onRefresh = useCallback(() => {
 		dispatcher(ProfileActions.request({ profile: profileId, fromProfile: currentProfileId }));
 		dispatcher(PostActions.requestFromProfile({ profile: profileId }));
 	}, [dispatcher, profileId, currentProfileId]);
 
-	React.useEffect(() => onRefresh(), [onRefresh]);
+	useEffect(() => onRefresh(), [onRefresh]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const listener: NavigationComponentListener = {
 			navigationButtonPressed: (event: NavigationButtonPressedEvent) => {
 				if (event.buttonId === 'FOLLOW_PROFILE') {
@@ -68,7 +68,7 @@ export const ProfileView: NavigationFunctionComponent<ProfileViewProps> = ({ com
 		};
 	}, [componentId, currentProfileId, dispatcher, profileId]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (profileId !== currentProfileId) {
 			if (!profileEntity.profile.followingThem) {
 				MaterialIcons.getImageSource('person-add', 25).then((followIcon) =>

@@ -2,7 +2,6 @@ import { AppState } from '@core/state/app.store';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { ProfileListScreen } from '@screens/profile-list/ProfileListScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import React from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 

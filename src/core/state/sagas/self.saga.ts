@@ -27,7 +27,7 @@ function* switchedProfileWorker() {
 	const menuIcon: string = yield call(MaterialCommunityIcons.getImageSource, 'menu', 25);
 
 	yield call(
-		Navigation.setRoot,
+		[Navigation, Navigation.setRoot],
 		dashboardRoot(menuIcon, currentProfile?.profile?.name, currentProfile?.profile?.tag),
 	);
 }

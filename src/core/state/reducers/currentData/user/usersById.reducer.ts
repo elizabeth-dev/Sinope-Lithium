@@ -1,4 +1,4 @@
-import { ReceiveSelfUserAction, UserActionsDto } from '@actions/user.actions';
+import { InitializeDataSuccessAction, UserActionsDto } from '@actions/user.actions';
 import { UserEntity } from '@shared/types/entities/user.interface';
 
 export interface UsersByIdState {
@@ -9,7 +9,7 @@ const initialState: UsersByIdState = {};
 
 export function usersByIdReducer(state = initialState, action: UserActionsDto): UsersByIdState {
 	switch (action.type) {
-		case ReceiveSelfUserAction:
+		case InitializeDataSuccessAction:
 			return {
 				...state,
 				[action.payload.user.id]: {

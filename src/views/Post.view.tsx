@@ -5,7 +5,7 @@ import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { PostScreen } from '@screens/post/PostScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
+import { useEffect, useMemo } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,7 @@ export interface PostViewProps {
 
 export const PostView: NavigationFunctionComponent<PostViewProps> = ({ postId, componentId }) => {
 	const dispatcher = useAppDispatch();
-	const selectPostById = React.useMemo(() => fromPost.make.byId(), []);
+	const selectPostById = useMemo(() => fromPost.make.byId(), []);
 
 	const postEntity = useSelector((state: AppState) => selectPostById(state, postId));
 	const currentProfileId = useSelector(fromProfile.currentId);
@@ -30,7 +30,7 @@ export const PostView: NavigationFunctionComponent<PostViewProps> = ({ postId, c
 	const onUnlike = (_postId: string) =>
 		dispatcher(PostActions.unlike({ post: _postId, fromProfile: currentProfileId }));
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatcher(PostActions.request({ post: postId }));
 	}, [postId, dispatcher]);
 

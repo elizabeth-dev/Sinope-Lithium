@@ -46,7 +46,6 @@
 		"scope": "typescriptreact",
 		"prefix": "rnv",
 		"body": [
-			"import React from 'react';",
 			"import { NavigationFunctionComponent } from 'react-native-navigation';",
 			"",
 			//https://code.visualstudio.com/docs/editor/userdefinedsnippets
@@ -62,7 +61,6 @@
 		"scope": "typescriptreact",
 		"prefix": "rnrx",
 		"body": [
-			"import React from 'react';",
 			"import { ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Styles as styles } from './${TM_FILENAME_BASE/(.*)\\..+?$/$1/}.styles';",
 			"",
 			"export const ${TM_FILENAME_BASE/(.*)\\..+?$/$1/}Model: React.FC = () => {",

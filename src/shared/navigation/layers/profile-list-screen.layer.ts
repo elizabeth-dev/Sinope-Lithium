@@ -1,9 +1,9 @@
+import { AppViews } from '@core/app.views';
 import { Layout } from 'react-native-navigation';
-import { AppScreens } from '@core/app.screens';
 
 export const profileListScreenLayer = (profileIds: string[], title: string): Layout<{ profileIds: string[] }> => ({
 	component: {
-		name: AppScreens.ProfileListScreen,
+		name: AppViews.ProfileListView,
 		passProps: {
 			profileIds,
 		},

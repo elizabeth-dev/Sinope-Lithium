@@ -1,4 +1,4 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { theme } from '@theme/main.theme';
 import { LayoutRoot } from 'react-native-navigation';
 import { ImageSource } from 'react-native-vector-icons/Icon';
@@ -8,7 +8,7 @@ export const dashboardRoot = (menuIcon: ImageSource, profileName: string, profil
 		sideMenu: {
 			left: {
 				component: {
-					name: AppScreens.DrawerScreen,
+					name: AppViews.DrawerView,
 				},
 			},
 			center: {
@@ -17,7 +17,7 @@ export const dashboardRoot = (menuIcon: ImageSource, profileName: string, profil
 					children: [
 						{
 							component: {
-								name: AppScreens.DashboardScreen,
+								name: AppViews.DashboardView,
 								options: {
 									topBar: {
 										leftButtons: [

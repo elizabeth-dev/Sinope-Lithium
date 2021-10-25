@@ -7,8 +7,11 @@ import {
 	RegisterAction,
 	TokenExpiredAction,
 } from '@actions/auth.actions';
+import { UserActions } from '@actions/user.actions';
 import { AuthSrv } from '@core/api/service/auth.service';
+import { firstProfileRoot } from '@shared/navigation/roots/firstProfile.root';
 import { CallReturn } from '@shared/types/saga.type';
+import { Navigation } from 'react-native-navigation';
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { fromAuth } from '../selectors/auth.selectors';
 
@@ -17,6 +20,7 @@ function* loginWorker({ payload }: ILoginAction) {
 		const tokenPair: CallReturn<typeof AuthSrv.login> = yield call(AuthSrv.login, payload.email, payload.password);
 
 		yield put(AuthActions.loginSuccess(tokenPair));
+		yield put(UserActions.initData());
 	} catch (error) {
 		yield put(AuthActions.loginFailure());
 	}
@@ -27,6 +31,7 @@ function* registerWorker({ payload }: IRegisterAction) {
 		const tokenPair: CallReturn<typeof AuthSrv.login> = yield call(AuthSrv.register, payload);
 
 		yield put(AuthActions.registerSuccess(tokenPair));
+		yield call([Navigation, Navigation.setRoot], firstProfileRoot());
 	} catch (error) {
 		yield put(AuthActions.registerFailure());
 	}

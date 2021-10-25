@@ -1,10 +1,10 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { theme } from '@theme/main.theme';
 import { Layout } from 'react-native-navigation';
 
 export const postScreenLayer = (postId: string): Layout<{ postId: string }> => ({
 	component: {
-		name: AppScreens.PostScreen,
+		name: AppViews.PostView,
 		options: {
 			topBar: {
 				title: {

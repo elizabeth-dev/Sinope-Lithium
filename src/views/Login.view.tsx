@@ -3,7 +3,6 @@ import { AppState } from '@core/state/app.store';
 import { LoginScreen } from '@screens/login/LoginScreen.component';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
 import { registerRoot } from '@shared/navigation/roots/register.root';
-import React from 'react';
 import { Keyboard } from 'react-native';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';

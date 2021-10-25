@@ -1,9 +1,10 @@
 import { SelfActions } from '@actions/self.actions';
+import { UserActions } from '@actions/user.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { DrawerScreen } from '@screens/drawer/DrawerScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
 import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
-import React from 'react';
+import { useEffect } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
@@ -12,8 +13,8 @@ export const DrawerView: NavigationFunctionComponent = ({ componentId }) => {
 
 	// Check if better approach exists
 	const currentProfile = useSelector(fromProfile.current);
-	const otherProfiles = useSelector(fromProfile.mine)!
-		.filter((el) => el.profile?.id !== currentProfile?.profile?.id)
+	const otherProfiles = (useSelector(fromProfile.mine) ?? [])
+		.filter((el) => el?.profile?.id !== currentProfile?.profile?.id)
 		.map((el) => el.profile);
 
 	const onProfileNav = (profileId: string) => nav.toProfile(profileId, componentId);
@@ -34,9 +35,13 @@ export const DrawerView: NavigationFunctionComponent = ({ componentId }) => {
 		}); */
 	};
 
+	useEffect(() => {
+		if (!currentProfile?.profile) dispatcher(UserActions.initData());
+	}, [currentProfile?.profile]);
+
 	return (
 		<DrawerScreen
-			currentProfile={currentProfile.profile}
+			currentProfile={currentProfile?.profile}
 			otherProfiles={otherProfiles}
 			onProfileNav={onProfileNav}
 			onProfileSwitch={onProfileSwitch}

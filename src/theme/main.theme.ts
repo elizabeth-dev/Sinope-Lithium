@@ -5,7 +5,7 @@ export const theme1 = {
 		primary: '#1b3c59',
 		secondary: '#11bfae',
 		accent: '#456173',
-		warn: '#000000',
+		warn: '#d63a55',
 		background: '#2e2e2e',
 		action: '#000000',
 		disabledAction: '#000000',
@@ -79,7 +79,7 @@ export const theme1 = {
 			size: 14,
 			letterSpacing: 1.25 / 14,
 			opacity: 0.87,
-			color: '#ffffff',
+			color: '#f2f2f0',
 		},
 	},
 } as const;
@@ -342,4 +342,4 @@ export const lightTheme2 = {
 	},
 } as const;
 
-export const theme = theme2;
+export const theme = theme1;

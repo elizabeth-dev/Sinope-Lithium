@@ -1,86 +1,86 @@
-import { AppScreens } from '@core/app.screens';
+import { AppViews } from '@core/app.views';
 import { appStore } from '@core/state/app.store';
 import { screenHOC } from '@shared/utils/hoc/screenHOC/screenHOC';
 import { Navigation } from 'react-native-navigation';
-import { AskQuestionScreen } from './src/components/screens/ask-question/AskQuestionScreen.component';
-import { ComposeScreen } from './src/components/screens/compose/ComposeScreen.component';
-import { DashboardScreen } from './src/components/screens/dashboard/DashboardScreen.component';
-import { DrawerScreen } from './src/components/screens/drawer/DrawerScreen.component';
-import { FirstProfileScreen } from './src/components/screens/first-profile/FirstProfileScreen.component';
-import { LoginScreen } from './src/components/screens/login/LoginScreen.component';
-import { PostScreen } from './src/components/screens/post/PostScreen.component';
-import { ProfileListScreen } from './src/components/screens/profile-list/ProfileListScreen.component';
-import { ProfileScreen } from './src/components/screens/profile/ProfileScreen.component';
-import { RegisterScreen } from './src/components/screens/register/RegisterScreen.component';
-import { SearchScreen } from './src/components/screens/search/SearchScreen.component';
+import { AskQuestionView } from './src/views/AskQuestion.view';
+import { ComposeView } from './src/views/Compose.view';
+import { DashboardView } from './src/views/Dashboard.view';
+import { DrawerView } from './src/views/Drawer.view';
+import { FirstProfileView } from './src/views/FirstProfile.view';
+import { LoginView } from './src/views/Login.view';
+import { PostView } from './src/views/Post.view';
+import { ProfileView } from './src/views/Profile.view';
+import { ProfileListView } from './src/views/ProfileList.view';
+import { RegisterView } from './src/views/Register.view';
+import { SearchView } from './src/views/Search.view';
 import { SplashScreen } from './src/views/splash/screens/splash/SplashScreen.component';
 
 Navigation.registerComponent(
-	AppScreens.SplashScreen,
+	AppViews.SplashView,
 	() => screenHOC(SplashScreen, appStore, true, true),
 	() => SplashScreen,
 );
 Navigation.registerComponent(
-	AppScreens.DashboardScreen,
-	() => screenHOC(DashboardScreen, appStore),
-	() => DashboardScreen,
+	AppViews.DashboardView,
+	() => screenHOC(DashboardView, appStore),
+	() => DashboardView,
 );
 Navigation.registerComponent(
-	AppScreens.DrawerScreen,
-	() => screenHOC(DrawerScreen, appStore, false),
-	() => DrawerScreen,
+	AppViews.DrawerView,
+	() => screenHOC(DrawerView, appStore, false),
+	() => DrawerView,
 );
 Navigation.registerComponent(
-	AppScreens.ProfileScreen,
-	() => screenHOC(ProfileScreen, appStore),
-	() => ProfileScreen,
+	AppViews.ProfileView,
+	() => screenHOC(ProfileView, appStore),
+	() => ProfileView,
 );
 Navigation.registerComponent(
-	AppScreens.PostScreen,
-	() => screenHOC(PostScreen, appStore),
-	() => PostScreen,
+	AppViews.PostView,
+	() => screenHOC(PostView, appStore),
+	() => PostView,
 );
 Navigation.registerComponent(
-	AppScreens.LoginScreen,
-	() => screenHOC(LoginScreen, appStore),
-	() => LoginScreen,
+	AppViews.LoginView,
+	() => screenHOC(LoginView, appStore),
+	() => LoginView,
 );
 Navigation.registerComponent(
-	AppScreens.RegisterScreen,
-	() => screenHOC(RegisterScreen, appStore),
-	() => RegisterScreen,
+	AppViews.RegisterView,
+	() => screenHOC(RegisterView, appStore),
+	() => RegisterView,
 );
 Navigation.registerComponent(
-	AppScreens.FirstProfileScreen,
-	() => screenHOC(FirstProfileScreen, appStore),
-	() => FirstProfileScreen,
+	AppViews.FirstProfileView,
+	() => screenHOC(FirstProfileView, appStore),
+	() => FirstProfileView,
 );
 Navigation.registerComponent(
-	AppScreens.ComposeScreen,
-	() => screenHOC(ComposeScreen, appStore),
-	() => ComposeScreen,
+	AppViews.ComposeView,
+	() => screenHOC(ComposeView, appStore),
+	() => ComposeView,
 );
 Navigation.registerComponent(
-	AppScreens.SearchScreen,
-	() => screenHOC(SearchScreen, appStore),
-	() => SearchScreen,
+	AppViews.SearchView,
+	() => screenHOC(SearchView, appStore),
+	() => SearchView,
 );
 Navigation.registerComponent(
-	AppScreens.AskQuestionScreen,
-	() => screenHOC(AskQuestionScreen, appStore),
-	() => AskQuestionScreen,
+	AppViews.AskQuestionView,
+	() => screenHOC(AskQuestionView, appStore),
+	() => AskQuestionView,
 );
 Navigation.registerComponent(
-	AppScreens.ProfileListScreen,
-	() => screenHOC(ProfileListScreen, appStore),
-	() => ProfileListScreen,
+	AppViews.ProfileListView,
+	() => screenHOC(ProfileListView, appStore),
+	() => ProfileListView,
 );
 
 Navigation.events().registerAppLaunchedListener(() => {
 	Navigation.setRoot({
 		root: {
 			component: {
-				name: AppScreens.SplashScreen,
+				name: AppViews.SplashView,
 			},
 		},
 	});

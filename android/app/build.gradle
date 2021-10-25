@@ -133,6 +133,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     ndkVersion rootProject.ext.ndkVersion
 
+    lintOptions {
+      checkDependencies false
+    }
+
     compileOptions {
         // Android Gradle Plugin v4.0.0
         coreLibraryDesugaringEnabled true

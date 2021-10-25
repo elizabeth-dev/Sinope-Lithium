@@ -1,3 +1,4 @@
+import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '@actions/post.actions';
 import {
 	CreatedFirstProfileAction,
 	CreatedProfileAction,
@@ -11,11 +12,10 @@ import {
 	RequestProfileFollowingAction,
 	UnfollowedProfileAction,
 } from '@actions/profile.actions';
-import { IReceiveSelfUserAction, ReceiveSelfUserAction } from '@actions/user.actions';
-import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interface';
 import { IReceiveSearchAction, ReceiveSearchAction } from '@actions/search.actions';
-import { IReceivePostsAction, IReceiveProfilePostsAction, ReceivePostsAction } from '@actions/post.actions';
 import { IReceiveTimelineAction, ReceiveTimelineAction } from '@actions/timeline.actions';
+import { IInitializeDataSuccessAction, InitializeDataSuccessAction } from '@actions/user.actions';
+import { IProfile, ProfileEntity } from '@shared/types/entities/profile.interface';
 
 export interface ProfilesByIdState {
 	[id: string]: ProfileEntity;
@@ -53,7 +53,7 @@ export function profilesByIdReducer(
 	state = initialState,
 	action:
 		| ProfileActionsDto
-		| IReceiveSelfUserAction
+		| IInitializeDataSuccessAction
 		| IReceiveSearchAction
 		| IReceivePostsAction
 		| IReceiveProfilePostsAction
@@ -76,7 +76,7 @@ export function profilesByIdReducer(
 				...state,
 				...reduceProfileList(action.payload.profiles, action.payload.receivedAt),
 			};
-		case ReceiveSelfUserAction:
+		case InitializeDataSuccessAction:
 			return {
 				...state,
 				...reduceProfileList(action.payload.user.profiles, action.payload.receivedAt),

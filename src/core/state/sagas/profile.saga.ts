@@ -16,6 +16,7 @@ import {
 	RequestProfileFollowingAction,
 	UnfollowProfileAction,
 } from '@actions/profile.actions';
+import { UserActions } from '@actions/user.actions';
 import { ProfileService } from '@core/api/service/profile.service';
 import { profileResToIProfile } from '@core/mapper/profile.mapper';
 import { call, put, select, takeEvery } from '@redux-saga/core/effects';
@@ -84,11 +85,13 @@ function* createFirstProfileWorker(action: ICreateFirstProfileAction) {
 		);
 
 		yield put(
+			// Is this necessary?
 			ProfileActions.createdFirst({
 				profile: profileResToIProfile(profile, Date.now()),
 				receivedAt: Date.now(),
 			}),
 		);
+		yield put(UserActions.initData());
 	} catch (error: any) {
 		if (error.status === 401) yield put(ProfileActions.failedCreateFirst());
 	}
