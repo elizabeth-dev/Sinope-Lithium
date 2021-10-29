@@ -4,7 +4,7 @@ import { fromPost } from '@core/state/selectors/post.selectors';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { PostScreen } from '@screens/post/PostScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { useEffect, useMemo } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';

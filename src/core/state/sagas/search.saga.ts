@@ -32,6 +32,7 @@ function* searchWorker(action: ISearchAction) {
 				questions: posts
 					.filter((post): post is Require<PostRes, 'question'> => !!post.question)
 					.map(postResToIQuestion),
+				result: { posts: posts.map((el) => el.id), profiles: profiles.map((el) => el.id) },
 				searchTerm: action.payload.searchTerm,
 				receivedAt: Date.now(),
 			}),

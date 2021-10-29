@@ -135,7 +135,7 @@ export interface PostRes {
 	 * @type {Date}
 	 * @memberof PostRes
 	 */
-	date: Date;
+	date: string;
 
 	/**
 	 *

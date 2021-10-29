@@ -13,5 +13,6 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': 0,
 		curly: ['error', 'multi-line'],
 		'no-console': ['warn', { allow: ['error'] }],
+		'no-shadow': ['error', { hoist: 'all' }],
 	},
 };

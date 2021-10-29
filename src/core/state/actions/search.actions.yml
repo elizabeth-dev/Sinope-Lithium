@@ -19,3 +19,4 @@ actionGroups:
                     profiles: IProfile[]
                     posts: IPost[]
                     questions: IQuestion[]
+                    result: '{ profiles: string[], posts: string[] }'

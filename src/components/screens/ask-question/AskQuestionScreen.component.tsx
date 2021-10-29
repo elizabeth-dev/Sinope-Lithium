@@ -5,11 +5,11 @@ import { KeyboardAvoidingView, Switch, TextInput, View } from 'react-native';
 import { AskQuestionScreenStyles as styles } from './AskQuestionScreen.styles';
 
 export interface AskQuestionScreenProps {
-	recipient: string;
+	placeholder: string;
 	onSend: (content: string, anonymous: boolean) => void;
 }
 
-export const AskQuestionScreen: React.FC<AskQuestionScreenProps> = ({ recipient, onSend }) => {
+export const AskQuestionScreen: React.FC<AskQuestionScreenProps> = ({ placeholder, onSend }) => {
 	const [content, setContent] = React.useState('');
 	const [anonymous, setAnonymous] = React.useState(true);
 
@@ -18,7 +18,7 @@ export const AskQuestionScreen: React.FC<AskQuestionScreenProps> = ({ recipient,
 			<Divider />
 			<TextInput
 				style={styles.input}
-				placeholder={`New question for ${recipient}`}
+				placeholder={placeholder}
 				value={content}
 				onChangeText={setContent}
 				multiline

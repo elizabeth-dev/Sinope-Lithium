@@ -5,6 +5,7 @@ import { IconButton } from '@atoms/icon-button/IconButton.component';
 import { Typography } from '@atoms/typography/Typography.component';
 import { FullPost } from '@shared/types/entities/post.interface';
 import { dateFormatter } from '@shared/utils/dates.utils';
+import { theme } from '@theme/main.theme';
 import React from 'react';
 import { Animated, LayoutChangeEvent, ToastAndroid, View } from 'react-native';
 import { PostStyles as styles } from './Post.styles';
@@ -30,7 +31,7 @@ export const Post: React.FC<PostProps> = ({
 	onLike,
 	onUnlike,
 }) => {
-	const liked = post.likes.indexOf(currentProfileId) === -1; // TODO: Shouldn't run all the array on each post
+	const liked = post.likes.indexOf(currentProfileId) !== -1; // TODO: Shouldn't run all the array on each post
 
 	const onClick = () => {
 		ToastAndroid.show('Clicked!', ToastAndroid.SHORT);
@@ -72,7 +73,10 @@ export const Post: React.FC<PostProps> = ({
 						style={styles.replyButton}>
 						0
 					</FlatButton>
-					<FlatButton icon="star-circle" onPress={() => (liked ? onLike(post.id) : onUnlike(post.id))}>
+					<FlatButton
+						icon="star-circle"
+						onPress={() => (liked ? onUnlike(post.id) : onLike(post.id))}
+						iconStyle={{ ...(liked && { color: theme.colors.starForeground }) }}>
 						{post.likes.length.toString()}
 					</FlatButton>
 					<FlatButton icon="share" onPress={onClick}>

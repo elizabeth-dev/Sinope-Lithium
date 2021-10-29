@@ -3,7 +3,7 @@ import { UserActions } from '@actions/user.actions';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { DrawerScreen } from '@screens/drawer/DrawerScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { useEffect } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';

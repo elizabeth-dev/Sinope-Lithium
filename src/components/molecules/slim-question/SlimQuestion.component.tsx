@@ -29,11 +29,12 @@ export const SlimQuestion: React.FC<SlimQuestionProps> = ({ question, onQuestion
 					<View style={styles.header}>
 						<View style={styles.userData}>
 							<Typography.Headline>{name}</Typography.Headline>
+							{question.from && <Typography.Subtitle>@{question.from.tag}</Typography.Subtitle>}
 						</View>
 						<IconButton icon="dots-vertical" size={24} onPress={() => {}} style={styles.menuButton} />
 					</View>
-					<View style={styles.content}>
-						<Typography.Body>{question.content}</Typography.Body>
+					<View>
+						<Typography.Body style={styles.content}>{question.content}</Typography.Body>
 						<Typography.Caption>{dateFormatter(question.date)}</Typography.Caption>
 					</View>
 				</View>

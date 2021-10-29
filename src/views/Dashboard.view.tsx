@@ -8,11 +8,12 @@ import { fromSearch } from '@core/state/selectors/search.selectors';
 import { fromTimeline } from '@core/state/selectors/timeline.selectors';
 import { DashboardScreen } from '@screens/dashboard/DashboardScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
+import { useNavListener } from '@shared/hooks/useNavListener.hook';
 import { composeScreenLayer } from '@shared/navigation/layers/compose-screen.layer';
 import { searchScreenLayer } from '@shared/navigation/layers/search-screen.layer';
 import { useCallback, useEffect } from 'react';
-import { Navigation, NavigationComponentListener, NavigationFunctionComponent } from 'react-native-navigation';
+import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
 export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
@@ -55,27 +56,24 @@ export const DashboardView: NavigationFunctionComponent = ({ componentId }) => {
 
 	useEffect(() => {
 		if (!timelineEntity || timelineEntity.timeline.length === 0) {
+			// Timeline length being 0 should be okay
 			onTimelineRefresh();
 		}
 	}, [onTimelineRefresh, timelineEntity?.timeline?.length]);
 
 	useEffect(() => {
-		// TODO: Check if this can be moved to a hook
-		const listener: NavigationComponentListener = {
-			navigationButtonPressed: (event) => {
-				if (event.buttonId === 'DASHBOARD_MENU') {
-					Navigation.mergeOptions(componentId, {
-						sideMenu: { left: { visible: true } },
-					});
-				}
-			},
-		};
+		if (!receivedQuestions || receivedQuestions.questions.length === 0) {
+			// Question length being 0 should be okay
+			onQuestionsRefresh();
+		}
+	}, [onQuestionsRefresh, receivedQuestions?.questions?.length]);
 
-		const subscription = Navigation.events().registerComponentListener(listener, componentId);
-		return () => {
-			subscription.remove();
-		};
-	}, [componentId]);
+	useNavListener(componentId, {
+		navigationButtonPressed: (event) => {
+			if (event.buttonId === 'DASHBOARD_MENU')
+				Navigation.mergeOptions(componentId, { sideMenu: { left: { visible: true } } });
+		},
+	});
 
 	return (
 		<DashboardScreen

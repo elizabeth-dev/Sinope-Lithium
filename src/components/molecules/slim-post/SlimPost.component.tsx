@@ -4,6 +4,7 @@ import { Typography } from '@atoms/typography/Typography.component';
 import { FullPost } from '@shared/types/entities/post.interface';
 import { dateFormatter } from '@shared/utils/dates.utils';
 import { colors } from '@theme/colors';
+import { theme } from '@theme/main.theme';
 import React from 'react';
 import { TouchableHighlight, View } from 'react-native';
 import { SlimPostStyles as styles } from './SlimPost.styles';
@@ -30,7 +31,7 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 	onLike,
 	onUnlike,
 }) => {
-	const liked = post.likes.indexOf(currentProfileId) === -1; // TODO: Shouldn't run all the array on each post
+	const liked = post.likes.indexOf(currentProfileId) !== -1; // TODO: Shouldn't run all the array on each post
 
 	return (
 		<TouchableHighlight underlayColor={colors.grey200} onPress={() => onPostNav(post.id)}>
@@ -68,9 +69,10 @@ export const SlimPost: React.FC<SlimPostProps> = ({
 							/>
 							<IconButton
 								icon="star-circle"
-								onPress={() => (liked ? onLike(post.id) : onUnlike(post.id))}
+								onPress={() => (liked ? onUnlike(post.id) : onLike(post.id))}
 								size={actionButtonSize}
 								style={styles.actionButton}
+								iconStyle={{ ...(liked && { color: theme.colors.starForeground }) }}
 							/>
 							<IconButton
 								icon="share"

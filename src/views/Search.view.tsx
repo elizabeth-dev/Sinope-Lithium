@@ -5,7 +5,7 @@ import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { fromSearch } from '@core/state/selectors/search.selectors';
 import { SearchScreen } from '@screens/search/SearchScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { useMemo } from 'react';
 import { NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';

@@ -30,7 +30,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 			<Avatar style={styles.avatar} label="E" size={72} />
 			<Typography.Headline>{profile.name}</Typography.Headline>
 			<Typography.Subtitle>@{profile.tag}</Typography.Subtitle>
-			<Typography.Body style={styles.description}>{profile.description}</Typography.Body>
+			{profile.description && <Typography.Body style={styles.description}>{profile.description}</Typography.Body>}
 		</View>
 		<View style={styles.profileData}>
 			<Pressable style={styles.follows} onPress={() => onFollowingNav()}>

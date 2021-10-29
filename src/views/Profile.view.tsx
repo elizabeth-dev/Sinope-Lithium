@@ -5,7 +5,7 @@ import { fromPost } from '@core/state/selectors/post.selectors';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { ProfileScreen } from '@screens/profile/ProfileScreen.component';
 import { nav } from '@shared/helper/navigation.helper';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
 	Navigation,
@@ -35,7 +35,7 @@ export const ProfileView: NavigationFunctionComponent<ProfileViewProps> = ({ com
 	const onProfileNav = (_profileId: string) => nav.toProfile(_profileId, componentId);
 	const onPostNav = (postId: string) => nav.toPost(postId, componentId);
 	const onReplyNav = (postId: string) => nav.toReply(postId, componentId);
-	const onAskQuestionNav = () => nav.toAskQuestion(componentId, profileId);
+	const onAskQuestionNav = () => nav.toAskQuestion(profileId, componentId);
 	const onFollowingNav = () => nav.toFollowing(profileEntity.profile.following?.profiles, componentId);
 	const onFollowersNav = () => nav.toFollowers(profileEntity.profile.followers?.profiles, componentId);
 

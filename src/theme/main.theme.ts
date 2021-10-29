@@ -1,4 +1,4 @@
-export const theme1 = {
+export const baseDarkTheme = {
 	// Blue + teal
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
@@ -26,6 +26,7 @@ export const theme1 = {
 		mediumBlack: '#000000de',
 		lightBlack: '#00000099',
 		lighterBlack: '#0000001f',
+		starForeground: '#fdd835bb',
 	},
 	opacity: {
 		1: 0.87,
@@ -85,6 +86,7 @@ export const theme1 = {
 } as const;
 
 export const theme2 = {
+	...baseDarkTheme,
 	// Blue + red
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
@@ -170,7 +172,7 @@ export const theme2 = {
 	},
 } as const;
 
-export const lightTheme1 = {
+export const baseLightTheme = {
 	// Blue + teal
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
@@ -257,6 +259,7 @@ export const lightTheme1 = {
 } as const;
 
 export const lightTheme2 = {
+	...baseLightTheme,
 	// Blue + teal
 	// https://colorhunt.co/palette/1b3c5945617311bfaef2f2f0
 	colors: {
@@ -342,4 +345,4 @@ export const lightTheme2 = {
 	},
 } as const;
 
-export const theme = theme1;
+export const theme = baseDarkTheme;

@@ -25,7 +25,7 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		// bottom: 36,
 	},
 	description: {
-		marginVertical: 16,
+		marginTop: 16,
 		marginHorizontal: 16,
 		textAlign: 'center',
 	},
@@ -33,7 +33,7 @@ export const ProfileHeaderStyles = StyleSheet.create({
 		alignSelf: 'stretch',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
-		marginBottom: 16,
+		marginVertical: 16,
 	},
 	follows: {
 		flexDirection: 'row',

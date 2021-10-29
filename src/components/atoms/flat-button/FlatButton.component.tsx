@@ -10,6 +10,7 @@ export interface FlatButtonProps {
 	onLongPress?: (event: GestureResponderEvent) => void;
 	style?: StyleProp<ViewStyle>;
 	textStyle?: StyleProp<TextStyle>;
+	iconStyle?: StyleProp<TextStyle>;
 	ripple?: boolean;
 	children: string;
 }
@@ -21,6 +22,7 @@ export const FlatButton: React.FC<FlatButtonProps> = ({
 	onLongPress,
 	style,
 	textStyle,
+	iconStyle,
 	ripple = true,
 	children,
 }) => (
@@ -37,7 +39,7 @@ export const FlatButton: React.FC<FlatButtonProps> = ({
 					  }
 					: null
 			}>
-			{icon && <Icon icon={icon} namespace={iconNamespace} style={styles.icon} />}
+			{icon && <Icon icon={icon} namespace={iconNamespace} style={[styles.icon, iconStyle]} />}
 			<Text style={[styles.text, textStyle]}>{children.toUpperCase()}</Text>
 		</Pressable>
 	</View>

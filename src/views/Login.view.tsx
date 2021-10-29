@@ -1,7 +1,7 @@
 import { AuthActions } from '@actions/auth.actions';
 import { AppState } from '@core/state/app.store';
 import { LoginScreen } from '@screens/login/LoginScreen.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { registerRoot } from '@shared/navigation/roots/register.root';
 import { Keyboard } from 'react-native';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GestureResponderEvent, Pressable, StyleProp, View, ViewStyle } from 'react-native';
+import { GestureResponderEvent, Pressable, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { Icon, IconNamespaces } from '../icon/Icon.component';
 import { IconButtonStyles as styles } from './IconButton.styles';
 
@@ -9,6 +9,7 @@ export interface IconButtonProps {
 	onPress?: (event: GestureResponderEvent) => void;
 	onLongPress?: (event: GestureResponderEvent) => void;
 	style?: StyleProp<ViewStyle>;
+	iconStyle?: StyleProp<TextStyle>;
 	size?: number;
 	ripple?: boolean;
 }
@@ -19,6 +20,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
 	onPress,
 	onLongPress,
 	style,
+	iconStyle,
 	size,
 	ripple = true,
 }) => (
@@ -35,7 +37,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
 					  }
 					: null
 			}>
-			<Icon icon={icon} namespace={iconNamespace} style={styles.icon} size={size} />
+			<Icon icon={icon} namespace={iconNamespace} style={[styles.icon, iconStyle]} size={size} />
 		</Pressable>
 	</View>
 );

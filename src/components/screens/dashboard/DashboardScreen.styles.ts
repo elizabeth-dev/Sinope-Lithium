@@ -15,6 +15,6 @@ export const DashboardScreenStyles = StyleSheet.create({
 		color: theme.colors.primaryForeground,
 	},
 	tabBarIndicator: {
-		backgroundColor: theme.colors.primaryForeground,
+		backgroundColor: theme.colors.secondary,
 	},
 });

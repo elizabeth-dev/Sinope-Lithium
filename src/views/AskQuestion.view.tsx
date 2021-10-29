@@ -1,7 +1,8 @@
 import { QuestionActions } from '@actions/question.actions';
+import { AppState } from '@core/state/app.store';
 import { fromProfile } from '@core/state/selectors/profile.selectors';
 import { AskQuestionScreen } from '@screens/ask-question/AskQuestionScreen.component';
-import { useAppDispatch } from '@shared/hooks/use-shallow-selector/useAppDispatch.hook';
+import { useAppDispatch } from '@shared/hooks/useAppDispatch.hook';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +14,7 @@ export const AskQuestionView: NavigationFunctionComponent<AskQuestionViewProps> 
 	const dispatcher = useAppDispatch();
 
 	const currentProfileId = useSelector(fromProfile.currentId);
+	const profileEntity = useSelector((state: AppState) => fromProfile.byId(state, recipient));
 
 	const onSend = (content: string, anonymous: boolean) => {
 		dispatcher(
@@ -29,5 +31,5 @@ export const AskQuestionView: NavigationFunctionComponent<AskQuestionViewProps> 
 		Navigation.pop(componentId);
 	};
 
-	return <AskQuestionScreen recipient={recipient} onSend={onSend} />;
+	return <AskQuestionScreen placeholder={`New question for @${profileEntity.profile.tag}`} onSend={onSend} />;
 };

@@ -52,8 +52,8 @@ export function searchReducer(state = initialState, action: SearchActionsDto): S
 					[action.payload.searchTerm]: {
 						...state.cache[action.payload.searchTerm],
 						search: {
-							profiles: action.payload.profiles.map((el) => el.id),
-							posts: action.payload.posts.map((el) => el.id),
+							profiles: action.payload.result.profiles,
+							posts: action.payload.result.posts,
 						},
 						isFetching: false,
 						receivedAt: action.payload.receivedAt,

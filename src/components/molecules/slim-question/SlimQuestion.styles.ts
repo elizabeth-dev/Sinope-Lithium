@@ -13,7 +13,7 @@ export const SlimQuestionStyles = StyleSheet.create({
 		marginHorizontal: 8,
 	},
 	content: {
-		marginBottom: 4,
+		marginVertical: 4,
 	},
 	body: {
 		flex: 1,
