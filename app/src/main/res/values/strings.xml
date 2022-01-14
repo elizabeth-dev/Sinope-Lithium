@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Sinope Lithium</string>
+    <string name="post_load_error">Could not load post</string>
+</resources>

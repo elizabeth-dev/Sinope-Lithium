@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/compose-model-1641658252450.xml" value="0.3091216216216216" />
+        <entry key="../../../../../layout/compose-model-1641733308456.xml" value="1.9386281588447654" />
+        <entry key="../../../../../layout/compose-model-1641756386740.xml" value="0.3091216216216216" />
+        <entry key="../../../../../layout/compose-model-1641769461118.xml" value="0.3091216216216216" />
+        <entry key="../../../../../layout/compose-model-1641844918308.xml" value="0.3091216216216216" />
+        <entry key="../../../../../layout/compose-model-1641845881337.xml" value="0.30869932432432434" />
+        <entry key="../../../../../layout/compose-model-1641847854076.xml" value="0.30869932432432434" />
+        <entry key="../../../../../layout/compose-model-1650142585904.xml" value="0.40925925925925927" />
+        <entry key="../../../../../layout/compose-model-1650143093615.xml" value="0.2970464135021097" />
+        <entry key="../../../../../layout/compose-model-1650145228066.xml" value="0.40925925925925927" />
+        <entry key="../../../../../layout/compose-model-1650146674741.xml" value="0.33" />
+        <entry key="../../../../../layout/compose-model-1650147133749.xml" value="0.32263513513513514" />
+        <entry key="../../../../../layout/compose-model-1650147248127.xml" value="0.3907407407407407" />
+        <entry key="../../../../../layout/compose-model-1650147346492.xml" value="0.32236286919831225" />
+        <entry key="../../../../../layout/compose-model-1650147861629.xml" value="0.32263513513513514" />
+        <entry key="../../../../../layout/compose-model-1650148320061.xml" value="0.32263513513513514" />
+        <entry key="../../../../../layout/compose-model-1650148796409.xml" value="0.33" />
+        <entry key="../../../../../layout/compose-model-1650150983105.xml" value="0.32263513513513514" />
+        <entry key="../../../../../layout/compose-model-1650151090024.xml" value="0.3108108108108108" />
+        <entry key="../../../../../layout/compose-model-1650213310042.xml" value="0.32221283783783783" />
+        <entry key="../../../../../layout/compose-model-1650747376735.xml" value="0.3091216216216216" />
+        <entry key="../../../../layout/compose-model-1642183796736.xml" value="0.35833333333333334" />
+        <entry key="../../../../layout/compose-model-1642184257905.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1642190659281.xml" value="0.5177364864864865" />
+        <entry key="../../../../layout/compose-model-1642190663626.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1642247998043.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1642249976817.xml" value="0.27744932432432434" />
+        <entry key="../../../../layout/compose-model-1642250604481.xml" value="0.5177364864864865" />
+        <entry key="../../../../layout/compose-model-1649198572438.xml" value="0.600925925925926" />
+        <entry key="../../../../layout/compose-model-1649199119064.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1649368615962.xml" value="0.3095439189189189" />
+      </map>
+    </option>
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/app/src/main/java/app/sinope/lithium/ui/molecule/slimpost/SlimPost.kt" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="708" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/build.gradle" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="297" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/app/build.gradle" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1184" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/app/src/main/java/app/sinope/lithium/ui/view/login/LoginScreen.kt" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
+</project>

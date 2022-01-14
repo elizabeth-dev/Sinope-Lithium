@@ -1,0 +1,15 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+
+image:
+  file: .gitpod.Dockerfile
+
+jetbrains:
+  intellij:
+    prebuilds:
+      version: both
+    plugins:
+      - com.github.copilot
+
+tasks:
+  - init: echo 'init script' # runs during prebuild
+    command: echo 'start script'

@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.google.cloud.artifactregistry:artifactregistry-gradle-plugin:2.1.5"
+
+        // https://github.com/GoogleCloudPlatform/artifact-registry-maven-tools/issues/63
+        classpath('com.google.guava:guava'){
+            version {
+                strictly '30.1.1-jre'
+            }
+        }
+    }
+}
+
+apply plugin: "com.google.cloud.artifactregistry.gradle-plugin"
+
+dependencyResolutionManagement {
+    //repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+
+        maven {
+            url "artifactregistry://europe-maven.pkg.dev/test-sinope/sinope"
+        }
+    }
+}
+rootProject.name = "Sinope Lithium"
+include ':app'

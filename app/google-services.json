@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "705939719280",
+    "project_id": "test-sinope",
+    "storage_bucket": "test-sinope.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705939719280:android:c69d6fc185f1d70342a0b5",
+        "android_client_info": {
+          "package_name": "app.sinope.lithium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705939719280-mndumccte9pqb8j053c792o0nrl2q7ro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKH-jlsBLTGT-IbUDGFuFFgFHqyJY1t_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705939719280-mndumccte9pqb8j053c792o0nrl2q7ro.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
