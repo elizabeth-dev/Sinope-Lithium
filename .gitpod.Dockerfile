@@ -42,7 +42,7 @@ RUN cd /tmp/cmdline-tools/bin && \
     "ndk;25.0.8775105" \
     "tools" \
     "skiaparser;3" && \
-    rm -rf /tmp/cmdline-tools
+    sudo rm -rf /tmp/cmdline-tools
 
 # Install packages
 RUN sudo install-packages zsh-syntax-highlighting zsh-autosuggestions google-cloud-cli
