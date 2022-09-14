@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
 
     // Sinope gRPC stubs
-    implementation group: 'app.sinope.grpc_api', name: 'stub-android', version: '1.0.0-SNAPSHOT'
+    //implementation group: 'app.sinope.grpc_api', name: 'stub-android', version: '1.0.0-SNAPSHOT'
     implementation 'io.grpc:grpc-cronet:1.47.0'
     implementation 'com.google.android.gms:play-services-cronet:18.0.1'
 

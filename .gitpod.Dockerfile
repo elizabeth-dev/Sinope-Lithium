@@ -16,11 +16,12 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 
 # Android SDK
 ENV ANDROID_HOME /opt/android-sdk
-ENV JAVA_HOME /home/gitpod/.sdkman/candidates/java/8.332.08.1-amzn
+ENV JAVA_HOME /home/gitpod/.sdkman/candidates/java/11.0.16.fx-zulu
 ENV PATH $JAVA_HOME/bin:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${PATH}
 
 RUN bash -c "source ~/.sdkman/bin/sdkman-init.sh && \
-                sdk install java 8.332.08.1-amzn"
+                sdk install java 11.0.16.fx-zulu && \
+                sdk default java 11.0.16.fx-zulu"
 
 RUN cd /tmp && \
     curl -fsSLo /tmp/commandline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip && \
